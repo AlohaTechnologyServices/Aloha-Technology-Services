@@ -218,22 +218,24 @@ function ServiceCard({ service, onOpen }) {
   const Icon = service.icon;
   return (
     <motion.div whileHover={{ y: -4 }} transition={{ duration: 0.2 }}>
-<Card className="rounded-3xl border-slate-200 shadow-sm bg-slate-900 text-white">
-  <CardHeader>
-    <CardTitle className="text-2xl text-white">Our mission</CardTitle>
-    <CardDescription className="text-slate-300 text-base leading-7">
-      To simplify complex challenges and deliver practical, results-driven solutions that empower clients to thrive in a competitive landscape.
-    </CardDescription>
-  </CardHeader>
-  <CardContent className="space-y-4 text-slate-200 leading-7">
-    <p>
-      We believe technology should make work easier, decisions clearer, and daily operations more efficient.
-    </p>
-    <p>
-      Whether you need a custom application, better documentation, on-site device setup, or a smarter workflow, we build solutions that fit your environment and move your goals forward.
-    </p>
-  </CardContent>
-</Card>
+      <Card className="h-full rounded-3xl border-slate-200 shadow-sm">
+        <CardHeader className="space-y-4">
+          <div className="w-12 h-12 rounded-2xl bg-slate-100 flex items-center justify-center">
+            <Icon className="w-6 h-6 text-slate-700" />
+          </div>
+          <div className="space-y-2">
+            <CardTitle className="text-xl text-slate-900">{service.title}</CardTitle>
+            <CardDescription className="text-slate-600 leading-7">
+              {service.blurb}
+            </CardDescription>
+          </div>
+        </CardHeader>
+        <CardContent>
+          <Button onClick={() => onOpen(service.id)} className="rounded-2xl">
+            View page <ArrowRight className="w-4 h-4 ml-2" />
+          </Button>
+        </CardContent>
+      </Card>
     </motion.div>
   );
 }
@@ -241,10 +243,12 @@ function ServiceCard({ service, onOpen }) {
 function HomePage({ onOpen }) {
   return (
     <div className="space-y-24">
-     <section className="rounded-[2rem] bg-slate-900 px-8 py-10 text-white">
+      <section className="grid lg:grid-cols-2 gap-10 items-center">
         <div className="space-y-8">
           <div className="space-y-4">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">Technical solutions for modern operations</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">
+              Technical solutions for modern operations
+            </p>
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-slate-900 leading-tight">
               Practical technology services built around real-world needs.
             </h1>
@@ -252,6 +256,7 @@ function HomePage({ onOpen }) {
               We help clients implement better systems, streamline workflows, improve operations, and solve technical challenges with practical, results-driven support.
             </p>
           </div>
+
           <div className="flex flex-wrap gap-4">
             <Button size="lg" className="rounded-2xl" onClick={() => onOpen("contact")}>
               Request a Consultation
@@ -260,18 +265,104 @@ function HomePage({ onOpen }) {
               Explore services
             </Button>
           </div>
+
           <div className="grid sm:grid-cols-3 gap-4 pt-2">
             {[
-    "Custom solutions tailored to real operational needs",
-    "Hands-on support for businesses, property managers, and homeowners",
-    "Clear implementation with practical, results-driven execution",
+              "Custom solutions tailored to real operational needs",
+              "Hands-on support for businesses, property managers, and homeowners",
+              "Clear implementation with practical, results-driven execution",
             ].map((item) => (
-              <div key={item} className="rounded-2xl border border-slate-200 px-4 py-4 text-sm font-medium text-slate-700 bg-white">
+              <div
+                key={item}
+                className="rounded-2xl border border-slate-200 px-4 py-4 text-sm font-medium text-slate-700 bg-white"
+              >
                 {item}
               </div>
             ))}
           </div>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="rounded-[2rem] border border-slate-200 bg-gradient-to-br from-slate-50 to-white p-8 shadow-sm"
+        >
+          <div className="grid gap-4">
+            {services.map((service) => {
+              const Icon = service.icon;
+              return (
+                <div key={service.id} className="flex items-start gap-4 rounded-2xl bg-white p-4 border border-slate-100">
+                  <div className="w-11 h-11 rounded-2xl bg-slate-100 flex items-center justify-center shrink-0">
+                    <Icon className="w-5 h-5 text-slate-700" />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-slate-900">{service.shortTitle}</p>
+                    <p className="text-sm text-slate-600 leading-6">{service.blurb}</p>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </motion.div>
+      </section>
+
+      <section className="space-y-10">
+        <SectionHeading
+          eyebrow="What we do"
+          title="A complete suite of technical and operational services"
+          description="We partner with businesses, property managers, and homeowners to implement technology that makes operations smoother, support easier, and decision-making stronger."
+        />
+        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+          {services.map((service) => (
+            <ServiceCard key={service.id} service={service} onOpen={onOpen} />
+          ))}
+        </div>
+      </section>
+
+      <section className="grid lg:grid-cols-2 gap-8">
+        <Card className="rounded-3xl border-slate-200 shadow-sm">
+          <CardHeader>
+            <CardTitle className="text-2xl">Who we help</CardTitle>
+            <CardDescription className="text-base leading-7">
+              Our services are designed for organizations and individuals who want practical outcomes, not unnecessary complexity.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="grid gap-4 text-slate-700">
+            {[
+              "Small and mid-sized businesses improving internal operations",
+              "Property managers modernizing systems and guest-facing technology",
+              "Homeowners needing reliable device setup and support",
+              "Teams rolling out new tools and processes across departments",
+            ].map((item) => (
+              <div key={item} className="flex gap-3">
+                <CheckCircle2 className="w-5 h-5 mt-0.5 text-slate-700" />
+                <span>{item}</span>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
+
+        <Card className="rounded-3xl border-slate-200 shadow-sm bg-white text-black">
+          <CardHeader>
+            <CardTitle className="text-2xl text-black">Our mission</CardTitle>
+            <CardDescription className="text-black text-base leading-7">
+              To simplify complex challenges and deliver practical, results-driven solutions that empower clients to thrive in a competitive landscape.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4 text-black leading-7">
+            <p>
+              We believe technology should make work easier, decisions clearer, and daily operations more efficient.
+            </p>
+            <p>
+              Whether you need a custom application, better documentation, on-site device setup, or a smarter workflow, we build solutions that fit your environment and move your goals forward.
+            </p>
+          </CardContent>
+        </Card>
+      </section>
+    </div>
+  );
+}
 
         <motion.div
           initial={{ opacity: 0, y: 16 }}

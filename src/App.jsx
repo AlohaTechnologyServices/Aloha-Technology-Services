@@ -262,9 +262,9 @@ function HomePage({ onOpen }) {
           </div>
           <div className="grid sm:grid-cols-3 gap-4 pt-2">
             {[
-              "Custom Solutions",
-              "Clear Implementation",
-              "Results-driven Support",
+    "Custom solutions tailored to real operational needs",
+    "Hands-on support for businesses, property managers, and homeowners",
+    "Clear implementation with practical, results-driven execution",
             ].map((item) => (
               <div key={item} className="rounded-2xl border border-slate-200 px-4 py-4 text-sm font-medium text-slate-700 bg-white">
                 {item}
@@ -273,19 +273,6 @@ function HomePage({ onOpen }) {
           </div>
         </div>
         <div className="grid sm:grid-cols-3 gap-4 pt-2">
-  {[
-    "Custom solutions tailored to real operational needs",
-    "Hands-on support for businesses, property managers, and homeowners",
-    "Clear implementation with practical, results-driven execution",
-  ].map((item) => (
-    <div
-      key={item}
-      className="rounded-2xl border border-slate-200 px-4 py-4 text-sm font-medium text-slate-700 bg-white"
-    >
-      {item}
-    </div>
-  ))}
-</div>
 
         <motion.div
           initial={{ opacity: 0, y: 16 }}

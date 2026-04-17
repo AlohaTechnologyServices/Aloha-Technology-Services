@@ -1,8 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Code2, Video, Wrench, BarChart3, Workflow, ArrowRight, CheckCircle2, Mail, Phone, MapPin, Menu, X } from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 
 const services = [
   {

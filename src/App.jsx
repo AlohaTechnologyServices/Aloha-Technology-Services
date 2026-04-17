@@ -1,3 +1,4 @@
+import { useForm, ValidationError } from "@formspree/react";
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Code2, Video, Wrench, BarChart3, Workflow, ArrowRight, CheckCircle2, Mail, Phone, MapPin, Menu, X } from "lucide-react";
@@ -484,6 +485,13 @@ function ContactPage() {
       </div>
     </div>
   );
+  function ContactPage() {
+  const [state, handleSubmit] = useForm("mnjlpyya");
+
+  return (
+    // contact page JSX here
+  );
+}
 }
 
 export default function TechnicalSolutionsCompanyWebsite() {

@@ -2,7 +2,6 @@ import { useForm, ValidationError } from "@formspree/react";
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Code2, Video, Wrench, BarChart3, Workflow, ArrowRight, CheckCircle2, Mail, Phone, MapPin, Menu, X } from "lucide-react";
-const [state, handleSubmit] = useForm("mnjlpyya");
 
 function Button({ children, onClick, variant = "default", size = "md", className = "", ...props }) {
   const base = "inline-flex items-center justify-center font-medium transition rounded-2xl";
@@ -442,56 +441,72 @@ function ServicePage({ service, onOpen }) {
 }
 
 function ContactPage() {
+  const [state, handleSubmit] = useForm("mnjlpyya");
+
   return (
     <div className="space-y-12">
       <SectionHeading
         eyebrow="Contact"
         title="Let’s build the right solution for your needs"
-        description="Whether you need custom software, training materials, technical installation, operational analysis, or workflow improvements, we’re ready to help."
+        description="Tell us about your project and we’ll follow up with next steps."
       />
 
-      <div className="grid lg:grid-cols-[1fr_1.1fr] gap-8">
-        <Card className="rounded-3xl border-slate-200 shadow-sm">
-          <CardHeader>
-            <CardTitle className="text-2xl">Tell us about your project, challenge, or support needs. We’ll review your message and follow up with the right next steps.</CardTitle>
-            <CardDescription className="text-base leading-7">
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-5 text-slate-700">
-            <div className="flex items-center gap-3"><Mail className="w-5 h-5" />hawaiiats@gmail.com </div>
-            <div className="flex items-center gap-3"><Phone className="w-5 h-5" /> (808) 443-7148</div>
-            <div className="flex items-center gap-3"><MapPin className="w-5 h-5" /> 62-1776 Niu Haohao Pl, Waikoloa, HI 96738 </div>
-          </CardContent>
-        </Card>
+      <div className="max-w-2xl">
+        {state.succeeded ? (
+          <div className="rounded-2xl border border-slate-200 bg-slate-50 p-5">
+            <h3 className="text-lg font-semibold text-slate-900">Thank you.</h3>
+            <p className="mt-2 text-slate-600">
+              Your message has been sent successfully.
+            </p>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">
+                Full Name
+              </label>
+              <input
+                type="text"
+                name="name"
+                required
+                className="w-full rounded-2xl border border-slate-300 px-4 py-3"
+              />
+            </div>
 
-        <Card className="rounded-3xl border-slate-200 shadow-sm">
-          <CardHeader>
-            <CardTitle className="text-2xl">Why clients choose us</CardTitle>
-            <CardDescription className="text-base leading-7">
-              We combine technical execution with real operational thinking.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="grid gap-4 text-slate-700 leading-7">
-            {[
-              "Solutions tailored to the client’s exact needs rather than one-size-fits-all packages",
-              "Clear communication from planning through implementation",
-              "Practical recommendations focused on usability and long-term value",
-              "Support for both business environments and residential technology needs",
-            ].map((item) => (
-              <div key={item} className="flex gap-3"><CheckCircle2 className="w-5 h-5 mt-0.5" /><span>{item}</span></div>
-            ))}
-          </CardContent>
-        </Card>
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">
+                Email
+              </label>
+              <input
+                type="email"
+                name="email"
+                required
+                className="w-full rounded-2xl border border-slate-300 px-4 py-3"
+              />
+              <ValidationError prefix="Email" field="email" errors={state.errors} />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">
+                Message
+              </label>
+              <textarea
+                name="message"
+                rows="5"
+                required
+                className="w-full rounded-2xl border border-slate-300 px-4 py-3"
+              />
+              <ValidationError prefix="Message" field="message" errors={state.errors} />
+            </div>
+
+            <Button type="submit" disabled={state.submitting}>
+              {state.submitting ? "Sending..." : "Request a Consultation"}
+            </Button>
+          </form>
+        )}
       </div>
     </div>
   );
-  function ContactPage() {
-  const [state, handleSubmit] = useForm("mnjlpyya");
-
-  return (
-    // contact page JSX here
-  );
-}
 }
 
 export default function TechnicalSolutionsCompanyWebsite() {

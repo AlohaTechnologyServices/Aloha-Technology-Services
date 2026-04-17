@@ -492,7 +492,7 @@ export default function TechnicalSolutionsCompanyWebsite() {
       <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/90 backdrop-blur">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-6">
           <button onClick={() => openPage("home")} className="text-left">
-            <div className="font-bold text-xl tracking-tight">Your Company</div>
+            <div className="font-bold text-xl tracking-tight">Aloha Technology Solutions</div>
             <div className="text-sm text-slate-500">Technical Solutions & Support</div>
           </button>
 
@@ -552,7 +552,7 @@ export default function TechnicalSolutionsCompanyWebsite() {
       <footer className="border-t border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-sm text-slate-500">
           <div>
-            <p className="font-semibold text-slate-700">Your Company</p>
+            <p className="font-semibold text-slate-700">Aloha Technology Solutions</p>
             <p>Practical, results-driven technical solutions.</p>
           </div>
           <div className="flex flex-wrap gap-4">

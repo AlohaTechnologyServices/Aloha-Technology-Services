@@ -330,9 +330,9 @@ function HomePage({ onOpen }) {
           </CardContent>
         </Card>
 
-        <Card className="rounded-3xl border-slate-200 shadow-sm bg-slate-900 text-white">
+        <Card className="rounded-3xl border-slate-200 shadow-sm bg-slate-900 text-black">
           <CardHeader>
-            <CardTitle className="text-2xl">Our mission</CardTitle>
+            <CardTitle className="text-2xl text-black">Our mission</CardTitle>
             <CardDescription className="text-slate-300 text-base leading-7">
               To simplify complex challenges and deliver practical, results-driven solutions that empower clients to thrive in a competitive landscape.
             </CardDescription>

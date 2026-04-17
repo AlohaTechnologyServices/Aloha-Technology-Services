@@ -333,11 +333,11 @@ function HomePage({ onOpen }) {
         <Card className="rounded-3xl border-slate-200 shadow-sm bg-slate-900 text-black">
           <CardHeader>
             <CardTitle className="text-2xl text-black">Our mission</CardTitle>
-            <CardDescription className="text-slate-300 text-base leading-7">
+<CardDescription className="text-black text-base leading-7">
               To simplify complex challenges and deliver practical, results-driven solutions that empower clients to thrive in a competitive landscape.
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4 text-slate-200 leading-7">
+<CardContent className="space-y-4 text-black leading-7">
             <p>
               We believe technology should make work easier, decisions clearer, and daily operations more efficient.
             </p>

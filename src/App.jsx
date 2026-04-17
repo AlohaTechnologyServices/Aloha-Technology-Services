@@ -2,6 +2,48 @@ import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Code2, Video, Wrench, BarChart3, Workflow, ArrowRight, CheckCircle2, Mail, Phone, MapPin, Menu, X } from "lucide-react";
 
+function Button({ children, onClick, variant = "default", size = "md", className = "", ...props }) {
+  const base = "inline-flex items-center justify-center font-medium transition rounded-2xl";
+  const variants = {
+    default: "bg-slate-900 text-white hover:bg-slate-800",
+    outline: "border border-slate-300 bg-white text-slate-900 hover:bg-slate-50",
+  };
+  const sizes = {
+    md: "px-4 py-2.5 text-sm",
+    lg: "px-6 py-3 text-base",
+  };
+
+  return (
+    <button
+      onClick={onClick}
+      className={`${base} ${variants[variant] || variants.default} ${sizes[size] || sizes.md} ${className}`.trim()}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+}
+
+function Card({ children, className = "" }) {
+  return <div className={`bg-white border ${className}`.trim()}>{children}</div>;
+}
+
+function CardHeader({ children, className = "" }) {
+  return <div className={`p-6 ${className}`.trim()}>{children}</div>;
+}
+
+function CardContent({ children, className = "" }) {
+  return <div className={`px-6 pb-6 ${className}`.trim()}>{children}</div>;
+}
+
+function CardTitle({ children, className = "" }) {
+  return <h3 className={`font-semibold ${className}`.trim()}>{children}</h3>;
+}
+
+function CardDescription({ children, className = "" }) {
+  return <p className={`text-slate-600 ${className}`.trim()}>{children}</p>;
+}
+
 const services = [
   {
     id: "application-development",

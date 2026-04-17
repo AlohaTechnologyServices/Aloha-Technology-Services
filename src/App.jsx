@@ -41,7 +41,7 @@ function CardTitle({ children, className = "" }) {
 }
 
 function CardDescription({ children, className = "" }) {
-  return <p className={`text-slate-600 ${className}`.trim()}>{children}</p>;
+  return <p className={`${className}`.trim()}>{children}</p>;
 }
 
 const services = [

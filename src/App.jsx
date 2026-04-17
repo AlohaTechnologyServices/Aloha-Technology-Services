@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Code2, Video, Wrench, BarChart3, Workflow, ArrowRight, CheckCircle2, Mail, Phone, MapPin, Menu, X } from "lucide-react";
+const [state, handleSubmit] = useForm("mnjlpyya");
 
 function Button({ children, onClick, variant = "default", size = "md", className = "", ...props }) {
   const base = "inline-flex items-center justify-center font-medium transition rounded-2xl";
@@ -248,12 +249,12 @@ function HomePage({ onOpen }) {
               Practical technology services built around real-world needs.
             </h1>
             <p className="text-lg text-slate-600 leading-8 max-w-2xl">
-              We deliver cutting-edge technical solutions tailored to businesses and individuals who need reliable systems, streamlined workflows, and clear support. From custom applications to on-site installations, we simplify complex challenges and turn them into practical results.
+              We help clients implement better systems, streamline workflows, improve operations, and solve technical challenges with practical, results-driven support.
             </p>
           </div>
           <div className="flex flex-wrap gap-4">
             <Button size="lg" className="rounded-2xl" onClick={() => onOpen("contact")}>
-              Get in touch
+              Request a Consultation
             </Button>
             <Button size="lg" variant="outline" className="rounded-2xl" onClick={() => onOpen("application-development")}>
               Explore services
@@ -261,9 +262,9 @@ function HomePage({ onOpen }) {
           </div>
           <div className="grid sm:grid-cols-3 gap-4 pt-2">
             {[
-              "Custom solutions",
-              "Clear implementation",
-              "Results-driven support",
+              "Custom Solutions",
+              "Clear Implementation",
+              "Results-driven Support",
             ].map((item) => (
               <div key={item} className="rounded-2xl border border-slate-200 px-4 py-4 text-sm font-medium text-slate-700 bg-white">
                 {item}
@@ -271,6 +272,20 @@ function HomePage({ onOpen }) {
             ))}
           </div>
         </div>
+        <div className="grid sm:grid-cols-3 gap-4 pt-2">
+  {[
+    "Custom solutions tailored to real operational needs",
+    "Hands-on support for businesses, property managers, and homeowners",
+    "Clear implementation with practical, results-driven execution",
+  ].map((item) => (
+    <div
+      key={item}
+      className="rounded-2xl border border-slate-200 px-4 py-4 text-sm font-medium text-slate-700 bg-white"
+    >
+      {item}
+    </div>
+  ))}
+</div>
 
         <motion.div
           initial={{ opacity: 0, y: 16 }}
@@ -409,7 +424,7 @@ function ServicePage({ service, onOpen }) {
         </div>
       </section>
 
-      <section className="rounded-[2rem] bg-slate-900 px-8 py-10 text-white">
+      <section className="rounded-[2rem] bg-slate-900 px-8 py-10 text-black">
         <div className="max-w-3xl space-y-4">
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-400">Next step</p>
           <h2 className="text-3xl font-bold">Need help with {service.shortTitle.toLowerCase()}?</h2>
@@ -437,9 +452,8 @@ function ContactPage() {
       <div className="grid lg:grid-cols-[1fr_1.1fr] gap-8">
         <Card className="rounded-3xl border-slate-200 shadow-sm">
           <CardHeader>
-            <CardTitle className="text-2xl">Get in touch</CardTitle>
+            <CardTitle className="text-2xl">Tell us about your project, challenge, or support needs. We’ll review your message and follow up with the right next steps.</CardTitle>
             <CardDescription className="text-base leading-7">
-              Replace the contact details below with your real business information.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-5 text-slate-700">

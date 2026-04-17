@@ -218,7 +218,7 @@ function ServiceCard({ service, onOpen }) {
   const Icon = service.icon;
   return (
     <motion.div whileHover={{ y: -4 }} transition={{ duration: 0.2 }}>
-      <Card className="h-full rounded-3xl border-slate-200 shadow-sm">
+      <Card className="rounded-3xl border-slate-200 shadow-sm bg-slate-900 text-white">
         <CardHeader className="space-y-4">
           <div className="w-12 h-12 rounded-2xl bg-slate-100 flex items-center justify-center">
             <Icon className="w-6 h-6 text-slate-700" />
@@ -241,7 +241,7 @@ function ServiceCard({ service, onOpen }) {
 function HomePage({ onOpen }) {
   return (
     <div className="space-y-24">
-      <section className="grid lg:grid-cols-2 gap-10 items-center">
+     <section className="rounded-[2rem] bg-slate-900 px-8 py-10 text-white">
         <div className="space-y-8">
           <div className="space-y-4">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">Technical solutions for modern operations</p>

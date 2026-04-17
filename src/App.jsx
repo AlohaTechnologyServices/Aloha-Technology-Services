@@ -218,22 +218,22 @@ function ServiceCard({ service, onOpen }) {
   const Icon = service.icon;
   return (
     <motion.div whileHover={{ y: -4 }} transition={{ duration: 0.2 }}>
-      <Card className="rounded-3xl border-slate-200 shadow-sm bg-slate-900 text-white">
-        <CardHeader className="space-y-4">
-          <div className="w-12 h-12 rounded-2xl bg-slate-100 flex items-center justify-center">
-            <Icon className="w-6 h-6 text-slate-700" />
-          </div>
-          <div className="space-y-2">
-            <CardTitle className="text-xl text-slate-900">{service.title}</CardTitle>
-            <CardDescription className="text-slate-600 leading-7">{service.blurb}</CardDescription>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <Button onClick={() => onOpen(service.id)} className="rounded-2xl">
-            View page <ArrowRight className="w-4 h-4 ml-2" />
-          </Button>
-        </CardContent>
-      </Card>
+<Card className="rounded-3xl border-slate-200 shadow-sm bg-slate-900 text-white">
+  <CardHeader>
+    <CardTitle className="text-2xl text-white">Our mission</CardTitle>
+    <CardDescription className="text-slate-300 text-base leading-7">
+      To simplify complex challenges and deliver practical, results-driven solutions that empower clients to thrive in a competitive landscape.
+    </CardDescription>
+  </CardHeader>
+  <CardContent className="space-y-4 text-slate-200 leading-7">
+    <p>
+      We believe technology should make work easier, decisions clearer, and daily operations more efficient.
+    </p>
+    <p>
+      Whether you need a custom application, better documentation, on-site device setup, or a smarter workflow, we build solutions that fit your environment and move your goals forward.
+    </p>
+  </CardContent>
+</Card>
     </motion.div>
   );
 }
@@ -410,18 +410,18 @@ function ServicePage({ service, onOpen }) {
         </div>
       </section>
 
-      <section className="rounded-[2rem] bg-slate-900 px-8 py-10 text-black">
-        <div className="max-w-3xl space-y-4">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-400">Next step</p>
-          <h2 className="text-3xl font-bold">Need help with {service.shortTitle.toLowerCase()}?</h2>
-          <p className="text-slate-300 leading-8">
-            We tailor every engagement to the client’s actual goals, systems, and environment. Let’s talk through your needs and design the right approach.
-          </p>
-          <Button className="rounded-2xl bg-white text-slate-900 hover:bg-slate-100" onClick={() => onOpen("contact")}>
-            Contact us <ArrowRight className="w-4 h-4 ml-2" />
-          </Button>
-        </div>
-      </section>
+     <section className="rounded-[2rem] bg-slate-900 px-8 py-10 text-white">
+  <div className="max-w-3xl space-y-4">
+    <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-400">Next step</p>
+    <h2 className="text-3xl font-bold text-white">Need help with {service.shortTitle.toLowerCase()}?</h2>
+    <p className="text-slate-300 leading-8">
+      We tailor every engagement to the client’s actual goals, systems, and environment. Let’s talk through your needs and design the right approach.
+    </p>
+    <Button className="rounded-2xl bg-white text-slate-900 hover:bg-slate-100" onClick={() => onOpen("contact")}>
+      Contact us <ArrowRight className="w-4 h-4 ml-2" />
+    </Button>
+  </div>
+</section>
     </div>
   );
 }

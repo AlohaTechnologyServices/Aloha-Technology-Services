@@ -272,7 +272,6 @@ function HomePage({ onOpen }) {
             ))}
           </div>
         </div>
-        <div className="grid sm:grid-cols-3 gap-4 pt-2">
 
         <motion.div
           initial={{ opacity: 0, y: 16 }}

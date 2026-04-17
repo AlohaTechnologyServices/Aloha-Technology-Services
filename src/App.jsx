@@ -443,9 +443,9 @@ function ContactPage() {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-5 text-slate-700">
-            <div className="flex items-center gap-3"><Mail className="w-5 h-5" /> hello@yourcompany.com</div>
-            <div className="flex items-center gap-3"><Phone className="w-5 h-5" /> (555) 123-4567</div>
-            <div className="flex items-center gap-3"><MapPin className="w-5 h-5" /> Serving businesses, property managers, and homeowners</div>
+            <div className="flex items-center gap-3"><Mail className="w-5 h-5" />hawaiiats@gmail.com </div>
+            <div className="flex items-center gap-3"><Phone className="w-5 h-5" /> (808) 443-7148</div>
+            <div className="flex items-center gap-3"><MapPin className="w-5 h-5" /> 62-1776 Niu Haohao Pl, Waikoloa, HI 96738 </div>
           </CardContent>
         </Card>
 
@@ -513,7 +513,6 @@ export default function TechnicalSolutionsCompanyWebsite() {
           </nav>
 
           <div className="flex items-center gap-3">
-            <Button className="hidden sm:inline-flex rounded-2xl" onClick={() => openPage("contact")}>Contact</Button>
             <button
               className="xl:hidden p-2 rounded-xl border border-slate-200"
               onClick={() => setMobileOpen((prev) => !prev)}

@@ -407,12 +407,180 @@ export default function TechnicalSolutionsCompanyWebsite() {
   const activeService = useMemo(() => services.find((service) => service.id === activePage), [activePage]);
   const openPage = (page) => { setActivePage(page); setMobileOpen(false); setServicesOpen(false); window.scrollTo({ top: 0, behavior: "smooth" }); };
   return <div className="min-h-screen bg-white text-slate-900">
-    <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 backdrop-blur"><div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:px-8"><button onClick={() => openPage("home")} className="flex items-center gap-4 text-left"><img src="/images/aloha-technology-services-cover.png" alt="Aloha Technology Services LLC brand artwork" className="h-14 w-14 rounded-2xl border border-slate-200 object-cover shadow-sm" loading="eager" decoding="async" /><div><div className="text-xl font-bold tracking-tight text-[#17324D]">{COMPANY_NAME}</div><div className="text-sm text-slate-500">Technology • Digital • Property • Operations</div></div></button>
-      <nav className="hidden items-center gap-2 lg:flex"><button onClick={() => openPage("home")} className={`rounded-2xl px-4 py-2 text-sm font-medium transition ${activePage === "home" ? "bg-[#17324D] text-white" : "text-slate-600 hover:bg-slate-100 hover:text-[#17324D]"}`}>Home</button><div className="relative"><button onClick={() => setServicesOpen((value) => !value)} className={`flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium transition ${activeService ? "bg-[#17324D] text-white" : "text-slate-600 hover:bg-slate-100 hover:text-[#17324D]"}`}>Services <ChevronDown className="h-4 w-4" /></button>{servicesOpen && <div className="absolute right-0 top-12 w-[900px] max-w-[calc(100vw-2rem)] rounded-3xl border border-slate-200 bg-white p-6 shadow-2xl"><div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">{serviceGroups.map((group) => <div key={group.id}><p className="mb-3 font-semibold text-[#17324D]">{group.label}</p><div className="space-y-1">{group.serviceIds.map((id) => { const service = services.find((item) => item.id === id); if (!service) return null; return <button key={service.id} onClick={() => openPage(service.id)} className="block w-full rounded-xl px-3 py-2 text-left text-sm text-slate-600 transition hover:bg-[#F2FBFB] hover:text-[#17324D]">{service.shortTitle}</button>; })}</div></div>)}</div></div>}</div><button onClick={() => openPage("about")} className={`rounded-2xl px-4 py-2 text-sm font-medium transition ${activePage === "about" ? "bg-[#17324D] text-white" : "text-slate-600 hover:bg-slate-100 hover:text-[#17324D]"}`}>About</button><Button size="sm" variant="accent" onClick={() => openPage("contact")}>Request Consultation</Button></nav>
-      <button className="rounded-xl border border-slate-200 p-2 lg:hidden" onClick={() => setMobileOpen((value) => !value)} aria-label="Toggle menu">{mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}</button></div>
-      {mobileOpen && <div className="border-t border-slate-200 bg-white lg:hidden"><div className="mx-auto max-w-7xl space-y-3 px-4 py-5 sm:px-6"><button onClick={() => openPage("home")} className="block w-full rounded-2xl bg-slate-50 px-4 py-3 text-left font-medium text-slate-700">Home</button><details className="rounded-2xl bg-slate-50"><summary className="cursor-pointer px-4 py-3 font-medium text-slate-700">Services</summary><div className="space-y-4 px-4 pb-4">{serviceGroups.map((group) => <div key={group.id}><p className="mb-2 text-sm font-semibold text-[#17324D]">{group.label}</p><div className="space-y-1">{group.serviceIds.map((id) => { const service = services.find((item) => item.id === id); if (!service) return null; return <button key={service.id} onClick={() => openPage(service.id)} className="block w-full rounded-xl px-3 py-2 text-left text-sm text-slate-600 hover:bg-white">{service.shortTitle}</button>; })}</div></div>)}</div></details><button onClick={() => openPage("about")} className="block w-full rounded-2xl bg-slate-50 px-4 py-3 text-left font-medium text-slate-700">About</button><button onClick={() => openPage("contact")} className="block w-full rounded-2xl bg-[#1D84B5] px-4 py-3 text-left font-semibold text-white">Request Consultation</button></div></div>}
+    <header className="border-b border-slate-200 bg-white">
+      <button
+        onClick={() => openPage("home")}
+        className="block w-full overflow-hidden bg-white"
+        aria-label="Return to the Aloha Technology Services LLC homepage"
+      >
+        <img
+          src="/images/aloha-technology-services-header-banner.png"
+          alt="Aloha Technology Services LLC"
+          className="block aspect-[6/1] w-full object-cover object-center"
+          loading="eager"
+          fetchPriority="high"
+          decoding="async"
+        />
+      </button>
+
+      <div className="border-t border-slate-200/80 bg-white/95 shadow-sm backdrop-blur">
+        <div className="mx-auto flex min-h-16 max-w-7xl items-center justify-end gap-3 px-4 py-3 sm:px-6 lg:px-8">
+          <nav className="hidden items-center gap-2 lg:flex">
+            <button
+              onClick={() => openPage("home")}
+              className={`rounded-full border px-5 py-2.5 text-sm font-semibold shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ${
+                activePage === "home"
+                  ? "border-[#17324D] bg-[#17324D] text-white"
+                  : "border-slate-200 bg-white text-[#17324D] hover:border-[#1D84B5] hover:text-[#1D84B5]"
+              }`}
+            >
+              Home
+            </button>
+
+            <div className="relative">
+              <button
+                onClick={() => setServicesOpen((value) => !value)}
+                className={`flex items-center gap-2 rounded-full border px-5 py-2.5 text-sm font-semibold shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ${
+                  activeService
+                    ? "border-[#17324D] bg-[#17324D] text-white"
+                    : "border-slate-200 bg-white text-[#17324D] hover:border-[#1D84B5] hover:text-[#1D84B5]"
+                }`}
+              >
+                Services <ChevronDown className="h-4 w-4" />
+              </button>
+
+              {servicesOpen && (
+                <div className="absolute right-0 top-14 z-50 w-[900px] max-w-[calc(100vw-2rem)] rounded-3xl border border-slate-200 bg-white p-6 shadow-2xl">
+                  <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+                    {serviceGroups.map((group) => (
+                      <div key={group.id}>
+                        <p className="mb-3 font-semibold text-[#17324D]">{group.label}</p>
+                        <div className="space-y-1">
+                          {group.serviceIds.map((id) => {
+                            const service = services.find((item) => item.id === id);
+                            if (!service) return null;
+                            return (
+                              <button
+                                key={service.id}
+                                onClick={() => openPage(service.id)}
+                                className="block w-full rounded-xl px-3 py-2 text-left text-sm text-slate-600 transition hover:bg-[#F2FBFB] hover:text-[#17324D]"
+                              >
+                                {service.shortTitle}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <button
+              onClick={() => openPage("about")}
+              className={`rounded-full border px-5 py-2.5 text-sm font-semibold shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ${
+                activePage === "about"
+                  ? "border-[#17324D] bg-[#17324D] text-white"
+                  : "border-slate-200 bg-white text-[#17324D] hover:border-[#1D84B5] hover:text-[#1D84B5]"
+              }`}
+            >
+              About
+            </button>
+
+            <Button size="sm" variant="accent" className="rounded-full px-5 py-2.5 shadow-md" onClick={() => openPage("contact")}>
+              Request Consultation
+            </Button>
+          </nav>
+
+          <button
+            className="rounded-full border border-slate-200 bg-white p-3 text-[#17324D] shadow-md lg:hidden"
+            onClick={() => setMobileOpen((value) => !value)}
+            aria-label="Toggle menu"
+          >
+            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
+
+        {mobileOpen && (
+          <div className="border-t border-slate-200 bg-white lg:hidden">
+            <div className="mx-auto max-w-7xl space-y-3 px-4 py-5 sm:px-6">
+              <button onClick={() => openPage("home")} className="block w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-left font-semibold text-[#17324D] shadow-sm">
+                Home
+              </button>
+              <details className="rounded-2xl border border-slate-200 bg-white shadow-sm">
+                <summary className="cursor-pointer px-4 py-3 font-semibold text-[#17324D]">Services</summary>
+                <div className="space-y-4 px-4 pb-4">
+                  {serviceGroups.map((group) => (
+                    <div key={group.id}>
+                      <p className="mb-2 text-sm font-semibold text-[#17324D]">{group.label}</p>
+                      <div className="space-y-1">
+                        {group.serviceIds.map((id) => {
+                          const service = services.find((item) => item.id === id);
+                          if (!service) return null;
+                          return (
+                            <button key={service.id} onClick={() => openPage(service.id)} className="block w-full rounded-xl px-3 py-2 text-left text-sm text-slate-600 hover:bg-[#F2FBFB]">
+                              {service.shortTitle}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </details>
+              <button onClick={() => openPage("about")} className="block w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-left font-semibold text-[#17324D] shadow-sm">
+                About
+              </button>
+              <button onClick={() => openPage("contact")} className="block w-full rounded-2xl bg-[#1D84B5] px-4 py-3 text-left font-semibold text-white shadow-md">
+                Request Consultation
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
     </header>
     <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6 md:py-16 lg:px-8">{activePage === "home" && <HomePage onOpen={openPage} />}{activeService && <ServicePage service={activeService} onOpen={openPage} />}{activePage === "about" && <AboutPage onOpen={openPage} />}{activePage === "contact" && <ContactPage />}</main>
-    <footer className="mt-20 border-t border-slate-200 bg-slate-50"><div className="mx-auto grid max-w-7xl gap-8 px-4 py-10 sm:px-6 md:grid-cols-[1fr_auto] lg:px-8"><div><p className="font-semibold text-[#17324D]">{COMPANY_NAME}</p><p className="mt-2 max-w-xl text-sm leading-6 text-slate-500">Locally owned and operated on Hawaiʻi Island. Website, automation, AI, technology, property, and operational support for businesses, homeowners, and property managers.</p></div><div className="flex flex-wrap gap-4 text-sm text-slate-500"><button onClick={() => openPage("home")} className="hover:text-[#17324D]">Home</button><button onClick={() => openPage("about")} className="hover:text-[#17324D]">About</button><button onClick={() => openPage("contact")} className="hover:text-[#17324D]">Contact</button><a href={`mailto:${COMPANY_EMAIL}`} className="hover:text-[#17324D]">Email</a></div></div></footer>
+    <footer className="mt-20 border-t border-slate-200 bg-slate-50">
+      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+        <button
+          onClick={() => openPage("home")}
+          className="block w-full overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-[0_14px_45px_rgba(23,50,77,0.10)] transition hover:shadow-[0_20px_60px_rgba(23,50,77,0.15)]"
+          aria-label="Return to the Aloha Technology Services LLC homepage"
+        >
+          <img
+            src="/images/aloha-technology-services-footer-banner.png"
+            alt="Aloha Technology Services LLC services banner"
+            className="block h-auto w-full"
+            loading="lazy"
+            decoding="async"
+          />
+        </button>
+
+        <div className="mt-7 flex flex-col gap-5 rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm md:flex-row md:items-center md:justify-between">
+          <div>
+            <p className="font-semibold text-[#17324D]">Aloha Technology Services LLC</p>
+            <p className="mt-1 max-w-2xl text-sm leading-6 text-slate-500">
+              Locally owned and operated on Hawaiʻi Island. Website, automation, AI, technology, property, and operational support for businesses, homeowners, and property managers.
+            </p>
+          </div>
+
+          <div className="flex flex-wrap gap-3">
+            <button onClick={() => openPage("home")} className="rounded-full border border-[#17324D] bg-[#17324D] px-5 py-3 text-sm font-semibold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-[#214765] hover:shadow-lg">
+              Home
+            </button>
+            <button onClick={() => openPage("about")} className="rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-[#17324D] shadow-md transition hover:-translate-y-0.5 hover:border-[#1D84B5] hover:text-[#1D84B5] hover:shadow-lg">
+              About
+            </button>
+            <button onClick={() => openPage("contact")} className="rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-[#17324D] shadow-md transition hover:-translate-y-0.5 hover:border-[#1D84B5] hover:text-[#1D84B5] hover:shadow-lg">
+              Contact
+            </button>
+            <a href={`mailto:${COMPANY_EMAIL}`} className="rounded-full border border-[#1D84B5] bg-[#1D84B5] px-5 py-3 text-sm font-semibold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-[#176f98] hover:shadow-lg">
+              Email
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
   </div>;
 }

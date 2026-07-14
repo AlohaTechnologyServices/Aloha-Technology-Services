@@ -407,119 +407,55 @@ export default function TechnicalSolutionsCompanyWebsite() {
   const activeService = useMemo(() => services.find((service) => service.id === activePage), [activePage]);
   const openPage = (page) => { setActivePage(page); setMobileOpen(false); setServicesOpen(false); window.scrollTo({ top: 0, behavior: "smooth" }); };
   return <div className="min-h-screen bg-white text-slate-900">
-    <header className="border-b border-slate-200 bg-white">
-      <button
-        onClick={() => openPage("home")}
-        className="block w-full overflow-hidden bg-white"
-        aria-label="Return to the Aloha Technology Services LLC homepage"
-      >
-        <img
-          src="/images/aloha-technology-services-header-banner.png"
-          alt="Aloha Technology Services LLC"
-          className="block aspect-[6/1] w-full object-cover object-center"
-          loading="eager"
-          fetchPriority="high"
-          decoding="async"
-        />
-      </button>
+    <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 backdrop-blur">
+      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-5 px-4 sm:px-6 lg:px-8">
+        <button
+          onClick={() => openPage("home")}
+          className="block min-w-0 flex-1 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:shadow-md lg:max-w-[690px]"
+          aria-label="Return to the Aloha Technology Services LLC homepage"
+        >
+          <img
+            src="/images/aloha-technology-services-header-banner.png"
+            alt="Aloha Technology Services LLC — Website, Automation, AI, Technology, Property and Operations"
+            className="block h-16 w-full object-fill sm:h-[68px]"
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
+          />
+        </button>
 
-      <div className="border-t border-slate-200/80 bg-white/95 shadow-sm backdrop-blur">
-        <div className="mx-auto flex min-h-16 max-w-7xl items-center justify-end gap-3 px-4 py-3 sm:px-6 lg:px-8">
-          <nav className="hidden items-center gap-2 lg:flex">
-            <button
-              onClick={() => openPage("home")}
-              className={`rounded-full border px-5 py-2.5 text-sm font-semibold shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ${
-                activePage === "home"
-                  ? "border-[#17324D] bg-[#17324D] text-white"
-                  : "border-slate-200 bg-white text-[#17324D] hover:border-[#1D84B5] hover:text-[#1D84B5]"
-              }`}
-            >
-              Home
-            </button>
-
-            <div className="relative">
-              <button
-                onClick={() => setServicesOpen((value) => !value)}
-                className={`flex items-center gap-2 rounded-full border px-5 py-2.5 text-sm font-semibold shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ${
-                  activeService
-                    ? "border-[#17324D] bg-[#17324D] text-white"
-                    : "border-slate-200 bg-white text-[#17324D] hover:border-[#1D84B5] hover:text-[#1D84B5]"
-                }`}
-              >
-                Services <ChevronDown className="h-4 w-4" />
-              </button>
-
-              {servicesOpen && (
-                <div className="absolute right-0 top-14 z-50 w-[900px] max-w-[calc(100vw-2rem)] rounded-3xl border border-slate-200 bg-white p-6 shadow-2xl">
-                  <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-                    {serviceGroups.map((group) => (
-                      <div key={group.id}>
-                        <p className="mb-3 font-semibold text-[#17324D]">{group.label}</p>
-                        <div className="space-y-1">
-                          {group.serviceIds.map((id) => {
-                            const service = services.find((item) => item.id === id);
-                            if (!service) return null;
-                            return (
-                              <button
-                                key={service.id}
-                                onClick={() => openPage(service.id)}
-                                className="block w-full rounded-xl px-3 py-2 text-left text-sm text-slate-600 transition hover:bg-[#F2FBFB] hover:text-[#17324D]"
-                              >
-                                {service.shortTitle}
-                              </button>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <button
-              onClick={() => openPage("about")}
-              className={`rounded-full border px-5 py-2.5 text-sm font-semibold shadow-sm transition hover:-translate-y-0.5 hover:shadow-md ${
-                activePage === "about"
-                  ? "border-[#17324D] bg-[#17324D] text-white"
-                  : "border-slate-200 bg-white text-[#17324D] hover:border-[#1D84B5] hover:text-[#1D84B5]"
-              }`}
-            >
-              About
-            </button>
-
-            <Button size="sm" variant="accent" className="rounded-full px-5 py-2.5 shadow-md" onClick={() => openPage("contact")}>
-              Request Consultation
-            </Button>
-          </nav>
-
+        <nav className="hidden shrink-0 items-center gap-2 lg:flex">
           <button
-            className="rounded-full border border-slate-200 bg-white p-3 text-[#17324D] shadow-md lg:hidden"
-            onClick={() => setMobileOpen((value) => !value)}
-            aria-label="Toggle menu"
+            onClick={() => openPage("home")}
+            className={`rounded-2xl px-4 py-2 text-sm font-medium transition ${activePage === "home" ? "bg-[#17324D] text-white shadow-sm" : "text-slate-600 hover:bg-slate-100 hover:text-[#17324D]"}`}
           >
-            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            Home
           </button>
-        </div>
 
-        {mobileOpen && (
-          <div className="border-t border-slate-200 bg-white lg:hidden">
-            <div className="mx-auto max-w-7xl space-y-3 px-4 py-5 sm:px-6">
-              <button onClick={() => openPage("home")} className="block w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-left font-semibold text-[#17324D] shadow-sm">
-                Home
-              </button>
-              <details className="rounded-2xl border border-slate-200 bg-white shadow-sm">
-                <summary className="cursor-pointer px-4 py-3 font-semibold text-[#17324D]">Services</summary>
-                <div className="space-y-4 px-4 pb-4">
+          <div className="relative">
+            <button
+              onClick={() => setServicesOpen((value) => !value)}
+              className={`flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium transition ${activeService ? "bg-[#17324D] text-white shadow-sm" : "text-slate-600 hover:bg-slate-100 hover:text-[#17324D]"}`}
+            >
+              Services <ChevronDown className="h-4 w-4" />
+            </button>
+
+            {servicesOpen && (
+              <div className="absolute right-0 top-12 w-[900px] max-w-[calc(100vw-2rem)] rounded-3xl border border-slate-200 bg-white p-6 shadow-2xl">
+                <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
                   {serviceGroups.map((group) => (
                     <div key={group.id}>
-                      <p className="mb-2 text-sm font-semibold text-[#17324D]">{group.label}</p>
+                      <p className="mb-3 font-semibold text-[#17324D]">{group.label}</p>
                       <div className="space-y-1">
                         {group.serviceIds.map((id) => {
                           const service = services.find((item) => item.id === id);
                           if (!service) return null;
                           return (
-                            <button key={service.id} onClick={() => openPage(service.id)} className="block w-full rounded-xl px-3 py-2 text-left text-sm text-slate-600 hover:bg-[#F2FBFB]">
+                            <button
+                              key={service.id}
+                              onClick={() => openPage(service.id)}
+                              className="block w-full rounded-xl px-3 py-2 text-left text-sm text-slate-600 transition hover:bg-[#F2FBFB] hover:text-[#17324D]"
+                            >
                               {service.shortTitle}
                             </button>
                           );
@@ -528,17 +464,71 @@ export default function TechnicalSolutionsCompanyWebsite() {
                     </div>
                   ))}
                 </div>
-              </details>
-              <button onClick={() => openPage("about")} className="block w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-left font-semibold text-[#17324D] shadow-sm">
-                About
-              </button>
-              <button onClick={() => openPage("contact")} className="block w-full rounded-2xl bg-[#1D84B5] px-4 py-3 text-left font-semibold text-white shadow-md">
-                Request Consultation
-              </button>
-            </div>
+              </div>
+            )}
           </div>
-        )}
+
+          <button
+            onClick={() => openPage("about")}
+            className={`rounded-2xl px-4 py-2 text-sm font-medium transition ${activePage === "about" ? "bg-[#17324D] text-white shadow-sm" : "text-slate-600 hover:bg-slate-100 hover:text-[#17324D]"}`}
+          >
+            About
+          </button>
+
+          <Button size="sm" variant="accent" onClick={() => openPage("contact")}>
+            Request Consultation
+          </Button>
+        </nav>
+
+        <button
+          className="rounded-xl border border-slate-200 p-2 lg:hidden"
+          onClick={() => setMobileOpen((value) => !value)}
+          aria-label="Toggle menu"
+        >
+          {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
       </div>
+
+      {mobileOpen && (
+        <div className="border-t border-slate-200 bg-white lg:hidden">
+          <div className="mx-auto max-w-7xl space-y-3 px-4 py-5 sm:px-6">
+            <button onClick={() => openPage("home")} className="block w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-left font-semibold text-[#17324D] shadow-sm">
+              Home
+            </button>
+            <details className="rounded-2xl border border-slate-200 bg-white shadow-sm">
+              <summary className="cursor-pointer px-4 py-3 font-semibold text-[#17324D]">Services</summary>
+              <div className="space-y-4 px-4 pb-4">
+                {serviceGroups.map((group) => (
+                  <div key={group.id}>
+                    <p className="mb-2 text-sm font-semibold text-[#17324D]">{group.label}</p>
+                    <div className="space-y-1">
+                      {group.serviceIds.map((id) => {
+                        const service = services.find((item) => item.id === id);
+                        if (!service) return null;
+                        return (
+                          <button
+                            key={service.id}
+                            onClick={() => openPage(service.id)}
+                            className="block w-full rounded-xl px-3 py-2 text-left text-sm text-slate-600 hover:bg-slate-50"
+                          >
+                            {service.shortTitle}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </details>
+            <button onClick={() => openPage("about")} className="block w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-left font-semibold text-[#17324D] shadow-sm">
+              About
+            </button>
+            <button onClick={() => openPage("contact")} className="block w-full rounded-2xl bg-[#1D84B5] px-4 py-3 text-left font-semibold text-white shadow-md">
+              Request Consultation
+            </button>
+          </div>
+        </div>
+      )}
     </header>
     <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6 md:py-16 lg:px-8">{activePage === "home" && <HomePage onOpen={openPage} />}{activeService && <ServicePage service={activeService} onOpen={openPage} />}{activePage === "about" && <AboutPage onOpen={openPage} />}{activePage === "contact" && <ContactPage />}</main>
     <footer className="mt-20 border-t border-slate-200 bg-slate-50">

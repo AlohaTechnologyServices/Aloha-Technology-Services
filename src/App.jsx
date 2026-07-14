@@ -290,9 +290,20 @@ function HomePage({ onOpen }) {
             {["Locally owned on Hawaiʻi Island", "Residential and commercial support", "Written proposals before work begins"].map((item) => <div key={item} className="rounded-2xl border border-white/15 bg-white/10 px-4 py-4 text-sm font-medium text-slate-100">{item}</div>)}
           </div>
         </div>
-        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="rounded-[2rem] border border-white/15 bg-white/10 p-6 backdrop-blur">
-          <p className="mb-5 text-sm font-semibold uppercase tracking-[0.2em] text-[#84DCCF]">How we can help</p>
-          <div className="grid gap-4">{serviceGroups.map((group) => { const Icon = group.icon; return <div key={group.id} className="flex items-start gap-4 rounded-2xl border border-white/10 bg-white/10 p-4"><div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white text-[#17324D]"><Icon className="h-5 w-5" /></div><div><p className="font-semibold text-white">{group.label}</p><p className="mt-1 text-sm leading-6 text-slate-300">{group.description}</p></div></div>; })}</div>
+        <motion.div
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="overflow-hidden rounded-[2rem] border border-white/20 bg-white shadow-2xl"
+        >
+          <img
+            src="/images/aloha-technology-services-cover.png"
+            alt="Aloha Technology Services LLC Hawaiian-inspired technology cover featuring digital, property, and operations services"
+            className="block h-auto w-full"
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
+          />
         </motion.div>
       </div>
     </section>

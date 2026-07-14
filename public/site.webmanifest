@@ -1,0 +1,10 @@
+{
+  "name": "Aloha Technology Solutions",
+  "short_name": "ATS Hawaii",
+  "description": "Technology, website, automation, AI, property, and business support for Hawaiʻi Island.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#17324D",
+  "lang": "en-US"
+}

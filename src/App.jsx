@@ -25,13 +25,81 @@ function Button({ children, onClick, variant = "primary", size = "md", className
   return <button onClick={onClick} className={`${base} ${variants[variant] || variants.primary} ${sizes[size] || sizes.md} ${className}`.trim()} {...props}>{children}</button>;
 }
 
-function Card({ children, className = "" }) {
-  return <div className={`rounded-3xl border border-slate-200/80 bg-white shadow-[0_14px_45px_rgba(23,50,77,0.07)] ${className}`.trim()}>{children}</div>;
+const CARD_TONES = {
+  light: {
+    background: "#FFFFFF",
+    title: "#17324D",
+    text: "#475569",
+    border: "rgba(203, 213, 225, 0.8)",
+  },
+  dark: {
+    background: "#17324D",
+    title: "#FFFFFF",
+    text: "#CBD5E1",
+    border: "rgba(23, 50, 77, 1)",
+  },
+  soft: {
+    background: "#F2FBFB",
+    title: "#17324D",
+    text: "#475569",
+    border: "#CBE8E7",
+  },
+  sand: {
+    background: "#F7F3EB",
+    title: "#17324D",
+    text: "#475569",
+    border: "#E9E0D2",
+  },
+};
+
+function Card({ children, className = "", tone = "light" }) {
+  const theme = CARD_TONES[tone] || CARD_TONES.light;
+
+  return (
+    <div
+      style={{
+        backgroundColor: theme.background,
+        color: theme.text,
+        borderColor: theme.border,
+        "--card-title-color": theme.title,
+        "--card-text-color": theme.text,
+      }}
+      className={`rounded-3xl border shadow-[0_14px_45px_rgba(23,50,77,0.07)] ${className}`.trim()}
+    >
+      {children}
+    </div>
+  );
 }
-function CardHeader({ children, className = "" }) { return <div className={`p-6 md:p-7 ${className}`.trim()}>{children}</div>; }
-function CardContent({ children, className = "" }) { return <div className={`px-6 pb-6 md:px-7 md:pb-7 ${className}`.trim()}>{children}</div>; }
-function CardTitle({ children, className = "" }) { return <h3 className={`font-semibold text-[#17324D] ${className}`.trim()}>{children}</h3>; }
-function CardDescription({ children, className = "" }) { return <p className={`text-slate-600 ${className}`.trim()}>{children}</p>; }
+
+function CardHeader({ children, className = "" }) {
+  return <div className={`p-6 md:p-7 ${className}`.trim()}>{children}</div>;
+}
+
+function CardContent({ children, className = "" }) {
+  return <div className={`px-6 pb-6 md:px-7 md:pb-7 ${className}`.trim()}>{children}</div>;
+}
+
+function CardTitle({ children, className = "" }) {
+  return (
+    <h3
+      style={{ color: "var(--card-title-color, #17324D)" }}
+      className={`font-semibold ${className}`.trim()}
+    >
+      {children}
+    </h3>
+  );
+}
+
+function CardDescription({ children, className = "" }) {
+  return (
+    <p
+      style={{ color: "var(--card-text-color, #475569)" }}
+      className={className.trim()}
+    >
+      {children}
+    </p>
+  );
+}
 
 const services = [
   {
@@ -266,7 +334,7 @@ function HomePage({ onOpen }) {
 
     <section className="grid gap-8 lg:grid-cols-2">
       <Card><CardHeader><CardTitle className="text-2xl">Why choose Aloha Technology Solutions?</CardTitle><CardDescription className="mt-2 leading-7">We combine technical capability, operational experience, local vendor coordination, and practical property support.</CardDescription></CardHeader><CardContent className="grid gap-4 text-slate-700">{["Locally owned and operated on Hawaiʻi Island", "Support for businesses, homeowners, vacation rentals, and property managers", "Clear communication and documented project proposals", "Manufacturer-aware support when product-specific guidance applies", "Coordination with qualified local vendors for specialized work", "Solutions designed around long-term usability and value"].map((item) => <div key={item} className="flex gap-3"><CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#3B7A57]" /><span>{item}</span></div>)}</CardContent></Card>
-      <Card className="bg-[#17324D] text-white"><CardHeader><CardTitle className="text-2xl text-white">Project-based pricing</CardTitle><CardDescription className="mt-2 leading-7 text-slate-300">Every property, business, and project has different requirements.</CardDescription></CardHeader><CardContent className="space-y-5 text-slate-200"><p className="leading-7">Pricing is determined on a case-by-case basis after reviewing the requested work, project scope, required materials, location, access, and anticipated time.</p><p className="leading-7">When appropriate, clients receive a written proposal outlining scope, estimated labor, materials or equipment, third-party costs, scheduling considerations, and proposed pricing.</p><Button variant="light" onClick={() => onOpen("contact")}>Request a Project Review</Button></CardContent></Card>
+      <Card tone="dark"><CardHeader><CardTitle className="text-2xl">Project-based pricing</CardTitle><CardDescription className="mt-2 leading-7">Every property, business, and project has different requirements.</CardDescription></CardHeader><CardContent className="space-y-5"><p className="leading-7">Pricing is determined on a case-by-case basis after reviewing the requested work, project scope, required materials, location, access, and anticipated time.</p><p className="leading-7">When appropriate, clients receive a written proposal outlining scope, estimated labor, materials or equipment, third-party costs, scheduling considerations, and proposed pricing.</p><Button variant="light" onClick={() => onOpen("contact")}>Request a Project Review</Button></CardContent></Card>
     </section>
 
     <section className="rounded-[2rem] bg-gradient-to-r from-[#1D84B5] to-[#3FA7A3] px-6 py-12 text-white md:px-10"><div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between"><div className="max-w-3xl"><p className="text-sm font-semibold uppercase tracking-[0.22em] text-white/75">Start a conversation</p><h2 className="mt-3 text-3xl font-bold tracking-tight md:text-4xl">Have a technology, property, or operational challenge?</h2><p className="mt-4 leading-7 text-white/90">Tell us what you are trying to accomplish. We will help you identify the right next step and prepare a clear proposal when appropriate.</p></div><Button variant="light" size="lg" onClick={() => onOpen("contact")}>Request a Consultation <ArrowRight className="h-4 w-4" /></Button></div></section>
@@ -301,7 +369,7 @@ function ContactPage() {
       <div><label htmlFor="message" className="mb-2 block text-sm font-semibold text-slate-700">Project details</label><textarea id="message" name="message" rows="7" required placeholder="Describe the issue, project, property, equipment, goals, and any timing considerations." className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-[#1D84B5] focus:ring-2 focus:ring-[#1D84B5]/15" /><ValidationError prefix="Message" field="message" errors={state.errors} /></div>
       <input type="text" name="_gotcha" className="hidden" tabIndex="-1" autoComplete="off" /><Button type="submit" size="lg" disabled={state.submitting}>{state.submitting ? "Sending..." : "Request a Consultation"}</Button>
     </form>}</CardContent></Card>
-    <div className="space-y-6"><Card className="bg-[#17324D] text-white"><CardHeader><CardTitle className="text-2xl text-white">Contact information</CardTitle><CardDescription className="mt-2 leading-7 text-slate-300">Serving businesses, homeowners, vacation rentals, property managers, and personal clients across Hawaiʻi Island.</CardDescription></CardHeader><CardContent className="space-y-5 text-slate-200"><div className="flex gap-3"><Mail className="mt-0.5 h-5 w-5 text-[#84DCCF]" /><a href={`mailto:${COMPANY_EMAIL}`} className="hover:text-white">{COMPANY_EMAIL}</a></div>{COMPANY_PHONE && <div className="flex gap-3"><Phone className="mt-0.5 h-5 w-5 text-[#84DCCF]" /><a href={`tel:${COMPANY_PHONE}`} className="hover:text-white">{COMPANY_PHONE}</a></div>}<div className="flex gap-3"><MapPin className="mt-0.5 h-5 w-5 text-[#84DCCF]" /><span>Locally owned and operated on the Big Island of Hawaiʻi</span></div></CardContent></Card><Card><CardHeader><CardTitle className="text-xl">What happens next?</CardTitle></CardHeader><CardContent className="space-y-4 text-slate-600">{["We review your project details.", "We follow up with questions or schedule a site review when needed.", "We determine the appropriate service, vendor, or project approach.", "A written proposal is provided when applicable."].map((item, index) => <div key={item} className="flex gap-4"><div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#EAF6F7] text-sm font-semibold text-[#17324D]">{index + 1}</div><p className="pt-1 leading-6">{item}</p></div>)}</CardContent></Card></div>
+    <div className="space-y-6"><Card tone="dark"><CardHeader><CardTitle className="text-2xl">Contact information</CardTitle><CardDescription className="mt-2 leading-7">Serving businesses, homeowners, vacation rentals, property managers, and personal clients across Hawaiʻi Island.</CardDescription></CardHeader><CardContent className="space-y-5"><div className="flex gap-3"><Mail className="mt-0.5 h-5 w-5 text-[#84DCCF]" /><a href={`mailto:${COMPANY_EMAIL}`} className="hover:text-white">{COMPANY_EMAIL}</a></div>{COMPANY_PHONE && <div className="flex gap-3"><Phone className="mt-0.5 h-5 w-5 text-[#84DCCF]" /><a href={`tel:${COMPANY_PHONE}`} className="hover:text-white">{COMPANY_PHONE}</a></div>}<div className="flex gap-3"><MapPin className="mt-0.5 h-5 w-5 text-[#84DCCF]" /><span>Locally owned and operated on the Big Island of Hawaiʻi</span></div></CardContent></Card><Card><CardHeader><CardTitle className="text-xl">What happens next?</CardTitle></CardHeader><CardContent className="space-y-4 text-slate-600">{["We review your project details.", "We follow up with questions or schedule a site review when needed.", "We determine the appropriate service, vendor, or project approach.", "A written proposal is provided when applicable."].map((item, index) => <div key={item} className="flex gap-4"><div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#EAF6F7] text-sm font-semibold text-[#17324D]">{index + 1}</div><p className="pt-1 leading-6">{item}</p></div>)}</CardContent></Card></div>
   </div></div>;
 }
 

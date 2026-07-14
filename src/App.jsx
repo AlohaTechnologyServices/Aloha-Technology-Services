@@ -411,13 +411,13 @@ export default function TechnicalSolutionsCompanyWebsite() {
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-5 px-4 sm:px-6 lg:px-8">
         <button
           onClick={() => openPage("home")}
-          className="block min-w-0 flex-1 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:shadow-md lg:max-w-[690px]"
+          className="block min-w-0 flex-1 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:shadow-md lg:max-w-[620px]"
           aria-label="Return to the Aloha Technology Services LLC homepage"
         >
           <img
             src="/images/aloha-technology-services-header-banner.png"
             alt="Aloha Technology Services LLC — Website, Automation, AI, Technology, Property and Operations"
-            className="block h-16 w-full object-fill sm:h-[68px]"
+            className="block h-16 w-full object-contain object-left sm:h-[68px]"
             loading="eager"
             fetchPriority="high"
             decoding="async"

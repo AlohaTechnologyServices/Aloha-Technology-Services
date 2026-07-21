@@ -1,5 +1,5 @@
 import { useForm, ValidationError } from "@formspree/react";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
   ArrowRight, BarChart3, Bot, Building2, CheckCircle2, ChevronDown, Code2,
@@ -11,6 +11,109 @@ const COMPANY_NAME = "Aloha Technology Services LLC";
 const COMPANY_EMAIL = "hawaiiats@gmail.com";
 const COMPANY_PHONE = "";
 const FORM_ID = "mnjlpyya";
+
+const SITE_URL = "https://atshawaii.vercel.app";
+
+const PAGE_PATHS = {
+  home: "/",
+  about: "/about",
+  contact: "/contact",
+  "application-development": "/services/application-development",
+  "technology-installation": "/services/technology-installation",
+  "training-support": "/services/training-support",
+  "website-development": "/services/website-development",
+  "automation-development": "/services/automation-development",
+  "ai-implementation": "/services/ai-implementation",
+  "workflow-optimization": "/services/workflow-optimization",
+  "business-insight": "/services/business-insight",
+  "vendor-coordination": "/services/vendor-coordination",
+  "handyman-services": "/services/handyman-services",
+};
+
+const PATH_TO_PAGE = Object.fromEntries(
+  Object.entries(PAGE_PATHS).map(([page, path]) => [path, page])
+);
+
+const PAGE_SEO = {
+  home: {
+    title: "Aloha Technology Services LLC | Technology, AI, Websites & Property Services",
+    description:
+      "Locally owned Hawaiʻi Island company providing website development, automation, AI implementation, technology installation, workflow improvement, vendor coordination, and handyman services.",
+  },
+  about: {
+    title: "About Aloha Technology Services LLC | Hawaiʻi Island",
+    description:
+      "Learn about Aloha Technology Services LLC, a locally owned Hawaiʻi Island company providing practical technology, digital, property, and operational support.",
+  },
+  contact: {
+    title: "Contact Aloha Technology Services LLC | Request a Consultation",
+    description:
+      "Contact Aloha Technology Services LLC to discuss a website, automation, AI, technology, business, vendor coordination, or handyman project on Hawaiʻi Island.",
+  },
+  "application-development": {
+    title: "Application Development & Implementation | Aloha Technology Services LLC",
+    description:
+      "Custom applications, internal dashboards, third-party software implementation, and process modernization for Hawaiʻi Island businesses.",
+  },
+  "technology-installation": {
+    title: "Technology Installation & Refresh Services | Hawaiʻi Island",
+    description:
+      "TV installation, mesh Wi-Fi, connected devices, office equipment, internet-provider coordination, and technology refresh services for homes and businesses.",
+  },
+  "training-support": {
+    title: "Training Videos & Technology Support | Hawaiʻi Island",
+    description:
+      "Practical employee training videos, homeowner instructions, system walkthroughs, documentation, and technology support resources.",
+  },
+  "website-development": {
+    title: "Website Development for Hawaiʻi Island Businesses",
+    description:
+      "Professional responsive website development, website redesigns, landing pages, integrations, and lead-generation forms for businesses and personal projects.",
+  },
+  "automation-development": {
+    title: "Business & Personal Automation Development | Hawaiʻi Island",
+    description:
+      "Custom automation for repetitive tasks, customer follow-up, reporting, approvals, reminders, data handling, and personal productivity.",
+  },
+  "ai-implementation": {
+    title: "Practical AI Implementation for Hawaiʻi Businesses",
+    description:
+      "Responsible AI implementation for customer support, document processing, reporting, internal knowledge, administration, and cost reduction.",
+  },
+  "workflow-optimization": {
+    title: "Workflow Optimization & SOP Development | Hawaiʻi Island",
+    description:
+      "Business workflow analysis, process redesign, SOP development, improved handoffs, and operational efficiency consulting.",
+  },
+  "business-insight": {
+    title: "Business Insight, Reporting & Operational Analysis | Hawaiʻi Island",
+    description:
+      "Actionable business reporting, operational analysis, dashboards, trend reviews, and decision support for Hawaiʻi Island organizations.",
+  },
+  "vendor-coordination": {
+    title: "Vendor Coordination & Project Assistance | Hawaiʻi Island",
+    description:
+      "Local vendor identification, estimate coordination, scheduling, communication, project updates, and specialized trade referrals.",
+  },
+  "handyman-services": {
+    title: "Professional Handyman Services | Hawaiʻi Island",
+    description:
+      "Minor repairs, installations, mounting, assembly, adjustments, property punch-list work, and manufacturer-guided support on Hawaiʻi Island.",
+  },
+};
+
+function normalizePath(pathname) {
+  if (!pathname || pathname === "/") return "/";
+  return pathname.replace(/\/+$/, "");
+}
+
+function pageFromPath(pathname) {
+  return PATH_TO_PAGE[normalizePath(pathname)] || "home";
+}
+
+function pathForPage(page) {
+  return PAGE_PATHS[page] || "/";
+}
 
 function Button({ children, onClick, variant = "primary", size = "md", className = "", ...props }) {
   const base = "inline-flex items-center justify-center gap-2 rounded-2xl font-semibold transition duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60";
@@ -401,11 +504,66 @@ function ContactPage() {
 }
 
 export default function TechnicalSolutionsCompanyWebsite() {
-  const [activePage, setActivePage] = useState("home");
+  const [activePage, setActivePage] = useState(() => pageFromPath(window.location.pathname));
   const [mobileOpen, setMobileOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const activeService = useMemo(() => services.find((service) => service.id === activePage), [activePage]);
-  const openPage = (page) => { setActivePage(page); setMobileOpen(false); setServicesOpen(false); window.scrollTo({ top: 0, behavior: "smooth" }); };
+
+  useEffect(() => {
+    const handlePopState = () => {
+      setActivePage(pageFromPath(window.location.pathname));
+      setMobileOpen(false);
+      setServicesOpen(false);
+      window.scrollTo({ top: 0, behavior: "auto" });
+    };
+
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
+
+  useEffect(() => {
+    const seo = PAGE_SEO[activePage] || PAGE_SEO.home;
+    const canonicalUrl = `${SITE_URL}${pathForPage(activePage)}`;
+
+    document.title = seo.title;
+
+    const setMeta = (selector, attribute, value, content) => {
+      let element = document.head.querySelector(selector);
+      if (!element) {
+        element = document.createElement("meta");
+        element.setAttribute(attribute, value);
+        document.head.appendChild(element);
+      }
+      element.setAttribute("content", content);
+    };
+
+    setMeta('meta[name="description"]', "name", "description", seo.description);
+    setMeta('meta[name="robots"]', "name", "robots", "index, follow, max-image-preview:large");
+    setMeta('meta[property="og:title"]', "property", "og:title", seo.title);
+    setMeta('meta[property="og:description"]', "property", "og:description", seo.description);
+    setMeta('meta[property="og:url"]', "property", "og:url", canonicalUrl);
+    setMeta('meta[name="twitter:title"]', "name", "twitter:title", seo.title);
+    setMeta('meta[name="twitter:description"]', "name", "twitter:description", seo.description);
+
+    let canonical = document.head.querySelector('link[rel="canonical"]');
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.setAttribute("rel", "canonical");
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute("href", canonicalUrl);
+  }, [activePage]);
+
+  const openPage = (page) => {
+    const nextPath = pathForPage(page);
+    if (normalizePath(window.location.pathname) !== nextPath) {
+      window.history.pushState({ page }, "", nextPath);
+    }
+    setActivePage(page);
+    setMobileOpen(false);
+    setServicesOpen(false);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
   return <div className="min-h-screen bg-white text-slate-900">
     <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 backdrop-blur">
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-5 px-4 sm:px-6 lg:px-8">
@@ -530,7 +688,19 @@ export default function TechnicalSolutionsCompanyWebsite() {
         </div>
       )}
     </header>
-    <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6 md:py-16 lg:px-8">{activePage === "home" && <HomePage onOpen={openPage} />}{activeService && <ServicePage service={activeService} onOpen={openPage} />}{activePage === "about" && <AboutPage onOpen={openPage} />}{activePage === "contact" && <ContactPage />}</main>
+    <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6 md:py-16 lg:px-8">
+      <nav aria-label="All website pages" className="sr-only">
+        <a href="/">Home</a>
+        <a href="/about">About Aloha Technology Services LLC</a>
+        <a href="/contact">Contact Aloha Technology Services LLC</a>
+        {services.map((service) => (
+          <a key={service.id} href={pathForPage(service.id)}>
+            {service.title}
+          </a>
+        ))}
+      </nav>
+      {activePage === "home" && <HomePage onOpen={openPage} />}{activeService && <ServicePage service={activeService} onOpen={openPage} />}{activePage === "about" && <AboutPage onOpen={openPage} />}{activePage === "contact" && <ContactPage />}
+    </main>
     <footer className="mt-20 border-t border-slate-200 bg-slate-50">
       <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
         <button

@@ -1,4 +1,5 @@
 import { useForm, ValidationError } from "@formspree/react";
+import AlohaAssistant from "./AlohaAssistant";
 import React, { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
@@ -783,5 +784,6 @@ export default function TechnicalSolutionsCompanyWebsite() {
         </div>
       </div>
     </footer>
+    <AlohaAssistant onNavigate={openPage} />
   </div>;
 }

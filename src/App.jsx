@@ -637,12 +637,12 @@ function AboutPage({ onOpen }) {
     },
     {
       icon: Home,
-      title: "Water Care Solutions irrigation",
-      text: "As an Irrigation Technician with Water Care Solutions, Koa gained hands-on experience installing, maintaining, and troubleshooting irrigation systems while also supporting landscaping, grounds maintenance, and the consistent care required to keep outdoor areas functional and presentable.",
+      title: "Irrigation Technician",
+      text: "As an Irrigation Technician, Koa gained hands-on experience installing, maintaining, and troubleshooting irrigation systems while also supporting landscaping, grounds maintenance, and the consistent care required to keep outdoor areas functional and presentable.",
     },
     {
       icon: Hammer,
-      title: "Anderson Flooring Hawaii, LLC",
+      title: "Flooring Installer",
       text: "His flooring experience included installation support, surface and jobsite preparation, material handling, detailed finish work, and attention to the sequencing and quality standards that affect a completed interior space.",
     },
     {
@@ -743,7 +743,7 @@ function AboutPage({ onOpen }) {
         <CardHeader><CardTitle className="text-3xl">From Waimea to a career built on practical responsibility</CardTitle></CardHeader>
         <CardContent className="space-y-5 text-base leading-8 text-slate-600">
           <p>Koa grew up in Waimea on the Big Island and graduated from Parker School. He later earned a Bachelor’s Degree in Physics from the University of Hawaiʻi at Mānoa before returning home to build his career and remain close to family.</p>
-          <p>Before and alongside his operations career, Koa developed a practical foundation through apprentice-level and supervised electrical work, irrigation work with Water Care Solutions, and flooring work with Anderson Flooring Hawaii, LLC. As an Irrigation Technician, his responsibilities included installing, maintaining, and troubleshooting irrigation systems while supporting landscaping and grounds care. His broader hands-on experience also included assisting with electrical installation, wiring, and troubleshooting, as well as flooring installation support, surface preparation, material handling, and detailed finish work.</p>
+          <p>Before and alongside his operations career, Koa developed a practical foundation through apprentice-level and supervised electrical work, irrigation work, and flooring work. As an Irrigation Technician, his responsibilities included installing, maintaining, and troubleshooting irrigation systems while supporting landscaping and grounds care. His broader hands-on experience also included assisting with electrical installation, wiring, and troubleshooting, as well as flooring installation support, surface preparation, material handling, and detailed finish work.</p>
           <p>Those experiences strengthened his understanding of jobsite conditions, work sequencing, safety, workmanship, preventive care, and the importance of recognizing when a task requires a licensed trade professional. His career later expanded into luxury residential and resort operations, where success depended on careful inspections, reliable communication, maintenance planning, vendor coordination, documentation, budget awareness, service recovery, and consistent follow-through.</p>
           <p>Across those roles, he supported more than 50 high-value residences, worked with over 60 local vendors and service providers, and helped coordinate thousands of guest arrivals and departures. He also developed inspection standards, training materials, damage-tracking processes, and operating procedures used by teams supporting complex properties.</p>
           <p>That combination of analytical training and field experience led to the creation of Aloha Technology Services LLC in 2024: a locally owned company focused on making technology, property support, and business operations more practical and easier to manage.</p>

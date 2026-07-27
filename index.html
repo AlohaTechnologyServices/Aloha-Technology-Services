@@ -114,6 +114,20 @@
         background: #ffffff;
       }
       .seo-shell-card h2 { margin-top: 0; }
+      .seo-shell-founder {
+        display: grid;
+        grid-template-columns: minmax(220px, 0.8fr) minmax(0, 1.2fr);
+        align-items: center;
+        gap: 28px;
+      }
+      .seo-shell-founder img {
+        display: block;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 5 / 4;
+        object-fit: cover;
+        border-radius: 18px;
+      }
       .seo-shell-services {
         columns: 2;
         padding-left: 22px;
@@ -128,6 +142,7 @@
         .seo-shell-header-inner { align-items: flex-start; flex-direction: column; padding: 12px 0; }
         .seo-shell-logo { width: 100%; }
         .seo-shell-grid { grid-template-columns: 1fr; }
+        .seo-shell-founder { grid-template-columns: 1fr; }
         .seo-shell-services { columns: 1; }
         .seo-shell-hero { padding: 32px 24px; }
       }
@@ -142,7 +157,18 @@
         "url": "https://atshawaii.vercel.app/",
         "email": "hawaiiats@gmail.com",
         "image": "https://atshawaii.vercel.app/images/aloha-technology-services-header-banner.png",
-        "description": "Locally owned Hawaiʻi Island company providing owner-directed property field services, residential home inspections, website development, automation, AI implementation, technology installation, workflow improvement, vendor coordination, and handyman services.",
+        "description": "Founded by Kenyon Koa Smith, Aloha Technology Services LLC combines college education, supervised electrical experience, irrigation and landscaping experience, flooring installation, luxury property operations, technology, inspections, process improvement, and local Hawaiʻi Island experience.",
+        "foundingDate": "2024",
+        "founder": {
+          "@type": "Person",
+          "name": "Kenyon Koa Smith",
+          "image": "https://atshawaii.vercel.app/images/kenyon-koa-smith-about.webp",
+          "url": "https://atshawaii.vercel.app/about",
+          "alumniOf": {
+            "@type": "CollegeOrUniversity",
+            "name": "University of Hawaiʻi at Mānoa"
+          }
+        },
         "areaServed": {
           "@type": "AdministrativeArea",
           "name": "Island of Hawaiʻi"
@@ -230,13 +256,27 @@
             </ul>
           </section>
 
-          <section class="seo-shell-card">
-            <h2>Locally owned on Hawaiʻi Island</h2>
-            <p>
-              We understand island logistics, residential and commercial technology needs,
-              vacation-rental operations, property access, and the importance of clear
-              communication throughout every project.
-            </p>
+          <section class="seo-shell-card seo-shell-founder">
+            <img
+              src="/images/kenyon-koa-smith-about.webp"
+              width="1000"
+              height="800"
+              alt="Kenyon “Koa” Smith, founder of Aloha Technology Services LLC"
+            />
+            <div>
+              <h2>Founded by Kenyon “Koa” Smith</h2>
+              <p>
+                Raised in Waimea, Koa graduated from Parker School and earned a Bachelor’s Degree
+                from the University of Hawaiʻi at Mānoa. His professional background includes
+                apprentice-level and supervised electrical installation, wiring, and troubleshooting;
+                work as an Irrigation Technician with Water Care Solutions, including irrigation-system
+                installation, maintenance, troubleshooting, landscaping support, and grounds care;
+                flooring installation, preparation, and finish work with Anderson Flooring
+                Hawaii, LLC; and luxury residential and resort operations supporting more than 50
+                high-value homes and coordination with over 60 local vendors.
+              </p>
+              <p><a href="/about"><strong>Learn more about Koa and ATS</strong></a></p>
+            </div>
           </section>
 
           <section class="seo-shell-card">

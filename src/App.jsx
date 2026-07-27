@@ -14,6 +14,8 @@ const COMPANY_PHONE = "";
 const FORM_ID = "mnjlpyya";
 
 const SITE_URL = "https://atshawaii.vercel.app";
+const DEFAULT_SOCIAL_IMAGE = "/images/aloha-technology-services-header-banner.png";
+const FOUNDER_PORTRAIT = "/images/kenyon-koa-smith-about.webp";
 
 const PAGE_PATHS = {
   home: "/",
@@ -44,9 +46,10 @@ const PAGE_SEO = {
       "Locally owned Hawaiʻi Island company providing website development, automation, AI implementation, technology installation, residential home inspections, owner-directed property field services, workflow improvement, vendor coordination, and handyman services.",
   },
   about: {
-    title: "About Aloha Technology Services LLC | Hawaiʻi Island",
+    title: "About Koa Smith | Aloha Technology Services LLC",
     description:
-      "Learn about Aloha Technology Services LLC, a locally owned Hawaiʻi Island company providing practical technology, digital, property, and operational support.",
+      "Meet Kenyon “Koa” Smith and learn how his college education, supervised electrical work, irrigation experience, flooring installation, luxury property operations, technology, and process improvement shape Aloha Technology Services LLC.",
+    image: FOUNDER_PORTRAIT,
   },
   contact: {
     title: "Contact Aloha Technology Services LLC | Request a Consultation",
@@ -224,6 +227,7 @@ const services = [
     hero: "Build the right tools and implement them with confidence.",
     overview: "We develop practical software and help businesses implement new applications with less disruption. Our focus is usability, adoption, and measurable operational value rather than unnecessary complexity.",
     examples: [
+      { title: "Custom Operations Dashboard", description: "Centralize work orders, project updates, owner requests, and performance reporting in one practical interface." },
       { title: "Third-Party Application Rollout", description: "Configure a new platform, document workflows, train users, and support a smooth transition into daily operations." },
       { title: "Spreadsheet Process Modernization", description: "Replace fragmented spreadsheets and manual approvals with a structured, trackable internal application." },
     ],
@@ -593,7 +597,186 @@ function ServicePage({ service, onOpen }) {
 }
 
 function AboutPage({ onOpen }) {
-  return <div className="space-y-16"><section className="rounded-[2rem] bg-[#F2FBFB] px-6 py-12 md:px-10"><SectionHeading eyebrow="About us" title="Local knowledge. Practical experience. Clear solutions." description="Aloha Technology Services LLC is locally owned and operated on Hawaiʻi Island. We support businesses, homeowners, vacation rentals, and property managers with websites, automation, AI implementation, technology, residential home inspections, owner-directed property field services, workflow improvement, vendor coordination, and practical property services." /></section><section className="grid gap-8 lg:grid-cols-2"><Card><CardHeader><CardTitle className="text-2xl">Our approach</CardTitle></CardHeader><CardContent className="space-y-4 leading-7 text-slate-600"><p>We start by understanding the actual problem, the people involved, and the desired outcome. From there, we recommend practical steps rather than forcing every client into the same package.</p><p>Some projects require a residential home inspection, hands-on installation, or handyman support. Others require a website, business automation, responsible AI implementation, software, process improvement, training, or coordination with a qualified local professional. Our role is to simplify the path forward.</p></CardContent></Card><Card><CardHeader><CardTitle className="text-2xl">Our mission</CardTitle></CardHeader><CardContent className="space-y-4 leading-7 text-slate-600"><p>Our mission is to simplify complex challenges and deliver practical, results-driven solutions that help clients operate with greater confidence.</p><p>We believe technology and property support should make daily life easier, improve communication, and create lasting value.</p></CardContent></Card></section><section className="rounded-[2rem] bg-[#17324D] px-8 py-10 text-white"><h2 className="text-3xl font-bold">Ready to discuss your project?</h2><p className="mt-4 max-w-3xl leading-8 text-slate-300">Share the details and we will help identify the right service, vendor, or next step.</p><Button variant="light" className="mt-6" onClick={() => onOpen("contact")}>Contact Aloha Technology Services LLC</Button></section></div>;
+  const experienceHighlights = [
+    {
+      icon: Building2,
+      value: "50+",
+      label: "Luxury residences supported",
+      text: "Experience supporting high-value homes across Hawaiʻi Island resort and residential communities.",
+    },
+    {
+      icon: Users,
+      value: "60+",
+      label: "Local vendor relationships",
+      text: "Coordination experience across construction, HVAC, appliances, restoration, locksmith, internet, alarm, and specialty services.",
+    },
+    {
+      icon: Home,
+      value: "Thousands",
+      label: "Guest transitions supported",
+      text: "Operational experience preparing residences, coordinating service, and protecting the owner and guest experience.",
+    },
+    {
+      icon: BarChart3,
+      value: "Bachelor’s Degree",
+      label: "Analytical foundation",
+      text: "A college education that supports structured problem-solving, systems thinking, data analysis, and practical implementation.",
+    },
+  ];
+
+  const professionalFoundations = [
+    {
+      icon: Building2,
+      title: "Luxury property operations",
+      text: "Koa’s professional background includes residential and resort operations, property readiness, inspections, preventative maintenance, repair coordination, owner communication, guest service, project support, and quality control.",
+    },
+    {
+      icon: Zap,
+      title: "Supervised electrical experience",
+      text: "His apprentice-level and supervised electrical background included assisting with installation, wiring, and troubleshooting while working within defined plans, safety practices, and qualified oversight. This experience is presented as practical background, not as an electrical contractor license.",
+    },
+    {
+      icon: Home,
+      title: "Water Care Solutions irrigation",
+      text: "As an Irrigation Technician with Water Care Solutions, Koa gained hands-on experience installing, maintaining, and troubleshooting irrigation systems while also supporting landscaping, grounds maintenance, and the consistent care required to keep outdoor areas functional and presentable.",
+    },
+    {
+      icon: Hammer,
+      title: "Anderson Flooring Hawaii, LLC",
+      text: "His flooring experience included installation support, surface and jobsite preparation, material handling, detailed finish work, and attention to the sequencing and quality standards that affect a completed interior space.",
+    },
+    {
+      icon: Workflow,
+      title: "Processes, SOPs, and training",
+      text: "He has created inspection procedures, readiness standards, damage-tracking systems, training resources, operational databases, and repeatable workflows designed to improve consistency and accountability.",
+    },
+    {
+      icon: Users,
+      title: "Vendor and project coordination",
+      text: "His experience includes reviewing proposals, comparing options, coordinating schedules, documenting progress, supporting invoice approval, and helping owners and teams work effectively with local service providers.",
+    },
+    {
+      icon: Laptop,
+      title: "Technology and business systems",
+      text: "His technical interests and operational experience support website development, application implementation, automation, responsible AI use, reporting, technology installation, training, and workflow improvement.",
+    },
+  ];
+
+  const serviceConnections = [
+    {
+      title: "Websites, applications, automation, and AI",
+      text: "College-level analytical training, systems thinking, hands-on technology work, and operational problem-solving provide the foundation for building practical digital tools rather than technology for technology’s sake.",
+    },
+    {
+      title: "Workflow optimization, reporting, and training",
+      text: "Years of documenting inspections, coordinating teams, building SOPs, tracking issues, and improving handoffs shape ATS solutions for clearer operations and better decision-making.",
+    },
+    {
+      title: "Technology installation and troubleshooting",
+      text: "Supervised electrical exposure, practical troubleshooting, connected-home experience, and coordination with internet and equipment providers support careful technology installations while reinforcing when licensed electrical or specialty work must be referred out.",
+    },
+    {
+      title: "Home inspections and property field services",
+      text: "Experience with property conditions, landscaping, irrigation, flooring, finish work, maintenance coordination, and detailed documentation supports broader awareness during inspections and clearly defined onsite field services.",
+    },
+    {
+      title: "Handyman work and vendor coordination",
+      text: "Hands-on trade exposure helps Koa assess visible conditions, communicate scope clearly, complete appropriate minor work, and recognize when a licensed contractor or specialized professional is required.",
+    },
+    {
+      title: "A practical standard for finished work",
+      text: "Flooring, landscape, irrigation, electrical-support, and luxury-property experience developed an appreciation for preparation, sequencing, cleanliness, visual quality, functionality, and dependable follow-through.",
+    },
+  ];
+
+  return <div className="space-y-16">
+    <section className="overflow-hidden rounded-[2rem] bg-[#17324D] px-6 py-12 text-white md:px-10 md:py-14">
+      <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
+        <div className="space-y-6">
+          <p className="text-sm font-semibold uppercase tracking-[0.22em] text-[#84DCCF]">About Aloha Technology Services LLC</p>
+          <h1 className="max-w-4xl text-4xl font-bold tracking-tight md:text-5xl">Built from local experience across technology, property operations, and service.</h1>
+          <p className="max-w-3xl text-lg leading-8 text-slate-300">Aloha Technology Services LLC was founded by Kenyon “Koa” Smith to bring together technical problem-solving, hands-on field experience, business operations, and a deep understanding of Hawaiʻi Island homes, vendors, and client expectations.</p>
+          <div className="flex flex-wrap gap-3">
+            <Button variant="light" onClick={() => onOpen("contact")}>Discuss Your Project <ArrowRight className="h-4 w-4" /></Button>
+            <Button variant="outline" className="border-white/40 bg-transparent text-white hover:border-white hover:bg-white hover:text-[#17324D]" onClick={() => onOpen("home")}>Explore ATS Services</Button>
+          </div>
+        </div>
+        <div className="overflow-hidden rounded-[2rem] border border-white/15 bg-white/10 shadow-2xl backdrop-blur-sm">
+          <div className="relative overflow-hidden bg-slate-900">
+            <img
+              src={FOUNDER_PORTRAIT}
+              alt="Kenyon “Koa” Smith, founder of Aloha Technology Services LLC"
+              width="1000"
+              height="800"
+              className="block aspect-[5/4] w-full object-cover"
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
+            />
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#17324D] via-[#17324D]/85 to-transparent px-6 pb-5 pt-16">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#84DCCF]">Founder</p>
+              <h2 className="mt-1 text-2xl font-bold">Kenyon “Koa” Smith</h2>
+            </div>
+          </div>
+          <div className="p-7">
+            <p className="leading-7 text-slate-300">Hawaiʻi Island operations professional, technical problem-solver, and owner of Aloha Technology Services LLC.</p>
+            <div className="mt-6 space-y-4 border-t border-white/15 pt-6 text-sm leading-6 text-slate-300">
+              <div className="flex gap-3"><MapPin className="mt-0.5 h-5 w-5 shrink-0 text-[#84DCCF]" /><span>Raised in Waimea and committed to serving Hawaiʻi Island communities.</span></div>
+              <div className="flex gap-3"><BarChart3 className="mt-0.5 h-5 w-5 shrink-0 text-[#84DCCF]" /><span>Bachelor’s Degree from the University of Hawaiʻi at Mānoa.</span></div>
+              <div className="flex gap-3"><Building2 className="mt-0.5 h-5 w-5 shrink-0 text-[#84DCCF]" /><span>Professional foundation in luxury residential, resort, property, and business operations.</span></div>
+              <div className="flex gap-3"><Hammer className="mt-0.5 h-5 w-5 shrink-0 text-[#84DCCF]" /><span>Hands-on background in supervised electrical work, irrigation systems, landscaping support, flooring installation, and finish work.</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section className="space-y-10">
+      <SectionHeading eyebrow="Professional background" title="Experience that directly supports the work ATS provides" description="The services offered by ATS are grounded in real operational responsibility, technical education, onsite problem-solving, documentation, vendor coordination, and client service." />
+      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {experienceHighlights.map(({ icon: Icon, value, label, text }) => <Card key={label} tone="soft"><CardContent className="p-6"><Icon className="h-7 w-7 text-[#1D84B5]" /><p className="mt-5 text-3xl font-bold tracking-tight text-[#17324D]">{value}</p><h3 className="mt-2 font-semibold text-[#17324D]">{label}</h3><p className="mt-3 text-sm leading-6 text-slate-600">{text}</p></CardContent></Card>)}
+      </div>
+    </section>
+
+    <section className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
+      <Card tone="sand">
+        <CardHeader><CardTitle className="text-3xl">From Waimea to a career built on practical responsibility</CardTitle></CardHeader>
+        <CardContent className="space-y-5 text-base leading-8 text-slate-600">
+          <p>Koa grew up in Waimea on the Big Island and graduated from Parker School. He later earned a Bachelor’s Degree from the University of Hawaiʻi at Mānoa before returning home to build his career and remain close to family.</p>
+          <p>Before and alongside his operations career, Koa developed a practical foundation through apprentice-level and supervised electrical work, irrigation work with Water Care Solutions, and flooring work with Anderson Flooring Hawaii, LLC. As an Irrigation Technician, his responsibilities included installing, maintaining, and troubleshooting irrigation systems while supporting landscaping and grounds care. His broader hands-on experience also included assisting with electrical installation, wiring, and troubleshooting, as well as flooring installation support, surface preparation, material handling, and detailed finish work.</p>
+          <p>Those experiences strengthened his understanding of jobsite conditions, work sequencing, safety, workmanship, preventive care, and the importance of recognizing when a task requires a licensed trade professional. His career later expanded into luxury residential and resort operations, where success depended on careful inspections, reliable communication, maintenance planning, vendor coordination, documentation, budget awareness, service recovery, and consistent follow-through.</p>
+          <p>Across those roles, he supported more than 50 high-value residences, worked with over 60 local vendors and service providers, and helped coordinate thousands of guest arrivals and departures. He also developed inspection standards, training materials, damage-tracking processes, and operating procedures used by teams supporting complex properties.</p>
+          <p>That combination of analytical training and field experience led to the creation of Aloha Technology Services LLC in 2024: a locally owned company focused on making technology, property support, and business operations more practical and easier to manage.</p>
+        </CardContent>
+      </Card>
+
+      <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+        {professionalFoundations.map(({ icon: Icon, title, text }) => <Card key={title}><CardContent className="p-6"><div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#EAF6F7] text-[#1D84B5]"><Icon className="h-6 w-6" /></div><h3 className="mt-5 text-xl font-semibold text-[#17324D]">{title}</h3><p className="mt-3 leading-7 text-slate-600">{text}</p></CardContent></Card>)}
+      </div>
+    </section>
+
+    <section className="rounded-[2rem] bg-[#F2FBFB] px-6 py-10 md:px-10 md:py-12">
+      <SectionHeading eyebrow="Why the experience matters" title="Every service is connected to work Koa has performed in the real world" description="ATS combines technical capability with an operator’s understanding of reliability, communication, scope, documentation, and the people affected by each project." />
+      <div className="mt-9 grid gap-5 md:grid-cols-2">
+        {serviceConnections.map((item) => <div key={item.title} className="rounded-2xl border border-[#CBE8E7] bg-white p-6 shadow-sm"><div className="flex gap-3"><CheckCircle2 className="mt-0.5 h-6 w-6 shrink-0 text-[#1D84B5]" /><div><h3 className="text-lg font-semibold text-[#17324D]">{item.title}</h3><p className="mt-2 leading-7 text-slate-600">{item.text}</p></div></div></div>)}
+      </div>
+    </section>
+
+    <section className="grid gap-8 lg:grid-cols-2">
+      <Card>
+        <CardHeader><CardTitle className="text-2xl">A practical, client-centered approach</CardTitle></CardHeader>
+        <CardContent className="space-y-4 leading-7 text-slate-600"><p>ATS begins by understanding the actual problem, the people involved, the property or business environment, and the desired result. The recommended solution is then shaped around the client’s needs rather than forcing every project into the same package.</p><p>Clear scope, realistic expectations, documented communication, and dependable follow-through are treated as part of the service—not as extras.</p></CardContent>
+      </Card>
+      <Card>
+        <CardHeader><CardTitle className="text-2xl">Local commitment</CardTitle></CardHeader>
+        <CardContent className="space-y-4 leading-7 text-slate-600"><p>Being raised on Hawaiʻi Island shapes how Koa approaches relationships, communication, and responsibility. ATS is built to serve local businesses, homeowners, property owners, and organizations with respect for island logistics and the importance of trusted long-term relationships.</p><p>When a project requires expertise outside ATS’s scope, the goal is to communicate that clearly and help identify the appropriate next step or qualified professional.</p></CardContent>
+      </Card>
+    </section>
+
+    <section className="rounded-3xl border border-emerald-200 bg-emerald-50 px-6 py-5 text-sm leading-6 text-emerald-950"><strong>Property Field Services scope:</strong> ATS provides clearly defined, owner-directed onsite vendor services. ATS does not provide property management, caretaker or custodian services, leasing, tenant placement, rent or deposit handling, lease administration, or landlord-tenant representation.</section>
+
+    <section className="rounded-[2rem] bg-[#17324D] px-8 py-10 text-white"><h2 className="text-3xl font-bold">Ready to discuss what you are trying to accomplish?</h2><p className="mt-4 max-w-3xl leading-8 text-slate-300">Share the project, challenge, property, system, or workflow. ATS will review the details and help identify a practical next step.</p><Button variant="light" className="mt-6" onClick={() => onOpen("contact")}>Contact Aloha Technology Services LLC <ArrowRight className="h-4 w-4" /></Button></section>
+  </div>;
 }
 
 function ContactPage() {
@@ -633,6 +816,7 @@ export default function TechnicalSolutionsCompanyWebsite() {
   useEffect(() => {
     const seo = PAGE_SEO[activePage] || PAGE_SEO.home;
     const canonicalUrl = `${SITE_URL}${pathForPage(activePage)}`;
+    const socialImageUrl = `${SITE_URL}${seo.image || DEFAULT_SOCIAL_IMAGE}`;
 
     document.title = seo.title;
 
@@ -651,8 +835,11 @@ export default function TechnicalSolutionsCompanyWebsite() {
     setMeta('meta[property="og:title"]', "property", "og:title", seo.title);
     setMeta('meta[property="og:description"]', "property", "og:description", seo.description);
     setMeta('meta[property="og:url"]', "property", "og:url", canonicalUrl);
+    setMeta('meta[property="og:image"]', "property", "og:image", socialImageUrl);
+    setMeta('meta[property="og:image:alt"]', "property", "og:image:alt", activePage === "about" ? "Kenyon Koa Smith, founder of Aloha Technology Services LLC" : "Aloha Technology Services LLC");
     setMeta('meta[name="twitter:title"]', "name", "twitter:title", seo.title);
     setMeta('meta[name="twitter:description"]', "name", "twitter:description", seo.description);
+    setMeta('meta[name="twitter:image"]', "name", "twitter:image", socialImageUrl);
 
     let canonical = document.head.querySelector('link[rel="canonical"]');
     if (!canonical) {

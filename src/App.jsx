@@ -224,7 +224,6 @@ const services = [
     hero: "Build the right tools and implement them with confidence.",
     overview: "We develop practical software and help businesses implement new applications with less disruption. Our focus is usability, adoption, and measurable operational value rather than unnecessary complexity.",
     examples: [
-      { title: "Custom Operations Dashboard", description: "Centralize work orders, project updates, owner requests, and performance reporting in one practical interface." },
       { title: "Third-Party Application Rollout", description: "Configure a new platform, document workflows, train users, and support a smooth transition into daily operations." },
       { title: "Spreadsheet Process Modernization", description: "Replace fragmented spreadsheets and manual approvals with a structured, trackable internal application." },
     ],

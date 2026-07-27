@@ -618,7 +618,7 @@ function AboutPage({ onOpen }) {
     },
     {
       icon: BarChart3,
-      value: "Bachelor’s Degree",
+      value: "Bachelor’s Degree in Physics",
       label: "Analytical foundation",
       text: "A college education that supports structured problem-solving, systems thinking, data analysis, and practical implementation.",
     },
@@ -722,7 +722,7 @@ function AboutPage({ onOpen }) {
             <p className="leading-7 text-slate-300">Hawaiʻi Island operations professional, technical problem-solver, and owner of Aloha Technology Services LLC.</p>
             <div className="mt-6 space-y-4 border-t border-white/15 pt-6 text-sm leading-6 text-slate-300">
               <div className="flex gap-3"><MapPin className="mt-0.5 h-5 w-5 shrink-0 text-[#84DCCF]" /><span>Raised in Waimea and committed to serving Hawaiʻi Island communities.</span></div>
-              <div className="flex gap-3"><BarChart3 className="mt-0.5 h-5 w-5 shrink-0 text-[#84DCCF]" /><span>Bachelor’s Degree from the University of Hawaiʻi at Mānoa.</span></div>
+              <div className="flex gap-3"><BarChart3 className="mt-0.5 h-5 w-5 shrink-0 text-[#84DCCF]" /><span>Bachelor’s Degree in Physics from the University of Hawaiʻi at Mānoa.</span></div>
               <div className="flex gap-3"><Building2 className="mt-0.5 h-5 w-5 shrink-0 text-[#84DCCF]" /><span>Professional foundation in luxury residential, resort, property, and business operations.</span></div>
               <div className="flex gap-3"><Hammer className="mt-0.5 h-5 w-5 shrink-0 text-[#84DCCF]" /><span>Hands-on background in supervised electrical work, irrigation systems, landscaping support, flooring installation, and finish work.</span></div>
             </div>
@@ -742,7 +742,7 @@ function AboutPage({ onOpen }) {
       <Card tone="sand">
         <CardHeader><CardTitle className="text-3xl">From Waimea to a career built on practical responsibility</CardTitle></CardHeader>
         <CardContent className="space-y-5 text-base leading-8 text-slate-600">
-          <p>Koa grew up in Waimea on the Big Island and graduated from Parker School. He later earned a Bachelor’s Degree from the University of Hawaiʻi at Mānoa before returning home to build his career and remain close to family.</p>
+          <p>Koa grew up in Waimea on the Big Island and graduated from Parker School. He later earned a Bachelor’s Degree in Physics from the University of Hawaiʻi at Mānoa before returning home to build his career and remain close to family.</p>
           <p>Before and alongside his operations career, Koa developed a practical foundation through apprentice-level and supervised electrical work, irrigation work with Water Care Solutions, and flooring work with Anderson Flooring Hawaii, LLC. As an Irrigation Technician, his responsibilities included installing, maintaining, and troubleshooting irrigation systems while supporting landscaping and grounds care. His broader hands-on experience also included assisting with electrical installation, wiring, and troubleshooting, as well as flooring installation support, surface preparation, material handling, and detailed finish work.</p>
           <p>Those experiences strengthened his understanding of jobsite conditions, work sequencing, safety, workmanship, preventive care, and the importance of recognizing when a task requires a licensed trade professional. His career later expanded into luxury residential and resort operations, where success depended on careful inspections, reliable communication, maintenance planning, vendor coordination, documentation, budget awareness, service recovery, and consistent follow-through.</p>
           <p>Across those roles, he supported more than 50 high-value residences, worked with over 60 local vendors and service providers, and helped coordinate thousands of guest arrivals and departures. He also developed inspection standards, training materials, damage-tracking processes, and operating procedures used by teams supporting complex properties.</p>

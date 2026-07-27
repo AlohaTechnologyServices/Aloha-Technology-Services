@@ -2,15 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://atshawaii.vercel.app/</loc>
-    <lastmod>2026-07-20</lastmod>
+    <lastmod>2026-07-27</lastmod>
   </url>
   <url>
     <loc>https://atshawaii.vercel.app/about</loc>
-    <lastmod>2026-07-20</lastmod>
+    <lastmod>2026-07-27</lastmod>
   </url>
   <url>
     <loc>https://atshawaii.vercel.app/contact</loc>
-    <lastmod>2026-07-20</lastmod>
+    <lastmod>2026-07-27</lastmod>
   </url>
   <url>
     <loc>https://atshawaii.vercel.app/services/website-development</loc>
@@ -45,8 +45,12 @@
     <lastmod>2026-07-20</lastmod>
   </url>
   <url>
+    <loc>https://atshawaii.vercel.app/services/property-field-services</loc>
+    <lastmod>2026-07-27</lastmod>
+  </url>
+  <url>
     <loc>https://atshawaii.vercel.app/services/vendor-coordination</loc>
-    <lastmod>2026-07-20</lastmod>
+    <lastmod>2026-07-27</lastmod>
   </url>
   <url>
     <loc>https://atshawaii.vercel.app/services/handyman-services</loc>

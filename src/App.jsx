@@ -618,7 +618,7 @@ function AboutPage({ onOpen }) {
     },
     {
       icon: BarChart3,
-      value: "Bachelor’s Degree in Physics",
+      value: "Bachelor’s Degree",
       label: "Analytical foundation",
       text: "A college education that supports structured problem-solving, systems thinking, data analysis, and practical implementation.",
     },
@@ -637,12 +637,12 @@ function AboutPage({ onOpen }) {
     },
     {
       icon: Home,
-      title: "Irrigation Technician",
-      text: "As an Irrigation Technician, Koa gained hands-on experience installing, maintaining, and troubleshooting irrigation systems while also supporting landscaping, grounds maintenance, and the consistent care required to keep outdoor areas functional and presentable.",
+      title: "Water Care Solutions irrigation",
+      text: "As an Irrigation Technician with Water Care Solutions, Koa gained hands-on experience installing, maintaining, and troubleshooting irrigation systems while also supporting landscaping, grounds maintenance, and the consistent care required to keep outdoor areas functional and presentable.",
     },
     {
       icon: Hammer,
-      title: "Flooring Installer",
+      title: "Anderson Flooring Hawaii, LLC",
       text: "His flooring experience included installation support, surface and jobsite preparation, material handling, detailed finish work, and attention to the sequencing and quality standards that affect a completed interior space.",
     },
     {
@@ -698,7 +698,7 @@ function AboutPage({ onOpen }) {
           <p className="max-w-3xl text-lg leading-8 text-slate-300">Aloha Technology Services LLC was founded by Kenyon “Koa” Smith to bring together technical problem-solving, hands-on field experience, business operations, and a deep understanding of Hawaiʻi Island homes, vendors, and client expectations.</p>
           <div className="flex flex-wrap gap-3">
             <Button variant="light" onClick={() => onOpen("contact")}>Discuss Your Project <ArrowRight className="h-4 w-4" /></Button>
-            <Button variant="outline" className="border-white/40 bg-transparent text-white hover:border-white hover:bg-white hover:text-[#17324D]" onClick={() => onOpen("home")}>Explore ATS Services</Button>
+            <Button variant="outline" className="border-white bg-white text-[#17324D] shadow-sm hover:border-white hover:bg-slate-100 hover:text-[#17324D]" onClick={() => onOpen("home")}>Explore ATS Services</Button>
           </div>
         </div>
         <div className="overflow-hidden rounded-[2rem] border border-white/15 bg-white/10 shadow-2xl backdrop-blur-sm">
@@ -722,7 +722,7 @@ function AboutPage({ onOpen }) {
             <p className="leading-7 text-slate-300">Hawaiʻi Island operations professional, technical problem-solver, and owner of Aloha Technology Services LLC.</p>
             <div className="mt-6 space-y-4 border-t border-white/15 pt-6 text-sm leading-6 text-slate-300">
               <div className="flex gap-3"><MapPin className="mt-0.5 h-5 w-5 shrink-0 text-[#84DCCF]" /><span>Raised in Waimea and committed to serving Hawaiʻi Island communities.</span></div>
-              <div className="flex gap-3"><BarChart3 className="mt-0.5 h-5 w-5 shrink-0 text-[#84DCCF]" /><span>Bachelor’s Degree in Physics from the University of Hawaiʻi at Mānoa.</span></div>
+              <div className="flex gap-3"><BarChart3 className="mt-0.5 h-5 w-5 shrink-0 text-[#84DCCF]" /><span>Bachelor’s Degree from the University of Hawaiʻi at Mānoa.</span></div>
               <div className="flex gap-3"><Building2 className="mt-0.5 h-5 w-5 shrink-0 text-[#84DCCF]" /><span>Professional foundation in luxury residential, resort, property, and business operations.</span></div>
               <div className="flex gap-3"><Hammer className="mt-0.5 h-5 w-5 shrink-0 text-[#84DCCF]" /><span>Hands-on background in supervised electrical work, irrigation systems, landscaping support, flooring installation, and finish work.</span></div>
             </div>
@@ -742,8 +742,8 @@ function AboutPage({ onOpen }) {
       <Card tone="sand">
         <CardHeader><CardTitle className="text-3xl">From Waimea to a career built on practical responsibility</CardTitle></CardHeader>
         <CardContent className="space-y-5 text-base leading-8 text-slate-600">
-          <p>Koa grew up in Waimea on the Big Island and graduated from Parker School. He later earned a Bachelor’s Degree in Physics from the University of Hawaiʻi at Mānoa before returning home to build his career and remain close to family.</p>
-          <p>Before and alongside his operations career, Koa developed a practical foundation through apprentice-level and supervised electrical work, irrigation work, and flooring work. As an Irrigation Technician, his responsibilities included installing, maintaining, and troubleshooting irrigation systems while supporting landscaping and grounds care. His broader hands-on experience also included assisting with electrical installation, wiring, and troubleshooting, as well as flooring installation support, surface preparation, material handling, and detailed finish work.</p>
+          <p>Koa grew up in Waimea on the Big Island and graduated from Parker School. He later earned a Bachelor’s Degree from the University of Hawaiʻi at Mānoa before returning home to build his career and remain close to family.</p>
+          <p>Before and alongside his operations career, Koa developed a practical foundation through apprentice-level and supervised electrical work, irrigation work with Water Care Solutions, and flooring work with Anderson Flooring Hawaii, LLC. As an Irrigation Technician, his responsibilities included installing, maintaining, and troubleshooting irrigation systems while supporting landscaping and grounds care. His broader hands-on experience also included assisting with electrical installation, wiring, and troubleshooting, as well as flooring installation support, surface preparation, material handling, and detailed finish work.</p>
           <p>Those experiences strengthened his understanding of jobsite conditions, work sequencing, safety, workmanship, preventive care, and the importance of recognizing when a task requires a licensed trade professional. His career later expanded into luxury residential and resort operations, where success depended on careful inspections, reliable communication, maintenance planning, vendor coordination, documentation, budget awareness, service recovery, and consistent follow-through.</p>
           <p>Across those roles, he supported more than 50 high-value residences, worked with over 60 local vendors and service providers, and helped coordinate thousands of guest arrivals and departures. He also developed inspection standards, training materials, damage-tracking processes, and operating procedures used by teams supporting complex properties.</p>
           <p>That combination of analytical training and field experience led to the creation of Aloha Technology Services LLC in 2024: a locally owned company focused on making technology, property support, and business operations more practical and easier to manage.</p>

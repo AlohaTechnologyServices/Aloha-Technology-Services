@@ -4,6 +4,7 @@ import { ArrowRight, Bot, RotateCcw, X } from "lucide-react";
 const STARTER_CHOICES = [
   { label: "Help me choose a service", prompt: "Help me choose the right service." },
   { label: "Home inspection", prompt: "I need information about a home inspection." },
+  { label: "Property check or vendor access", prompt: "I need owner-directed property field services." },
   { label: "Website or automation", prompt: "I need help with a website or business automation." },
   { label: "Wi-Fi, TV, or devices", prompt: "I need help with Wi-Fi, a TV, or connected devices." },
   { label: "Handyman or vendor", prompt: "I need a repair and I am not sure whether I need handyman or vendor coordination." },
@@ -12,6 +13,7 @@ const STARTER_CHOICES = [
 
 const SERVICE_CHOICES = [
   { label: "Buying, selling, or maintaining a home", prompt: "I need a home inspection." },
+  { label: "Property check, photos, or vendor access", prompt: "I need owner-directed property field services." },
   { label: "Website, automation, or AI", prompt: "I need digital services." },
   { label: "Wi-Fi, TVs, computers, or devices", prompt: "I need technology installation." },
   { label: "Minor repair or installation", prompt: "I need handyman services." },
@@ -22,6 +24,13 @@ const SERVICE_CHOICES = [
 const REPAIR_CHOICES = [
   { label: "Minor repair, mounting, or assembly", prompt: "The work is a minor repair, mounting, assembly, or adjustment." },
   { label: "Electrical, plumbing, HVAC, roofing, or specialized work", prompt: "The work needs a licensed or specialized trade professional." },
+];
+
+const PROPERTY_FIELD_CHOICES = [
+  { label: "Visual check and photos", prompt: "I need a scheduled visual property check and photos." },
+  { label: "Meet a vendor or delivery", prompt: "I need someone onsite for an owner-authorized vendor or delivery appointment." },
+  { label: "Storm, leak, alarm, or incident check", prompt: "I need an owner-directed incident check at a property." },
+  { label: "Rental or tenant services", prompt: "I need leasing, tenant, rent, or property management help." },
 ];
 
 const DIGITAL_CHOICES = [
@@ -87,6 +96,72 @@ function buildReply(rawInput) {
       text:
         "Choose the option that best matches your project. I can narrow it down further after that.",
       choices: SERVICE_CHOICES,
+    };
+  }
+
+  if (
+    includesAny(input, [
+      "property management",
+      "property manager",
+      "caretaker",
+      "custodian",
+      "leasing",
+      "lease administration",
+      "tenant screening",
+      "tenant placement",
+      "guest placement",
+      "rent collection",
+      "collect rent",
+      "security deposit",
+      "show a rental",
+      "show the property to tenants",
+      "eviction",
+      "landlord-tenant",
+      "landlord tenant",
+    ])
+  ) {
+    return {
+      text:
+        "ATS does not provide property management, caretaker or custodian services, leasing, rental advertising, tenant or guest placement, rent or security-deposit handling, lease administration, occupancy decisions, or landlord-tenant representation. Those responsibilities must remain with the owner or an appropriately licensed Hawaiʻi real estate professional. ATS can still provide clearly defined, owner-directed field visits such as visual checks, photographs, vendor access, and delivery documentation.",
+      page: "property-field-services",
+      actionLabel: "View Property Field Services",
+      choices: PROPERTY_FIELD_CHOICES,
+    };
+  }
+
+  if (
+    includesAny(input, [
+      "property field",
+      "property check",
+      "check the property",
+      "visual check",
+      "visual property check",
+      "photo documentation",
+      "property photos",
+      "vacant home check",
+      "vacant property check",
+      "vendor access",
+      "meet a vendor",
+      "meet the contractor",
+      "delivery verification",
+      "meet a delivery",
+      "storm check",
+      "leak check",
+      "alarm check",
+      "incident check",
+      "onsite field support",
+      "on-site field support",
+      "field visit",
+      "owner-directed",
+      "owner directed",
+    ])
+  ) {
+    return {
+      text:
+        "Owner-Directed Property Field Services provides factual onsite support for property owners, including scheduled visual checks, dated photographs, vendor or delivery access, incident checks, technology checks, and post-service documentation. ATS follows a written owner-approved scope and does not make leasing, tenant, financial, legal, or property-management decisions.",
+      page: "property-field-services",
+      actionLabel: "View Property Field Services",
+      choices: PROPERTY_FIELD_CHOICES,
     };
   }
 
@@ -441,7 +516,7 @@ function buildReply(rawInput) {
   ) {
     return {
       text:
-        "Aloha Technology Services LLC is a locally owned and operated Hawaiʻi Island company providing technology, digital, property, and operational support for businesses, homeowners, vacation rentals, and property managers.",
+        "Aloha Technology Services LLC is a locally owned and operated Hawaiʻi Island company providing technology, digital, owner-directed property field services, residential home inspections, and operational support for businesses, homeowners, property owners, and property managers.",
       page: "about",
       actionLabel: "About ATS",
     };

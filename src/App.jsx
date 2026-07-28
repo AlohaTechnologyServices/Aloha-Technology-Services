@@ -10,7 +10,8 @@ import {
 
 const COMPANY_NAME = "Aloha Technology Services LLC";
 const COMPANY_EMAIL = "hawaiiats@gmail.com";
-const COMPANY_PHONE = "";
+const COMPANY_PHONE = "+1 808 443 7148";
+const COMPANY_PHONE_HREF = "+18084437148";
 const FORM_ID = "mnjlpyya";
 
 const SITE_URL = "https://atshawaii.vercel.app";
@@ -791,7 +792,7 @@ function ContactPage() {
       <div><label htmlFor="message" className="mb-2 block text-sm font-semibold text-slate-700">Project details</label><textarea id="message" name="message" rows="7" required placeholder="Describe the issue, project, property, equipment, goals, and any timing considerations." className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-[#1D84B5] focus:ring-2 focus:ring-[#1D84B5]/15" /><ValidationError prefix="Message" field="message" errors={state.errors} /></div>
       <input type="text" name="_gotcha" className="hidden" tabIndex="-1" autoComplete="off" /><Button type="submit" size="lg" disabled={state.submitting}>{state.submitting ? "Sending..." : "Request a Consultation"}</Button>
     </form>}</CardContent></Card>
-    <div className="space-y-6"><Card tone="dark"><CardHeader><CardTitle className="text-2xl">Contact information</CardTitle><CardDescription className="mt-2 leading-7">Serving businesses, homeowners, vacation rentals, property managers, and personal clients across Hawaiʻi Island.</CardDescription></CardHeader><CardContent className="space-y-5"><div className="flex gap-3"><Mail className="mt-0.5 h-5 w-5 text-[#84DCCF]" /><a href={`mailto:${COMPANY_EMAIL}`} className="hover:text-white">{COMPANY_EMAIL}</a></div>{COMPANY_PHONE && <div className="flex gap-3"><Phone className="mt-0.5 h-5 w-5 text-[#84DCCF]" /><a href={`tel:${COMPANY_PHONE}`} className="hover:text-white">{COMPANY_PHONE}</a></div>}<div className="flex gap-3"><MapPin className="mt-0.5 h-5 w-5 text-[#84DCCF]" /><span>Locally owned and operated on the Big Island of Hawaiʻi</span></div></CardContent></Card><Card><CardHeader><CardTitle className="text-xl">What happens next?</CardTitle></CardHeader><CardContent className="space-y-4 text-slate-600">{["We review your project details.", "We follow up with questions or schedule a site review when needed.", "We determine the appropriate service, vendor, or project approach.", "A written proposal is provided when applicable."].map((item, index) => <div key={item} className="flex gap-4"><div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#EAF6F7] text-sm font-semibold text-[#17324D]">{index + 1}</div><p className="pt-1 leading-6">{item}</p></div>)}</CardContent></Card></div>
+    <div className="space-y-6"><Card tone="dark"><CardHeader><CardTitle className="text-2xl">Contact information</CardTitle><CardDescription className="mt-2 leading-7">Serving businesses, homeowners, vacation rentals, property managers, and personal clients across Hawaiʻi Island.</CardDescription></CardHeader><CardContent className="space-y-5"><div className="flex gap-3"><Mail className="mt-0.5 h-5 w-5 text-[#84DCCF]" /><a href={`mailto:${COMPANY_EMAIL}`} className="hover:text-white">{COMPANY_EMAIL}</a></div>{COMPANY_PHONE && <div className="flex gap-3"><Phone className="mt-0.5 h-5 w-5 text-[#84DCCF]" /><a href={`tel:${COMPANY_PHONE_HREF}`} className="hover:text-white">{COMPANY_PHONE}</a></div>}<div className="flex gap-3"><MapPin className="mt-0.5 h-5 w-5 text-[#84DCCF]" /><span>Locally owned and operated on the Big Island of Hawaiʻi</span></div></CardContent></Card><Card><CardHeader><CardTitle className="text-xl">What happens next?</CardTitle></CardHeader><CardContent className="space-y-4 text-slate-600">{["We review your project details.", "We follow up with questions or schedule a site review when needed.", "We determine the appropriate service, vendor, or project approach.", "A written proposal is provided when applicable."].map((item, index) => <div key={item} className="flex gap-4"><div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#EAF6F7] text-sm font-semibold text-[#17324D]">{index + 1}</div><p className="pt-1 leading-6">{item}</p></div>)}</CardContent></Card></div>
   </div></div>;
 }
 
@@ -862,18 +863,16 @@ export default function TechnicalSolutionsCompanyWebsite() {
   };
   return <div className="min-h-screen bg-white text-slate-900">
     <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 backdrop-blur">
-      <div className="mx-auto flex min-h-20 max-w-7xl items-center justify-between gap-3 px-4 py-2 sm:gap-5 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-5 px-4 sm:px-6 lg:px-8">
         <button
           onClick={() => openPage("home")}
-          className="block w-[min(72vw,390px)] shrink-0 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md lg:w-[390px] xl:w-[480px]"
+          className="block min-w-0 flex-1 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:shadow-md lg:max-w-[620px]"
           aria-label="Return to the Aloha Technology Services LLC homepage"
         >
           <img
             src="/images/aloha-technology-services-header-banner.png"
             alt="Aloha Technology Services LLC — Website, Automation, AI, Technology, Property and Operations"
-            width="1914"
-            height="413"
-            className="block h-auto w-full"
+            className="block h-16 w-full object-contain object-left sm:h-[68px]"
             loading="eager"
             fetchPriority="high"
             decoding="async"

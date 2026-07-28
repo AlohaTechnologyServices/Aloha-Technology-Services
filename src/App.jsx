@@ -865,7 +865,7 @@ export default function TechnicalSolutionsCompanyWebsite() {
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-5 px-4 sm:px-6 lg:px-8">
         <button
           onClick={() => openPage("home")}
-          className="block min-w-0 flex-1 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:shadow-md lg:max-w-[620px]"
+          className="block min-w-0 flex-1 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:shadow-md lg:max-w-[640px]"
           aria-label="Return to the Aloha Technology Services LLC homepage"
         >
           <img

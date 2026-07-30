@@ -1,0 +1,48 @@
+/* ATS wording, service-menu, and readability refinements. */
+
+.ats-services-menu-grid {
+  grid-template-columns: minmax(0, 1fr) !important;
+}
+
+.ats-service-menu-marker,
+.ats-mobile-service-marker {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+  font-size: 1.25rem !important;
+  font-weight: 800 !important;
+  line-height: 1 !important;
+}
+
+.ats-mobile-service-marker {
+  width: 1.5rem !important;
+  margin-right: 0.25rem !important;
+  color: #77d7cf !important;
+}
+
+.ats-high-contrast-card {
+  color: #ffffff !important;
+}
+
+.ats-high-contrast-card h1,
+.ats-high-contrast-card h2,
+.ats-high-contrast-card h3,
+.ats-high-contrast-card p,
+.ats-high-contrast-card span,
+.ats-high-contrast-card li {
+  color: #f8fafc !important;
+}
+
+.ats-high-contrast-card button,
+.ats-high-contrast-card button span {
+  color: #061b33 !important;
+}
+
+@media (min-width: 768px) {
+  .ats-services-menu-grid {
+    grid-auto-flow: column !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-rows: repeat(var(--ats-menu-rows, 6), minmax(0, auto)) !important;
+  }
+}

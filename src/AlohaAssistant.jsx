@@ -1,49 +1,39 @@
 import React, { useEffect, useRef, useState } from "react";
-import { ArrowRight, Bot, RotateCcw, X } from "lucide-react";
+import { ArrowRight, Bot, RotateCcw, Send, X } from "lucide-react";
 
 const STARTER_CHOICES = [
   { label: "Help me choose a service", prompt: "Help me choose the right service." },
-  { label: "Home inspection", prompt: "I need information about a home inspection." },
-  { label: "Property check or vendor access", prompt: "I need owner-directed property field services." },
-  { label: "Website or automation", prompt: "I need help with a website or business automation." },
-  { label: "Wi-Fi, TV, or devices", prompt: "I need help with Wi-Fi, a TV, or connected devices." },
-  { label: "Handyman or vendor", prompt: "I need a repair and I am not sure whether I need handyman or vendor coordination." },
-  { label: "Pricing and quotes", prompt: "How does pricing and quoting work?" },
+  { label: "Compare inspection types", prompt: "Help me compare home inspection types." },
+  { label: "Book a home inspection", prompt: "I want to book a home inspection." },
+  { label: "Find the right vendor", prompt: "I need vendor coordination." },
+  { label: "Property field visit", prompt: "I need property field services." },
+  { label: "Pricing and quotes", prompt: "How does pricing work?" },
 ];
 
 const SERVICE_CHOICES = [
-  { label: "Buying, selling, or maintaining a home", prompt: "I need a home inspection." },
-  { label: "Property check, photos, or vendor access", prompt: "I need owner-directed property field services." },
-  { label: "Website, automation, or AI", prompt: "I need digital services." },
-  { label: "Wi-Fi, TVs, computers, or devices", prompt: "I need technology installation." },
-  { label: "Minor repair or installation", prompt: "I need handyman services." },
-  { label: "Licensed or specialized repair", prompt: "I need vendor coordination." },
-  { label: "Business process or reporting", prompt: "I need business operations help." },
+  { label: "Property Field Services", prompt: "Tell me about property field services." },
+  { label: "Home Inspections", prompt: "Tell me about home inspections." },
+  { label: "Vendor Coordination", prompt: "Tell me about vendor coordination." },
+  { label: "Handyman Services", prompt: "Tell me about handyman services." },
+  { label: "Operations or technology", prompt: "I need operations or technology help." },
 ];
 
-const REPAIR_CHOICES = [
-  { label: "Minor repair, mounting, or assembly", prompt: "The work is a minor repair, mounting, assembly, or adjustment." },
-  { label: "Electrical, plumbing, HVAC, roofing, or specialized work", prompt: "The work needs a licensed or specialized trade professional." },
-];
-
-const PROPERTY_FIELD_CHOICES = [
-  { label: "Visual check and photos", prompt: "I need a scheduled visual property check and photos." },
-  { label: "Meet a vendor or delivery", prompt: "I need someone onsite for an owner-authorized vendor or delivery appointment." },
-  { label: "Storm, leak, alarm, or incident check", prompt: "I need an owner-directed incident check at a property." },
-  { label: "Rental or tenant services", prompt: "I need leasing, tenant, rent, or property management help." },
+const INSPECTION_CHOICES = [
+  { label: "Buying a home", prompt: "I am buying a home and need an inspection." },
+  { label: "Selling a home", prompt: "I am selling a home and need a pre-listing inspection." },
+  { label: "Maintenance review", prompt: "I want a home maintenance inspection." },
+  { label: "Moisture or leak concern", prompt: "I need a moisture and water-intrusion inspection." },
+  { label: "Irrigation or pool/spa", prompt: "I need an irrigation or pool inspection." },
+  { label: "Rental arrival/departure", prompt: "I need custom arrival and departure inspections." },
 ];
 
 const DIGITAL_CHOICES = [
-  { label: "New or redesigned website", prompt: "I need website development." },
-  { label: "Automate repetitive work", prompt: "I need automation development." },
-  { label: "Implement AI in a business", prompt: "I need AI implementation." },
-  { label: "Build an application or dashboard", prompt: "I need application development." },
-];
-
-const BUSINESS_CHOICES = [
-  { label: "Improve workflows or SOPs", prompt: "I need workflow optimization." },
-  { label: "Reporting, dashboards, or analysis", prompt: "I need business insight and analysis." },
-  { label: "Training videos or documentation", prompt: "I need training videos and documentation." },
+  { label: "Workflow or SOPs", prompt: "I need workflow optimization." },
+  { label: "Technology installation", prompt: "I need technology installation." },
+  { label: "Training and support", prompt: "I need training and support." },
+  { label: "Website development", prompt: "I need website development." },
+  { label: "Reporting or analysis", prompt: "I need insight and analysis." },
+  { label: "Automation, AI or an app", prompt: "I need automation, AI, or application development." },
 ];
 
 const INITIAL_MESSAGES = [
@@ -51,7 +41,7 @@ const INITIAL_MESSAGES = [
     id: 1,
     sender: "assistant",
     text:
-      "Aloha! I’m the Aloha Technology Services website guide. I can answer basic service questions, help you choose the right service, and take you to the correct page. What are you working on?",
+      "Aloha! I’m the ATS website guide. I can help you choose a service, compare inspection options, explain vendor coordination, or take you to the right page. What are you working on?",
     choices: STARTER_CHOICES,
   },
 ];
@@ -63,481 +53,287 @@ function includesAny(text, terms) {
 function buildReply(rawInput) {
   const input = rawInput.toLowerCase().replace(/[’ʻ]/g, "'").trim();
 
-  if (
-    includesAny(input, [
-      "hello",
-      "hi ",
-      "hey",
-      "aloha",
-      "good morning",
-      "good afternoon",
-      "good evening",
-    ]) ||
-    input === "hi"
-  ) {
+  if (!input) {
+    return { text: "Please enter a few details about the property, project, or service you need." };
+  }
+
+  if (includesAny(input, ["hello", "aloha", "good morning", "good afternoon", "good evening"]) || input === "hi" || input === "hey") {
     return {
-      text:
-        "Aloha! Tell me what you are trying to accomplish, and I’ll point you toward the most relevant service.",
+      text: "Aloha! Choose the option that best matches your need, and I’ll narrow it down.",
       choices: SERVICE_CHOICES,
     };
   }
 
-  if (
-    includesAny(input, [
-      "choose",
-      "which service",
-      "not sure",
-      "what service",
-      "right service",
-      "where do i start",
-    ])
-  ) {
+  if (includesAny(input, ["choose", "which service", "not sure", "where do i start", "right service"])) {
     return {
       text:
-        "Choose the option that best matches your project. I can narrow it down further after that.",
+        "Start with the outcome you need: an onsite property visit, a home-condition inspection, a qualified third-party provider, minor hands-on work, or an operations/technology solution.",
       choices: SERVICE_CHOICES,
     };
   }
 
-  if (
-    includesAny(input, [
-      "property management",
-      "property manager",
-      "caretaker",
-      "custodian",
-      "leasing",
-      "lease administration",
-      "tenant screening",
-      "tenant placement",
-      "guest placement",
-      "rent collection",
-      "collect rent",
-      "security deposit",
-      "show a rental",
-      "show the property to tenants",
-      "eviction",
-      "landlord-tenant",
-      "landlord tenant",
-    ])
-  ) {
+  if (includesAny(input, ["compare inspection", "inspection types", "which inspection", "different inspections"])) {
     return {
       text:
-        "ATS does not provide property management, caretaker or custodian services, leasing, rental advertising, tenant or guest placement, rent or security-deposit handling, lease administration, occupancy decisions, or landlord-tenant representation. Those responsibilities must remain with the owner or an appropriately licensed Hawaiʻi real estate professional. ATS can still provide clearly defined, owner-directed field visits such as visual checks, photographs, vendor access, and delivery documentation.",
-      page: "property-field-services",
-      actionLabel: "View Property Field Services",
-      choices: PROPERTY_FIELD_CHOICES,
-    };
-  }
-
-  if (
-    includesAny(input, [
-      "property field",
-      "property check",
-      "check the property",
-      "visual check",
-      "visual property check",
-      "photo documentation",
-      "property photos",
-      "vacant home check",
-      "vacant property check",
-      "vendor access",
-      "meet a vendor",
-      "meet the contractor",
-      "delivery verification",
-      "meet a delivery",
-      "storm check",
-      "leak check",
-      "alarm check",
-      "incident check",
-      "onsite field support",
-      "on-site field support",
-      "field visit",
-      "owner-directed",
-      "owner directed",
-    ])
-  ) {
-    return {
-      text:
-        "Owner-Directed Property Field Services provides factual onsite support for property owners, including scheduled visual checks, dated photographs, vendor or delivery access, incident checks, technology checks, and post-service documentation. ATS follows a written owner-approved scope and does not make leasing, tenant, financial, legal, or property-management decisions.",
-      page: "property-field-services",
-      actionLabel: "View Property Field Services",
-      choices: PROPERTY_FIELD_CHOICES,
-    };
-  }
-
-  if (
-    includesAny(input, [
-      "home inspection",
-      "property inspection",
-      "house inspection",
-      "buying a home",
-      "buy a home",
-      "buyer inspection",
-      "pre-purchase",
-      "pre purchase",
-      "selling a home",
-      "sell a home",
-      "seller inspection",
-      "pre-listing",
-      "pre listing",
-      "maintenance inspection",
-      "condition review",
-    ])
-  ) {
-    return {
-      text:
-        "Residential Home Inspections are designed for buyers, sellers, and current homeowners. The inspection is a visual, non-invasive review of readily accessible systems and includes a client-friendly report, photographs, prioritized findings, and practical recommendations. Pricing is quoted after reviewing the property and requested scope.",
+        "ATS offers eleven inspection options. A Full Residential or Buyer’s Inspection is the broadest choice; Pre-Listing is for sellers; Maintenance is for current owners; Condo/Townhome and New Construction are tailored scopes; Reinspection checks previously reported items; moisture, irrigation and pool/spa are targeted services; and arrival/departure inspections document rental-property condition.",
       page: "home-inspections",
-      actionLabel: "View Home Inspections",
+      actionLabel: "Compare All Inspections",
+      choices: INSPECTION_CHOICES,
+    };
+  }
+
+  if (includesAny(input, ["buying", "buyer", "purchase", "due diligence", "under contract"])) {
+    return {
+      text:
+        "A Buyer’s Home Inspection is designed for the due-diligence period. It reviews readily accessible residential systems, documents visible safety and repair concerns, distinguishes urgent issues from maintenance, and provides a photographic report for informed discussion with your real-estate and advisory team.",
+      page: "home-inspections",
+      actionLabel: "View Buyer Inspection Details",
       choices: [
-        { label: "I am buying", prompt: "I am buying a property and need an inspection." },
-        { label: "I am selling", prompt: "I am selling a property and need a pre-listing inspection." },
-        { label: "Request an inspection quote", prompt: "I want to request a home inspection quote." },
+        { label: "Request a quote", prompt: "I want a buyer inspection quote." },
+        { label: "Add moisture inspection", prompt: "Can moisture inspection be added?" },
       ],
     };
   }
 
-  if (
-    includesAny(input, [
-      "inspection quote",
-      "request a home inspection quote",
-      "request an inspection quote",
-    ])
-  ) {
+  if (includesAny(input, ["selling", "seller", "pre-listing", "pre listing", "before listing"])) {
     return {
       text:
-        "The best next step is the consultation form. Select the appropriate Home Inspection project type and include the property location, approximate size, property type, desired date, and whether you are buying, selling, or requesting a maintenance review.",
+        "A Pre-Listing Home Inspection helps an owner identify visible concerns before marketing the property, plan repairs or specialist evaluations, and reduce avoidable surprises during escrow. It supports preparation and disclosure discussions but does not replace legal or real-estate advice.",
+      page: "home-inspections",
+      actionLabel: "View Pre-Listing Details",
+    };
+  }
+
+  if (includesAny(input, ["maintenance inspection", "current owner", "annual inspection", "maintenance review"])) {
+    return {
+      text:
+        "A Home Maintenance Inspection is for current owners who want to identify deferred maintenance, developing concerns, water-management issues, corrosion, aging components, and near-term service priorities. The report is organized to support a practical property-care plan.",
+      page: "home-inspections",
+      actionLabel: "View Maintenance Inspection",
+    };
+  }
+
+  if (includesAny(input, ["moisture", "water intrusion", "water-intrusion", "thermal", "leak", "wet spot", "mold concern", "musty"])) {
+    return {
+      text:
+        "The Moisture and Water-Intrusion Inspection uses thermal imaging, a moisture meter, visual indicators, and review of likely pathways at accessible areas. It can be quoted at a reduced bundled rate with another qualifying inspection. Thermal imaging does not see through walls and cannot by itself confirm mold, concealed damage, or the exact source of moisture.",
+      page: "home-inspections",
+      actionLabel: "View Moisture Inspection",
+      choices: [
+        { label: "Book targeted inspection", prompt: "I want to book a moisture inspection." },
+        { label: "Bundle with full inspection", prompt: "I want to bundle moisture with a full inspection." },
+      ],
+    };
+  }
+
+  if (includesAny(input, ["irrigation", "sprinkler", "watering system", "dry zone", "overspray"])) {
+    return {
+      text:
+        "The Irrigation System Inspection reviews accessible zones, representative emitters, visible leaks, damaged heads, overspray, coverage concerns, controller settings, and observable water contact near the building. It may be bundled with another qualifying inspection at a reduced rate.",
+      page: "home-inspections",
+      actionLabel: "View Irrigation Inspection",
+    };
+  }
+
+  if (includesAny(input, ["pool", "spa", "hot tub", "pool equipment", "pool heater"])) {
+    return {
+      text:
+        "The Pool/Spa and Equipment Inspection reviews accessible surfaces, visible structure, pumps, filters, heaters, controls, visible piping, barriers, and safety-related conditions. Thermal imaging may be used when helpful. It is not structural engineering, water-chemistry certification, or specialized leak detection.",
+      page: "home-inspections",
+      actionLabel: "View Pool/Spa Inspection",
+    };
+  }
+
+  if (includesAny(input, ["arrival", "departure", "turnover", "rental inspection", "vacation rental", "guest ready"])) {
+    return {
+      text:
+        "Custom Arrival and Departure Inspections use an owner-approved checklist and dated photographs to document agreed rooms, furnishings, equipment, missing or damaged items, and visible readiness concerns. This is an owner-directed documentation service, not property management, housekeeping certification, leasing, or guest placement.",
+      page: "home-inspections",
+      actionLabel: "View Arrival/Departure Inspections",
+    };
+  }
+
+  if (includesAny(input, ["new construction", "new build", "builder walkthrough", "warranty inspection"])) {
+    return {
+      text:
+        "A New Construction Home Inspection is an independent visual review of installed work and readily accessible systems before final acceptance or a warranty milestone. It documents visible workmanship, incomplete items, and operational concerns, but does not replace municipal inspections, engineering, or the builder’s quality-control responsibilities.",
+      page: "home-inspections",
+      actionLabel: "View New Construction Inspection",
+    };
+  }
+
+  if (includesAny(input, ["reinspection", "repair verification", "check repair", "verify repair"])) {
+    return {
+      text:
+        "Repair Verification and Reinspection is a focused return visit to document whether specified reported items appear to have been addressed. It compares visible conditions with the original report, but it is not a contractor warranty, engineering certification, or guarantee of concealed work.",
+      page: "home-inspections",
+      actionLabel: "View Reinspection Details",
+    };
+  }
+
+  if (includesAny(input, ["book inspection", "inspection quote", "schedule inspection", "buyer inspection quote", "bundle moisture", "book a moisture"])) {
+    return {
+      text:
+        "Use the contact form and select the exact inspection service. Include the property area or address, property type, approximate size, occupied or vacant status, desired date, and any known areas of concern.",
       page: "contact",
       actionLabel: "Request an Inspection Quote",
     };
   }
 
-  if (
-    includesAny(input, [
-      "price",
-      "pricing",
-      "cost",
-      "rate",
-      "rates",
-      "estimate",
-      "quote",
-      "how much",
-    ])
-  ) {
+  if (includesAny(input, ["home inspection", "house inspection", "property inspection", "inspection service"])) {
     return {
       text:
-        "Pricing is determined case by case after reviewing the project scope, location, access, materials or equipment, third-party costs, and anticipated time. When appropriate, clients receive a written proposal before work begins.",
-      page: "contact",
-      actionLabel: "Request a Quote",
+        "ATS provides eleven residential inspection options for buyers, sellers, owners, new construction, repair verification, moisture, irrigation, pools/spas, condos/townhomes, and rental arrival/departure documentation. Each scope is explained before the visit and includes clear limitations and reporting.",
+      page: "home-inspections",
+      actionLabel: "Explore Home Inspections",
+      choices: INSPECTION_CHOICES,
     };
   }
 
-  if (
-    includesAny(input, [
-      "service area",
-      "where do you work",
-      "where are you located",
-      "location",
-      "big island",
-      "hawaii island",
-      "hawai'i island",
-      "kona",
-      "waikoloa",
-      "waimea",
-      "kamuela",
-      "hilo",
-    ])
-  ) {
+  if (includesAny(input, ["vendor rating", "quality-to-value", "quality to value", "how do you rate", "provider rating"])) {
     return {
       text:
-        "Aloha Technology Services LLC is locally owned and operated on Hawaiʻi Island. Availability and travel considerations depend on the project location and scope, so include the property or business location when requesting a quote.",
-      page: "contact",
-      actionLabel: "Contact ATS",
+        "ATS uses an internal Quality-to-Value comparison method: 50% license/credential and exact-scope evidence, 20% Hawaiʻi Island service/contact confidence, 20% reputation evidence and review-sample confidence, and 10% relative value position. Ratings are editorial research aids—not endorsements—and current licensing, insurance, complaints, scope, proposals, and warranties must be verified for the project.",
+      page: "vendor-coordination",
+      actionLabel: "Review Rating Methodology",
     };
   }
 
-  if (
-    includesAny(input, [
-      "website",
-      "web site",
-      "redesign",
-      "landing page",
-      "online presence",
-      "contact form",
-      "seo",
-    ])
-  ) {
+  if (includesAny(input, ["vendor", "contractor", "electrician", "plumber", "plumbing", "electrical", "hvac", "roof", "roofing", "pest", "termite", "engineer", "provider"])) {
     return {
       text:
-        "Website Development is the right service for a new business or personal website, a redesign, mobile improvements, landing pages, lead-generation forms, analytics, and platform integrations.",
-      page: "website-development",
-      actionLabel: "View Website Development",
-    };
-  }
-
-  if (
-    includesAny(input, [
-      "automation",
-      "automate",
-      "repetitive",
-      "reminder",
-      "approval",
-      "data entry",
-      "customer follow-up",
-      "customer follow up",
-      "notification",
-      "recurring report",
-    ])
-  ) {
-    return {
-      text:
-        "Automation Development can connect existing tools, reduce manual entry, automate reminders and approvals, improve customer follow-up, and simplify recurring administrative work.",
-      page: "automation-development",
-      actionLabel: "View Automation Development",
-    };
-  }
-
-  if (
-    includesAny(input, [
-      "artificial intelligence",
-      " ai ",
-      "ai implementation",
-      "chatbot",
-      "knowledge assistant",
-      "document summary",
-      "document summaries",
-    ]) ||
-    input.startsWith("ai ") ||
-    input === "ai"
-  ) {
-    return {
-      text:
-        "AI Implementation focuses on practical business use cases such as customer-support assistance, internal knowledge tools, document processing, reporting, and administrative workflows. Solutions are planned around privacy, security, data quality, and human review.",
-      page: "ai-implementation",
-      actionLabel: "View AI Implementation",
-    };
-  }
-
-  if (
-    includesAny(input, [
-      "application",
-      "app development",
-      "software",
-      "dashboard",
-      "internal tool",
-      "spreadsheet modernization",
-      "platform rollout",
-    ])
-  ) {
-    return {
-      text:
-        "Application Development & Implementation is appropriate for custom internal tools, dashboards, spreadsheet modernization, and third-party software rollouts with training and process support.",
-      page: "application-development",
-      actionLabel: "View Application Development",
-    };
-  }
-
-  if (
-    includesAny(input, [
-      "digital services",
-      "website or automation",
-      "website and automation",
-      "web automation",
-    ])
-  ) {
-    return {
-      text:
-        "Digital projects generally fall under Website Development, Automation Development, AI Implementation, or Application Development. Choose the closest match below.",
-      choices: DIGITAL_CHOICES,
-    };
-  }
-
-  if (
-    includesAny(input, [
-      "wifi",
-      "wi-fi",
-      "mesh",
-      "network",
-      "internet",
-      "router",
-      "television",
-      " tv ",
-      "smart home",
-      "smart-home",
-      "connected device",
-      "printer",
-      "streaming device",
-      "technology installation",
-    ]) ||
-    input.startsWith("tv ") ||
-    input === "tv"
-  ) {
-    return {
-      text:
-        "Technology Installation & Refresh Services covers mesh Wi-Fi, internet-provider coordination, televisions, streaming equipment, smart-home and connected devices, printers, office equipment, and broader residential or commercial technology refreshes.",
-      page: "technology-installation",
-      actionLabel: "View Technology Installation",
-    };
-  }
-
-  if (
-    includesAny(input, [
-      "training",
-      "training video",
-      "documentation",
-      "how-to guide",
-      "how to guide",
-      "onboarding",
-      "standard operating procedure training",
-    ])
-  ) {
-    return {
-      text:
-        "Training Videos & Support is designed for employee onboarding, system walkthroughs, homeowner or guest instructions, written guides, and reusable support libraries.",
-      page: "training-support",
-      actionLabel: "View Training & Support",
-    };
-  }
-
-  if (
-    includesAny(input, [
-      "workflow",
-      "sop",
-      "process improvement",
-      "handoff",
-      "operational efficiency",
-      "business operations help",
-    ])
-  ) {
-    return {
-      text:
-        "Workflow Optimization is appropriate when a process has unnecessary steps, unclear ownership, inconsistent handoffs, or needs practical SOPs and better operating structure.",
-      page: "workflow-optimization",
-      actionLabel: "View Workflow Optimization",
-    };
-  }
-
-  if (
-    includesAny(input, [
-      "reporting",
-      "analytics",
-      "analysis",
-      "kpi",
-      "dashboard reporting",
-      "business insight",
-      "performance trend",
-      "data",
-    ])
-  ) {
-    return {
-      text:
-        "Business Insight & Analysis helps turn operational information into useful reporting, trend reviews, dashboards, and practical recommendations for decision-makers.",
-      page: "business-insight",
-      actionLabel: "View Business Insight & Analysis",
-    };
-  }
-
-  if (includesAny(input, ["business operations", "business process"])) {
-    return {
-      text:
-        "Business-support projects generally fall under Workflow Optimization, Business Insight & Analysis, or Training Videos & Support.",
-      choices: BUSINESS_CHOICES,
-    };
-  }
-
-  if (
-    includesAny(input, [
-      "electrician",
-      "plumber",
-      "plumbing",
-      "electrical",
-      "hvac",
-      "air conditioning",
-      "roof",
-      "roofing",
-      "licensed contractor",
-      "licensed trade",
-      "specialist",
-      "specialized repair",
-      "vendor coordination",
-      "find a vendor",
-      "contractor",
-    ])
-  ) {
-    return {
-      text:
-        "Vendor Coordination is the right starting point when work requires a qualified or licensed professional. ATS can help identify appropriate local vendors and assist with communication, estimates, scheduling, access, and project updates. The third-party vendor separately quotes and performs the specialized work.",
+        "Vendor Coordination is appropriate when the work requires a qualified or licensed professional. ATS uses an internal directory with 580 entries, 316 unique providers, 39 separated service families, and East/West Hawaiʻi coverage. We match the exact scope, review available evidence, complete current verification, and support proposals, scheduling, access, and documentation. The client selects the provider and approves all work and cost.",
       page: "vendor-coordination",
       actionLabel: "View Vendor Coordination",
+      choices: [
+        { label: "Explain provider ratings", prompt: "How do you rate providers?" },
+        { label: "Request vendor assistance", prompt: "I want to request vendor assistance." },
+      ],
     };
   }
 
-  if (
-    includesAny(input, [
-      "handyman",
-      "mount",
-      "mounting",
-      "assembly",
-      "assemble",
-      "minor repair",
-      "adjustment",
-      "punch list",
-      "shelf",
-      "shelving",
-      "cabinet hardware",
-      "door hardware",
-    ])
-  ) {
+  if (includesAny(input, ["property field", "property check", "visual check", "storm check", "vendor access", "delivery verification", "onsite support"])) {
     return {
       text:
-        "Handyman Services covers minor repairs, mounting, assembly, adjustments, hardware replacement, and property punch-list work that does not require a licensed contractor or specialized trade professional.",
+        "Property Field Services provide owner-directed visual checks, dated photographs, factual notes, vendor access, delivery or installation verification, incident checks, and defined onsite tasks. ATS does not provide property management, leasing, tenant placement, rent handling, or caretaker/custodian authority.",
+      page: "property-field-services",
+      actionLabel: "View Property Field Services",
+    };
+  }
+
+  if (includesAny(input, ["property manager", "property management", "caretaker", "custodian", "tenant", "rent collection", "lease"])) {
+    return {
+      text:
+        "ATS is not offering property management, caretaker/custodian, leasing, tenant-placement, rent/deposit handling, lease administration, or landlord-tenant representation. Property Field Services are limited to clearly authorized onsite observations, documentation, access, and tasks while the owner retains every management decision.",
+      page: "property-field-services",
+      actionLabel: "Review Scope Boundaries",
+    };
+  }
+
+  if (includesAny(input, ["handyman", "mount", "assembly", "assemble", "minor repair", "adjustment", "punch list"])) {
+    return {
+      text:
+        "Handyman Services cover minor repairs, mounting, assembly, adjustments, compatible installations, and punch-list work that does not require a contractor or regulated trade license. ATS documents scope and stops or refers the project if concealed conditions or expanded work require a qualified professional.",
       page: "handyman-services",
       actionLabel: "View Handyman Services",
     };
   }
 
-  if (includesAny(input, ["repair", "fix", "broken", "improvement"])) {
+  if (includesAny(input, ["workflow", "sop", "process", "handoff", "operations", "efficiency"])) {
     return {
       text:
-        "The right service depends on the type of work. ATS can perform appropriate minor handyman work, while electrical, plumbing, HVAC, roofing, structural, and other specialized work should be coordinated with a qualified professional.",
-      choices: REPAIR_CHOICES,
+        "Workflow Optimization reviews how tasks and information move, clarifies roles and decision points, develops practical SOPs, improves handoffs, and supports implementation. Choose another option below if the need is more technology-specific.",
+      page: "workflow-optimization",
+      actionLabel: "View Workflow Optimization",
+      choices: DIGITAL_CHOICES,
     };
   }
 
-  if (
-    includesAny(input, [
-      "about",
-      "who are you",
-      "company",
-      "locally owned",
-      "owner",
-      "aloha technology services",
-    ])
-  ) {
+  if (includesAny(input, ["wifi", "wi-fi", "mesh", "internet", "router", "television", " tv", "smart home", "connected device", "technology installation"])) {
     return {
       text:
-        "Aloha Technology Services LLC is a locally owned and operated Hawaiʻi Island company providing technology, digital, owner-directed property field services, residential home inspections, and operational support for businesses, homeowners, property owners, and property managers.",
-      page: "about",
-      actionLabel: "About ATS",
+        "Technology Installation covers mesh Wi-Fi, internet-provider coordination, televisions, streaming equipment, connected devices and appliances, printers, displays, and residential or commercial technology refreshes.",
+      page: "technology-installation",
+      actionLabel: "View Technology Installation",
     };
   }
 
-  if (
-    includesAny(input, [
-      "contact",
-      "email",
-      "call",
-      "phone",
-      "consultation",
-      "book",
-      "schedule",
-      "appointment",
-      "talk to someone",
-    ])
-  ) {
+  if (includesAny(input, ["training", "onboarding", "how-to", "how to", "documentation", "walkthrough", "support library"])) {
     return {
       text:
-        "Use the consultation form to share your project type, location, timeline, and details. ATS will review the request and follow up about scope, availability, and the most practical next step.",
+        "Training and Support includes employee onboarding videos, system walkthroughs, homeowner or guest instructions, written guides, and reusable support libraries for procedures, applications, and devices.",
+      page: "training-support",
+      actionLabel: "View Training & Support",
+    };
+  }
+
+  if (includesAny(input, ["website", "web site", "redesign", "landing page", "seo", "online presence"])) {
+    return {
+      text:
+        "Website Development includes new responsive websites, redesigns, landing pages, lead forms, analytics, integrations, search foundations, and ongoing service updates.",
+      page: "website-development",
+      actionLabel: "View Website Development",
+    };
+  }
+
+  if (includesAny(input, ["analysis", "reporting", "dashboard", "kpi", "insight", "trend", "data"])) {
+    return {
+      text:
+        "Insight & Analysis turns operational information into leadership-ready reporting, dashboards, trend reviews, issue patterns, and practical recommendations.",
+      page: "business-insight",
+      actionLabel: "View Insight & Analysis",
+    };
+  }
+
+  if (includesAny(input, ["automation", "automate", "repetitive", "reminder", "approval", "follow-up", "follow up", "data entry"])) {
+    return {
+      text:
+        "Automation Development can route inquiries, create tasks, send reminders, organize recurring reports, reduce duplicate entry, and support repeatable administrative or property-service workflows with clear exception handling.",
+      page: "automation-development",
+      actionLabel: "View Automation Development",
+    };
+  }
+
+  if (includesAny(input, ["artificial intelligence", "ai implementation", "chatbot", "knowledge assistant", "document summary"]) || input === "ai" || input.startsWith("ai ")) {
+    return {
+      text:
+        "AI Implementation focuses on defined use cases such as internal knowledge, customer-support drafting, document assistance, and reporting. ATS plans for privacy, data quality, approved access, human review, and situations where AI should not be used.",
+      page: "ai-implementation",
+      actionLabel: "View AI Implementation",
+    };
+  }
+
+  if (includesAny(input, ["application", "app development", "software", "internal tool", "spreadsheet modernization", "platform rollout"])) {
+    return {
+      text:
+        "Application Development is appropriate for internal tools, operational dashboards, spreadsheet modernization, field or inspection tools, request portals, and third-party application implementation.",
+      page: "application-development",
+      actionLabel: "View Application Development",
+    };
+  }
+
+  if (includesAny(input, ["price", "pricing", "cost", "rate", "quote", "how much", "estimate"])) {
+    return {
+      text:
+        "Pricing is determined after reviewing the service, property or project location, scope, access, size, system complexity, materials, third-party costs, and expected time. Moisture, irrigation, and pool/spa inspections may qualify for a reduced bundled rate when added to another inspection. A written quote or proposal is provided when appropriate.",
+      page: "contact",
+      actionLabel: "Request a Quote",
+    };
+  }
+
+  if (includesAny(input, ["service area", "where do you work", "big island", "hawaii island", "hawai'i island", "kona", "waikoloa", "waimea", "hilo", "pahoa", "keaau"])) {
+    return {
+      text:
+        "ATS is locally owned and operated on Hawaiʻi Island. Availability and travel considerations depend on the project location and scope, so include the property or business area when requesting service.",
+      page: "contact",
+      actionLabel: "Contact ATS",
+    };
+  }
+
+  if (includesAny(input, ["contact", "email", "phone", "request service", "request vendor assistance"])) {
+    return {
+      text:
+        "Use the contact page to select the exact service and provide the property or project location, desired timing, observed concern, and desired outcome. ATS can then review scope and availability.",
       page: "contact",
       actionLabel: "Open Contact Form",
     };
@@ -545,47 +341,26 @@ function buildReply(rawInput) {
 
   return {
     text:
-      "I’m not fully certain which service fits from that description. Choose the closest category below, or open the contact form and provide the project details so ATS can review it directly.",
+      "I can help with Property Field Services, Home Inspections, Vendor Coordination, Handyman Services, Workflow Optimization, Technology Installation, Training and Support, Website Development, Insight & Analysis, Automation, AI, and Application Development. Choose a category below or add more detail about the result you need.",
     choices: SERVICE_CHOICES,
-    page: "contact",
-    actionLabel: "Contact ATS",
   };
 }
 
-function ChatMessage({ message, onNavigate, onChoice }) {
-  const isAssistant = message.sender === "assistant";
-
+function Message({ message, onChoice, onNavigate }) {
+  const assistant = message.sender === "assistant";
   return (
-    <div className={`flex ${isAssistant ? "justify-start" : "justify-end"}`}>
-      <div
-        className={`max-w-[88%] rounded-2xl px-4 py-3 text-sm leading-6 ${
-          isAssistant
-            ? "border border-slate-200 bg-white text-slate-700 shadow-sm"
-            : "bg-[#17324D] text-white"
-        }`}
-      >
+    <div className={`flex ${assistant ? "justify-start" : "justify-end"}`}>
+      <div className={`max-w-[88%] rounded-2xl px-4 py-3 text-sm leading-6 ${assistant ? "bg-slate-100 text-slate-700" : "bg-[#1268D5] text-white"}`}>
         <p>{message.text}</p>
-
-        {message.page && (
-          <button
-            type="button"
-            onClick={() => onNavigate(message.page)}
-            className="mt-3 inline-flex items-center gap-2 rounded-xl bg-[#1D84B5] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#176f98]"
-          >
-            {message.actionLabel || "View Page"}
-            <ArrowRight className="h-4 w-4" />
+        {message.actionLabel && message.page && (
+          <button onClick={() => onNavigate(message.page)} className="mt-3 inline-flex items-center gap-2 font-bold text-[#0D57B5] hover:underline">
+            {message.actionLabel} <ArrowRight className="h-4 w-4" />
           </button>
         )}
-
-        {message.choices && message.choices.length > 0 && (
+        {message.choices && (
           <div className="mt-3 flex flex-wrap gap-2">
             {message.choices.map((choice) => (
-              <button
-                key={`${message.id}-${choice.label}`}
-                type="button"
-                onClick={() => onChoice(choice.prompt)}
-                className="rounded-full border border-[#CBE8E7] bg-[#F2FBFB] px-3 py-1.5 text-left text-xs font-semibold text-[#17324D] transition hover:border-[#3FA7A3] hover:bg-white"
-              >
+              <button key={choice.label} onClick={() => onChoice(choice.prompt)} className="rounded-full border border-slate-300 bg-white px-3 py-1.5 text-left text-xs font-semibold text-slate-700 transition hover:border-[#1268D5] hover:text-[#1268D5]">
                 {choice.label}
               </button>
             ))}
@@ -600,161 +375,48 @@ export default function AlohaAssistant({ onNavigate }) {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState(INITIAL_MESSAGES);
   const [input, setInput] = useState("");
-  const messageId = useRef(2);
-  const transcriptRef = useRef(null);
-  const inputRef = useRef(null);
+  const listRef = useRef(null);
 
   useEffect(() => {
-    if (!isOpen) return;
-    const frame = window.requestAnimationFrame(() => {
-      transcriptRef.current?.scrollTo({
-        top: transcriptRef.current.scrollHeight,
-        behavior: "smooth",
-      });
-      inputRef.current?.focus();
-    });
-    return () => window.cancelAnimationFrame(frame);
-  }, [isOpen, messages]);
+    if (isOpen) {
+      window.setTimeout(() => {
+        if (listRef.current) listRef.current.scrollTop = listRef.current.scrollHeight;
+      }, 20);
+    }
+  }, [messages, isOpen]);
 
-  function resetConversation() {
+  const sendMessage = (value) => {
+    const text = value.trim();
+    if (!text) return;
+    const userMessage = { id: Date.now(), sender: "user", text };
+    const reply = buildReply(text);
+    setMessages((current) => [...current, userMessage, { id: Date.now() + 1, sender: "assistant", ...reply }]);
+    setInput("");
+  };
+
+  const reset = () => {
     setMessages(INITIAL_MESSAGES);
     setInput("");
-  }
-
-  function navigateTo(page) {
-    onNavigate(page);
-    setIsOpen(false);
-  }
-
-  function sendMessage(value) {
-    const trimmed = value.trim();
-    if (!trimmed) return;
-
-    const userMessage = {
-      id: messageId.current++,
-      sender: "user",
-      text: trimmed,
-    };
-    const reply = buildReply(trimmed);
-    const assistantMessage = {
-      id: messageId.current++,
-      sender: "assistant",
-      ...reply,
-    };
-
-    setMessages((current) => [...current, userMessage, assistantMessage]);
-    setInput("");
-  }
-
-  function handleSubmit(event) {
-    event.preventDefault();
-    sendMessage(input);
-  }
+  };
 
   return (
-    <div className="fixed bottom-4 right-4 z-[80] sm:bottom-6 sm:right-6">
+    <div className="fixed bottom-5 right-5 z-[70]">
       {isOpen && (
-        <section
-          aria-label="Aloha Technology Services website assistant"
-          className="mb-3 flex max-h-[min(650px,calc(100vh-7rem))] w-[calc(100vw-2rem)] max-w-[400px] flex-col overflow-hidden rounded-[1.75rem] border border-slate-200 bg-slate-50 shadow-2xl"
-        >
-          <header className="flex items-center justify-between bg-[#17324D] px-5 py-4 text-white">
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-white text-[#17324D]">
-                <Bot className="h-5 w-5" />
-              </div>
-              <div>
-                <h2 className="font-semibold">Aloha Assistant</h2>
-                <p className="text-xs text-slate-300">Service and website guide</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-1">
-              <button
-                type="button"
-                onClick={resetConversation}
-                className="rounded-xl p-2 text-slate-200 transition hover:bg-white/10 hover:text-white"
-                aria-label="Restart conversation"
-                title="Restart conversation"
-              >
-                <RotateCcw className="h-4 w-4" />
-              </button>
-              <button
-                type="button"
-                onClick={() => setIsOpen(false)}
-                className="rounded-xl p-2 text-slate-200 transition hover:bg-white/10 hover:text-white"
-                aria-label="Close website assistant"
-              >
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-          </header>
-
-          <div
-            ref={transcriptRef}
-            className="flex-1 space-y-4 overflow-y-auto px-4 py-5"
-            aria-live="polite"
-          >
-            {messages.map((message) => (
-              <ChatMessage
-                key={message.id}
-                message={message}
-                onNavigate={navigateTo}
-                onChoice={sendMessage}
-              />
-            ))}
+        <div className="mb-3 flex h-[min(650px,calc(100vh-110px))] w-[min(390px,calc(100vw-32px))] flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
+          <div className="flex items-center justify-between bg-[#061B33] px-4 py-3 text-white">
+            <div className="flex items-center gap-3"><div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#1268D5]"><Bot className="h-5 w-5" /></div><div><p className="font-bold">Ask ATS</p><p className="text-xs text-slate-300">Service and inspection guide</p></div></div>
+            <div className="flex items-center gap-1"><button onClick={reset} className="rounded-lg p-2 hover:bg-white/10" aria-label="Reset assistant"><RotateCcw className="h-4 w-4" /></button><button onClick={() => setIsOpen(false)} className="rounded-lg p-2 hover:bg-white/10" aria-label="Close assistant"><X className="h-4 w-4" /></button></div>
           </div>
-
-          <form
-            onSubmit={handleSubmit}
-            className="border-t border-slate-200 bg-white p-3"
-          >
-            <div className="flex items-end gap-2">
-              <label htmlFor="ats-assistant-input" className="sr-only">
-                Ask a question about Aloha Technology Services
-              </label>
-              <textarea
-                ref={inputRef}
-                id="ats-assistant-input"
-                value={input}
-                onChange={(event) => setInput(event.target.value)}
-                onKeyDown={(event) => {
-                  if (event.key === "Enter" && !event.shiftKey) {
-                    event.preventDefault();
-                    sendMessage(input);
-                  }
-                }}
-                rows={1}
-                maxLength={500}
-                placeholder="Ask about services, pricing, or where to start…"
-                className="max-h-28 min-h-11 flex-1 resize-none rounded-2xl border border-slate-300 px-4 py-3 text-sm text-slate-800 outline-none transition placeholder:text-slate-400 focus:border-[#1D84B5] focus:ring-2 focus:ring-[#1D84B5]/15"
-              />
-              <button
-                type="submit"
-                disabled={!input.trim()}
-                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#1D84B5] text-white shadow-sm transition hover:bg-[#176f98] disabled:cursor-not-allowed disabled:opacity-40"
-                aria-label="Send question"
-              >
-                <ArrowRight className="h-5 w-5" />
-              </button>
-            </div>
-            <p className="mt-2 px-1 text-[11px] leading-4 text-slate-400">
-              Automated website guide. For project-specific advice, pricing, or scheduling,
-              use the consultation form.
-            </p>
+          <div ref={listRef} className="flex-1 space-y-3 overflow-y-auto p-4">
+            {messages.map((message) => <Message key={message.id} message={message} onChoice={sendMessage} onNavigate={(page) => { onNavigate(page); setIsOpen(false); }} />)}
+          </div>
+          <form onSubmit={(event) => { event.preventDefault(); sendMessage(input); }} className="border-t border-slate-200 p-3">
+            <div className="flex items-end gap-2"><textarea value={input} onChange={(event) => setInput(event.target.value)} onKeyDown={(event) => { if (event.key === "Enter" && !event.shiftKey) { event.preventDefault(); sendMessage(input); } }} rows="2" placeholder="Describe what you need..." className="min-h-[48px] flex-1 resize-none rounded-xl border border-slate-300 px-3 py-2 text-sm outline-none focus:border-[#1268D5] focus:ring-2 focus:ring-blue-100" /><button type="submit" className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#1268D5] text-white hover:bg-[#0D57B5]" aria-label="Send message"><Send className="h-5 w-5" /></button></div>
           </form>
-        </section>
+        </div>
       )}
-
-      <button
-        type="button"
-        onClick={() => setIsOpen((current) => !current)}
-        className="ml-auto flex items-center gap-2 rounded-full border border-white/20 bg-[#17324D] px-4 py-3 font-semibold text-white shadow-xl transition hover:-translate-y-0.5 hover:bg-[#214765] hover:shadow-2xl focus:outline-none focus:ring-2 focus:ring-[#1D84B5] focus:ring-offset-2"
-        aria-expanded={isOpen}
-        aria-label={isOpen ? "Close Aloha Assistant" : "Open Aloha Assistant"}
-      >
-        <Bot className="h-5 w-5" />
-        <span className="hidden sm:inline">{isOpen ? "Close" : "Ask ATS"}</span>
+      <button onClick={() => setIsOpen((value) => !value)} className="flex items-center gap-2 rounded-full bg-[#1268D5] px-5 py-3 font-bold text-white shadow-xl transition hover:-translate-y-0.5 hover:bg-[#0D57B5]" aria-expanded={isOpen}>
+        {isOpen ? <X className="h-5 w-5" /> : <Bot className="h-5 w-5" />}<span>{isOpen ? "Close" : "Ask ATS"}</span>
       </button>
     </div>
   );

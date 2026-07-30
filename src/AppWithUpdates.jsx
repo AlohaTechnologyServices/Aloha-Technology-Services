@@ -85,13 +85,39 @@ function updateMobileServicesMenu() {
 }
 
 function improveCardContrast() {
-  // Card.jsx always includes bg-white. Mark every Card that App.jsx also
-  // intended to render with the navy bg-[#061B33] utility so supplemental CSS
-  // can reliably restore the navy background regardless of Tailwind rule order.
   document.querySelectorAll("div.rounded-2xl").forEach((card) => {
     if (card.classList.contains("bg-[#061B33]")) {
       card.classList.add("ats-dark-card");
     }
+  });
+}
+
+function useDedicatedHomeInspectionHero() {
+  const heroImage = document.querySelector(
+    'img[alt="Hawaiʻi Island home representing residential inspection services"]',
+  );
+
+  if (heroImage && heroImage.getAttribute("src") !== "/images/home-inspection-hero.jpg") {
+    heroImage.setAttribute("src", "/images/home-inspection-hero.jpg");
+  }
+}
+
+function improveInspectionImageLayout() {
+  const detailSection = document.getElementById("inspection-detail");
+  const detailGrid = detailSection?.firstElementChild;
+  const imageShell = detailGrid?.firstElementChild;
+  const image = imageShell?.querySelector("img");
+
+  if (imageShell) {
+    imageShell.classList.add("ats-inspection-detail-image-shell");
+  }
+
+  if (image) {
+    image.classList.add("ats-inspection-detail-image");
+  }
+
+  document.querySelectorAll('img[alt$=" service"]').forEach((cardImage) => {
+    cardImage.classList.add("ats-inspection-card-image");
   });
 }
 
@@ -100,6 +126,8 @@ function applyWebsiteUpdates() {
   updateDesktopServicesMenu();
   updateMobileServicesMenu();
   improveCardContrast();
+  useDedicatedHomeInspectionHero();
+  improveInspectionImageLayout();
 }
 
 export default function AppWithUpdates() {

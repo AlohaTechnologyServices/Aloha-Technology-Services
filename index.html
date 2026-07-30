@@ -4,147 +4,74 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Aloha Technology Services LLC | Home Inspections, Technology & Property Field Services</title>
+    <title>Aloha Technology Services LLC | Property, Inspections & Technology</title>
     <meta
       name="description"
-      content="Locally owned Hawaiʻi Island company providing owner-directed property field services, residential home inspections, website development, automation, AI implementation, technology installation, workflow improvement, vendor coordination, and handyman services."
+      content="Hawaiʻi Island property field services, residential home inspections, vendor coordination, handyman support, workflow improvement, technology installation, websites, automation, AI and application development."
     />
     <meta name="robots" content="index, follow, max-image-preview:large" />
     <meta name="googlebot" content="index, follow, max-image-preview:large" />
     <meta name="author" content="Aloha Technology Services LLC" />
-    <meta name="theme-color" content="#17324D" />
+    <meta name="theme-color" content="#061B33" />
 
+    <link rel="canonical" href="https://atshawaii.vercel.app/" />
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
     <link rel="manifest" href="/site.webmanifest" />
-    <link rel="preload" as="image" href="/images/aloha-technology-services-header-banner.png" />
+    <link rel="preload" as="image" href="/images/ats-logo.png" />
+    <link rel="preload" as="image" href="/images/inspection-hero.jpg" />
 
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Aloha Technology Services LLC" />
     <meta property="og:title" content="Aloha Technology Services LLC" />
     <meta
       property="og:description"
-      content="Owner-directed property field services, residential home inspections, technology, websites, automation, AI, and operational support for Hawaiʻi Island."
+      content="Property field services, home inspections, vendor coordination, handyman support, operations and technology solutions for Hawaiʻi Island."
     />
     <meta property="og:url" content="https://atshawaii.vercel.app/" />
-    <meta
-      property="og:image"
-      content="https://atshawaii.vercel.app/images/aloha-technology-services-header-banner.png"
-    />
+    <meta property="og:image" content="https://atshawaii.vercel.app/images/ats-social-card.jpg" />
+    <meta property="og:image:alt" content="Aloha Technology Services LLC logo" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Aloha Technology Services LLC" />
     <meta
       name="twitter:description"
-      content="Owner-directed property field services, residential home inspections, technology, websites, automation, AI, and operational support for Hawaiʻi Island."
+      content="Property field services, home inspections, vendor coordination, handyman support, operations and technology solutions for Hawaiʻi Island."
     />
-    <meta
-      name="twitter:image"
-      content="https://atshawaii.vercel.app/images/aloha-technology-services-header-banner.png"
-    />
+    <meta name="twitter:image" content="https://atshawaii.vercel.app/images/ats-social-card.jpg" />
 
     <style>
       .seo-shell {
         margin: 0;
         background: #ffffff;
-        color: #17324d;
+        color: #061b33;
         font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       }
       .seo-shell * { box-sizing: border-box; }
-      .seo-shell a { color: inherit; }
-      .seo-shell-header {
-        border-bottom: 1px solid #e2e8f0;
-        background: #ffffff;
-      }
-      .seo-shell-header-inner,
-      .seo-shell-main,
-      .seo-shell-footer {
-        width: min(1180px, calc(100% - 32px));
-        margin: 0 auto;
-      }
-      .seo-shell-header-inner {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 24px;
-        min-height: 80px;
-      }
-      .seo-shell-logo {
-        display: block;
-        width: min(620px, 58vw);
-        max-height: 68px;
-        object-fit: contain;
-        object-position: left center;
-      }
-      .seo-shell-nav {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 16px;
-        font-weight: 700;
-      }
-      .seo-shell-main { padding: 56px 0; }
-      .seo-shell-hero {
-        padding: 48px;
-        border-radius: 32px;
-        background: #17324d;
-        color: #ffffff;
-      }
-      .seo-shell-hero h1 {
-        max-width: 800px;
-        margin: 0;
-        font-size: clamp(2.4rem, 5vw, 4.75rem);
-        line-height: 1.04;
-      }
-      .seo-shell-hero p {
-        max-width: 850px;
-        margin: 24px 0 0;
-        color: #dbe7f0;
-        font-size: 1.125rem;
-        line-height: 1.75;
-      }
-      .seo-shell-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 24px;
-        margin-top: 48px;
-      }
-      .seo-shell-card {
-        padding: 28px;
-        border: 1px solid #dbe4ec;
-        border-radius: 24px;
-        background: #ffffff;
-      }
-      .seo-shell-card h2 { margin-top: 0; }
-      .seo-shell-founder {
-        display: grid;
-        grid-template-columns: minmax(220px, 0.8fr) minmax(0, 1.2fr);
-        align-items: center;
-        gap: 28px;
-      }
-      .seo-shell-founder img {
-        display: block;
-        width: 100%;
-        height: auto;
-        aspect-ratio: 5 / 4;
-        object-fit: cover;
-        border-radius: 18px;
-      }
-      .seo-shell-services {
-        columns: 2;
-        padding-left: 22px;
-        line-height: 2;
-      }
-      .seo-shell-footer {
-        padding: 32px 0 48px;
-        border-top: 1px solid #e2e8f0;
-        color: #475569;
-      }
-      @media (max-width: 760px) {
-        .seo-shell-header-inner { align-items: flex-start; flex-direction: column; padding: 12px 0; }
-        .seo-shell-logo { width: 100%; }
-        .seo-shell-grid { grid-template-columns: 1fr; }
-        .seo-shell-founder { grid-template-columns: 1fr; }
-        .seo-shell-services { columns: 1; }
-        .seo-shell-hero { padding: 32px 24px; }
+      .seo-header { background: #061b33; color: white; }
+      .seo-header-inner,
+      .seo-main,
+      .seo-footer-inner { width: min(1180px, calc(100% - 32px)); margin: 0 auto; }
+      .seo-header-inner { min-height: 84px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+      .seo-logo { display: block; width: min(310px, 62vw); max-height: 72px; object-fit: contain; object-position: left center; }
+      .seo-nav { display: flex; flex-wrap: wrap; gap: 16px; font-size: 14px; font-weight: 700; }
+      .seo-nav a { color: white; text-decoration: none; }
+      .seo-main { padding: 48px 0 64px; }
+      .seo-hero { overflow: hidden; border-radius: 30px; background: #061b33; color: white; }
+      .seo-hero-inner { padding: 48px; background: linear-gradient(120deg, rgba(18,104,213,.2), transparent); }
+      .seo-hero h1 { max-width: 870px; margin: 0; font-size: clamp(2.35rem, 5vw, 4.7rem); line-height: 1.05; }
+      .seo-hero p { max-width: 850px; margin: 22px 0 0; color: #dbe7f0; font-size: 1.1rem; line-height: 1.75; }
+      .seo-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-top: 36px; }
+      .seo-card { padding: 25px; border: 1px solid #dbe4ec; border-radius: 20px; background: white; }
+      .seo-card h2 { margin-top: 0; }
+      .seo-services { columns: 2; padding-left: 20px; line-height: 1.95; }
+      .seo-services a { color: #0d57b5; }
+      .seo-footer { border-top: 1px solid #dbe4ec; background: #f8fafc; }
+      .seo-footer-inner { padding: 30px 0 45px; color: #475569; }
+      @media (max-width: 820px) {
+        .seo-header-inner { align-items: flex-start; flex-direction: column; padding: 12px 0; }
+        .seo-grid { grid-template-columns: 1fr; }
+        .seo-services { columns: 1; }
+        .seo-hero-inner { padding: 34px 24px; }
       }
     </style>
 
@@ -156,8 +83,10 @@
         "name": "Aloha Technology Services LLC",
         "url": "https://atshawaii.vercel.app/",
         "email": "hawaiiats@gmail.com",
-        "image": "https://atshawaii.vercel.app/images/aloha-technology-services-header-banner.png",
-        "description": "Founded by Kenyon Koa Smith, Aloha Technology Services LLC combines college education, supervised electrical experience, irrigation and landscaping experience, flooring installation, luxury property operations, technology, inspections, process improvement, and local Hawaiʻi Island experience.",
+        "telephone": "+1-808-443-7148",
+        "image": "https://atshawaii.vercel.app/images/ats-social-card.jpg",
+        "logo": "https://atshawaii.vercel.app/images/ats-logo.png",
+        "description": "Hawaiʻi Island property field services, home inspections, vendor coordination, handyman support, operations and practical technology solutions.",
         "foundingDate": "2024",
         "founder": {
           "@type": "Person",
@@ -177,14 +106,18 @@
           "@type": "OfferCatalog",
           "name": "Aloha Technology Services LLC Services",
           "itemListElement": [
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Website Development", "url": "https://atshawaii.vercel.app/services/website-development" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Automation Development", "url": "https://atshawaii.vercel.app/services/automation-development" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI Implementation", "url": "https://atshawaii.vercel.app/services/ai-implementation" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Technology Installation and Refreshes", "url": "https://atshawaii.vercel.app/services/technology-installation" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Owner-Directed Property Field Services", "url": "https://atshawaii.vercel.app/services/property-field-services" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Property Field Services", "url": "https://atshawaii.vercel.app/services/property-field-services" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Home Inspections", "url": "https://atshawaii.vercel.app/services/home-inspections" } },
             { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Vendor Coordination", "url": "https://atshawaii.vercel.app/services/vendor-coordination" } },
             { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Handyman Services", "url": "https://atshawaii.vercel.app/services/handyman-services" } },
-            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Residential Home Inspections", "url": "https://atshawaii.vercel.app/services/home-inspections" } }
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Workflow Optimization", "url": "https://atshawaii.vercel.app/services/workflow-optimization" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Technology Installation", "url": "https://atshawaii.vercel.app/services/technology-installation" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Training and Support", "url": "https://atshawaii.vercel.app/services/training-support" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Website Development", "url": "https://atshawaii.vercel.app/services/website-development" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Insight & Analysis", "url": "https://atshawaii.vercel.app/services/business-insight" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Automation Development", "url": "https://atshawaii.vercel.app/services/automation-development" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "AI Implementation", "url": "https://atshawaii.vercel.app/services/ai-implementation" } },
+            { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Application Development", "url": "https://atshawaii.vercel.app/services/application-development" } }
           ]
         }
       }
@@ -193,107 +126,65 @@
 
   <body class="seo-shell">
     <div id="root">
-      <header class="seo-shell-header">
-        <div class="seo-shell-header-inner">
+      <header class="seo-header">
+        <div class="seo-header-inner">
           <a href="/" aria-label="Aloha Technology Services LLC homepage">
-            <img
-              class="seo-shell-logo"
-              src="/images/aloha-technology-services-header-banner.png"
-              alt="Aloha Technology Services LLC — Website, Automation, AI, Technology, Property and Operations"
-            />
+            <img class="seo-logo" src="/images/ats-logo.png" alt="Aloha Technology Services LLC" />
           </a>
-          <nav class="seo-shell-nav" aria-label="Primary navigation">
+          <nav class="seo-nav" aria-label="Primary navigation">
             <a href="/">Home</a>
+            <a href="/services/home-inspections">Home Inspections</a>
+            <a href="/services/vendor-coordination">Vendor Coordination</a>
             <a href="/about">About</a>
-            <a href="/contact">Request a Consultation</a>
+            <a href="/contact">Contact</a>
           </nav>
         </div>
       </header>
 
-      <main class="seo-shell-main">
-        <section class="seo-shell-hero">
-          <h1>Practical solutions for Hawaiʻi businesses, homes, and properties.</h1>
-          <p>
-            Aloha Technology Services LLC is locally owned and operated on Hawaiʻi Island.
-            We help businesses, homeowners, vacation rentals, and property managers build
-            websites, implement automation and AI, improve operations, modernize technology,
-            provide owner-directed property field support, coordinate qualified local vendors, provide residential home inspections, and complete practical property projects.
-          </p>
+      <main class="seo-main">
+        <section class="seo-hero">
+          <div class="seo-hero-inner">
+            <h1>Property expertise. Practical technology. Dependable local support.</h1>
+            <p>
+              Aloha Technology Services LLC is locally owned and operated on Hawaiʻi Island. Our services are organized around Property Field Services, Home Inspections, Vendor Coordination, Handyman Services, Workflow Optimization, Technology Installation, Training and Support, Website Development, Insight & Analysis, Automation Development, AI Implementation and Application Development.
+            </p>
+          </div>
         </section>
 
-        <div class="seo-shell-grid">
-          <section class="seo-shell-card">
-            <h2>Technology, websites, automation, and AI</h2>
-            <p>
-              Services include responsive website development, custom applications, practical
-              business automation, responsible AI implementation, mesh Wi-Fi, television and
-              connected-device installation, training resources, and technical support.
-            </p>
+        <div class="seo-grid">
+          <section class="seo-card">
+            <h2>Home Inspections</h2>
+            <p>Residential inspections for buyers, sellers, owners, new construction, repair verification, moisture and water intrusion, irrigation, pools and spas, condos and rental arrival/departure documentation.</p>
           </section>
-
-          <section class="seo-shell-card">
-            <h2>Property and operational support</h2>
-            <p>
-              We provide owner-directed property field services and residential home inspections for buyers, sellers, and homeowners, along with workflow optimization, reporting and analysis, vendor coordination, project assistance, and handyman services for minor work that does not require a licensed trade professional. Property Field Services do not include leasing, tenant placement, rent handling, or property management.
-            </p>
+          <section class="seo-card">
+            <h2>Property Field Services</h2>
+            <p>Owner-directed visual checks, photographs, factual notes, authorized vendor access, delivery verification and incident documentation. No leasing or property-management authority.</p>
           </section>
-
-          <section class="seo-shell-card" style="grid-column: 1 / -1;">
-            <h2>Explore our services</h2>
-            <ul class="seo-shell-services">
+          <section class="seo-card">
+            <h2>Vendor Coordination</h2>
+            <p>Project-specific provider research supported by an internal directory covering 316 unique Hawaiʻi Island providers across 39 separated service families, with current verification required before regulated referrals.</p>
+          </section>
+          <section class="seo-card" style="grid-column: 1 / -1;">
+            <h2>Explore all services</h2>
+            <ul class="seo-services">
+              <li><a href="/services/property-field-services">Property Field Services</a></li>
+              <li><a href="/services/home-inspections">Home Inspections</a></li>
+              <li><a href="/services/vendor-coordination">Vendor Coordination</a></li>
+              <li><a href="/services/handyman-services">Handyman Services</a></li>
+              <li><a href="/services/workflow-optimization">Workflow Optimization</a></li>
+              <li><a href="/services/technology-installation">Technology Installation</a></li>
+              <li><a href="/services/training-support">Training and Support</a></li>
               <li><a href="/services/website-development">Website Development</a></li>
+              <li><a href="/services/business-insight">Insight & Analysis</a></li>
               <li><a href="/services/automation-development">Automation Development</a></li>
               <li><a href="/services/ai-implementation">AI Implementation</a></li>
               <li><a href="/services/application-development">Application Development</a></li>
-              <li><a href="/services/technology-installation">Technology Installation & Refreshes</a></li>
-              <li><a href="/services/training-support">Training Videos & Support</a></li>
-              <li><a href="/services/workflow-optimization">Workflow Optimization</a></li>
-              <li><a href="/services/business-insight">Business Insight & Analysis</a></li>
-              <li><a href="/services/property-field-services">Owner-Directed Property Field Services</a></li>
-              <li><a href="/services/vendor-coordination">Vendor Coordination</a></li>
-              <li><a href="/services/home-inspections">Residential Home Inspections</a></li>
-              <li><a href="/services/handyman-services">Handyman Services</a></li>
             </ul>
-          </section>
-
-          <section class="seo-shell-card seo-shell-founder">
-            <img
-              src="/images/kenyon-koa-smith-about.webp"
-              width="1000"
-              height="800"
-              alt="Kenyon “Koa” Smith, founder of Aloha Technology Services LLC"
-            />
-            <div>
-              <h2>Founded by Kenyon “Koa” Smith</h2>
-              <p>
-                Raised in Waimea, Koa graduated from Parker School and earned a Bachelor’s Degree
-                from the University of Hawaiʻi at Mānoa. His professional background includes
-                apprentice-level and supervised electrical installation, wiring, and troubleshooting;
-                work as an Irrigation Technician, including irrigation-system
-                installation, maintenance, troubleshooting, landscaping support, and grounds care;
-                flooring installation, preparation, and finish work; and luxury residential and resort operations supporting more than 50
-                high-value homes and coordination with over 60 local vendors.
-              </p>
-              <p><a href="/about"><strong>Learn more about Koa and ATS</strong></a></p>
-            </div>
-          </section>
-
-          <section class="seo-shell-card">
-            <h2>Project-based proposals</h2>
-            <p>
-              Pricing is determined after reviewing the scope, location, anticipated labor,
-              materials, equipment, and any third-party vendor requirements. A written proposal
-              is provided when appropriate.
-            </p>
-            <p><a href="/contact"><strong>Request a consultation</strong></a></p>
           </section>
         </div>
       </main>
 
-      <footer class="seo-shell-footer">
-        <strong>Aloha Technology Services LLC</strong><br />
-        Residential home inspections, technology, digital, property, and operational support for Hawaiʻi Island.
-      </footer>
+      <footer class="seo-footer"><div class="seo-footer-inner">Aloha Technology Services LLC • Locally owned and operated on Hawaiʻi Island • <a href="mailto:hawaiiats@gmail.com">hawaiiats@gmail.com</a></div></footer>
     </div>
 
     <script type="module" src="/src/main.jsx"></script>

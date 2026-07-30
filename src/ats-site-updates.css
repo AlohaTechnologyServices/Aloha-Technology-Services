@@ -1,4 +1,4 @@
-/* ATS wording, service-menu, and dark-card contrast refinements. */
+/* ATS wording, service-menu, dark-card, and image-presentation refinements. */
 
 .ats-services-menu-grid {
   grid-template-columns: minmax(0, 1fr) !important;
@@ -21,22 +21,42 @@
   color: #77d7cf !important;
 }
 
-/*
- * The shared Card component includes bg-white by default. Tailwind's generated
- * utility order can cause that white background to override bg-[#061B33].
- * AppWithUpdates adds this class only to cards that were intentionally styled
- * as navy cards in App.jsx.
- */
 .ats-dark-card {
   background-color: #061b33 !important;
   border-color: rgba(255, 255, 255, 0.12) !important;
   color: #ffffff !important;
 }
 
-/* Light buttons inside navy cards must retain dark, readable text. */
 .ats-dark-card button,
 .ats-dark-card button span {
   color: #061b33 !important;
+}
+
+/* All new inspection card images are 16:9, matching the existing card window. */
+.ats-inspection-card-image {
+  object-fit: cover !important;
+  object-position: center center !important;
+  image-rendering: auto;
+}
+
+/*
+ * The selected inspection panel previously stretched its image column to the
+ * full height of the text column. This forced a small source image into a very
+ * tall crop. Keep the image at a deliberate aspect ratio instead.
+ */
+.ats-inspection-detail-image-shell {
+  min-height: 0 !important;
+  width: 100% !important;
+  aspect-ratio: 16 / 9 !important;
+  align-self: start !important;
+  overflow: hidden !important;
+  background: #e8f1fb !important;
+}
+
+.ats-inspection-detail-image {
+  object-fit: cover !important;
+  object-position: center center !important;
+  image-rendering: auto;
 }
 
 @media (min-width: 768px) {
@@ -44,5 +64,11 @@
     grid-auto-flow: column !important;
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     grid-template-rows: repeat(var(--ats-menu-rows, 6), minmax(0, auto)) !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .ats-inspection-detail-image-shell {
+    aspect-ratio: 4 / 3 !important;
   }
 }

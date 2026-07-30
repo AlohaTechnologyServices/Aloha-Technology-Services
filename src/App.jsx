@@ -1,39 +1,70 @@
 import { useForm, ValidationError } from "@formspree/react";
-import AlohaAssistant from "./AlohaAssistant";
 import React, { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import {
-  ArrowRight, BarChart3, Bot, Building2, CheckCircle2, ChevronDown, Code2,
-  Globe2, Hammer, Home, Laptop, Mail, MapPin, Menu, Network, Phone, PlayCircle,
-  Smartphone, Users, Video, Wifi, Workflow, X, Zap
+  ArrowRight,
+  BarChart3,
+  Bot,
+  Building2,
+  Camera,
+  CheckCircle2,
+  ChevronDown,
+  ClipboardCheck,
+  Code2,
+  Droplets,
+  FileText,
+  Globe2,
+  Hammer,
+  HardHat,
+  Home,
+  Laptop,
+  Mail,
+  MapPin,
+  Menu,
+  Phone,
+  RefreshCw,
+  Search,
+  ShieldCheck,
+  Smartphone,
+  Sprout,
+  Thermometer,
+  Users,
+  Video,
+  Waves,
+  Wifi,
+  Workflow,
+  Wrench,
+  X,
+  Zap,
 } from "lucide-react";
+import AlohaAssistant from "./AlohaAssistant";
 
 const COMPANY_NAME = "Aloha Technology Services LLC";
 const COMPANY_EMAIL = "hawaiiats@gmail.com";
 const COMPANY_PHONE = "+1 808 443 7148";
 const COMPANY_PHONE_HREF = "+18084437148";
 const FORM_ID = "mnjlpyya";
-
 const SITE_URL = "https://atshawaii.vercel.app";
-const DEFAULT_SOCIAL_IMAGE = "/images/aloha-technology-services-header-banner.png";
+const LOGO = "/images/ats-logo.png";
+const SOCIAL_IMAGE = "/images/ats-social-card.jpg";
 const FOUNDER_PORTRAIT = "/images/kenyon-koa-smith-about.webp";
 
 const PAGE_PATHS = {
   home: "/",
   about: "/about",
   contact: "/contact",
-  "application-development": "/services/application-development",
+  "property-field-services": "/services/property-field-services",
+  "home-inspections": "/services/home-inspections",
+  "vendor-coordination": "/services/vendor-coordination",
+  "handyman-services": "/services/handyman-services",
+  "workflow-optimization": "/services/workflow-optimization",
   "technology-installation": "/services/technology-installation",
   "training-support": "/services/training-support",
   "website-development": "/services/website-development",
+  "business-insight": "/services/business-insight",
   "automation-development": "/services/automation-development",
   "ai-implementation": "/services/ai-implementation",
-  "workflow-optimization": "/services/workflow-optimization",
-  "business-insight": "/services/business-insight",
-  "vendor-coordination": "/services/vendor-coordination",
-  "handyman-services": "/services/handyman-services",
-  "home-inspections": "/services/home-inspections",
-  "property-field-services": "/services/property-field-services",
+  "application-development": "/services/application-development",
 };
 
 const PATH_TO_PAGE = Object.fromEntries(
@@ -42,82 +73,713 @@ const PATH_TO_PAGE = Object.fromEntries(
 
 const PAGE_SEO = {
   home: {
-    title: "Aloha Technology Services LLC | Technology, AI, Websites & Property Services",
+    title: "Aloha Technology Services LLC | Property, Inspection & Technology Services",
     description:
-      "Locally owned Hawaiʻi Island company providing website development, automation, AI implementation, technology installation, residential home inspections, owner-directed property field services, workflow improvement, vendor coordination, and handyman services.",
+      "Hawaiʻi Island property field services, residential home inspections, vendor coordination, handyman support, workflow improvement, technology installation, websites, automation, AI and application development.",
   },
   about: {
-    title: "About Koa Smith | Aloha Technology Services LLC",
+    title: "About Kenyon Koa Smith | Aloha Technology Services LLC",
     description:
-      "Meet Kenyon “Koa” Smith and learn how his college education, supervised electrical work, irrigation experience, flooring installation, luxury property operations, technology, and process improvement shape Aloha Technology Services LLC.",
+      "Learn about Kenyon Koa Smith and the Hawaiʻi Island property, operations, technology and hands-on experience behind Aloha Technology Services LLC.",
     image: FOUNDER_PORTRAIT,
   },
   contact: {
-    title: "Contact Aloha Technology Services LLC | Request a Consultation",
+    title: "Contact Aloha Technology Services LLC | Request Service",
     description:
-      "Contact Aloha Technology Services LLC to discuss owner-directed property field services, a residential home inspection, website, automation, AI, technology, business, vendor coordination, or handyman project on Hawaiʻi Island.",
+      "Request a home inspection, property field visit, vendor coordination, handyman service, technology project or business consultation on Hawaiʻi Island.",
   },
-  "application-development": {
-    title: "Application Development & Implementation | Aloha Technology Services LLC",
+  "property-field-services": {
+    title: "Property Field Services | Hawaiʻi Island",
     description:
-      "Custom applications, internal dashboards, third-party software implementation, and process modernization for Hawaiʻi Island businesses.",
+      "Owner-directed visual property checks, photo documentation, vendor access, delivery verification, incident checks and defined onsite support on Hawaiʻi Island.",
   },
-  "technology-installation": {
-    title: "Technology Installation & Refresh Services | Hawaiʻi Island",
+  "home-inspections": {
+    title: "Home Inspections | Buyers, Sellers & Owners | Hawaiʻi Island",
     description:
-      "TV installation, mesh Wi-Fi, connected devices, office equipment, internet-provider coordination, and technology refresh services for homes and businesses.",
+      "Detailed residential home inspections, moisture and thermal-imaging inspections, irrigation, pool and spa inspections, reinspections and custom rental arrival/departure inspections.",
   },
-  "training-support": {
-    title: "Training Videos & Technology Support | Hawaiʻi Island",
+  "vendor-coordination": {
+    title: "Vendor Coordination & Provider Research | Hawaiʻi Island",
     description:
-      "Practical employee training videos, homeowner instructions, system walkthroughs, documentation, and technology support resources.",
+      "Project-specific provider research and coordination supported by an internal Hawaiʻi Island directory covering 316 unique providers across 39 separated service families.",
   },
-  "website-development": {
-    title: "Website Development for Hawaiʻi Island Businesses",
+  "handyman-services": {
+    title: "Handyman Services | Hawaiʻi Island",
     description:
-      "Professional responsive website development, website redesigns, landing pages, integrations, and lead-generation forms for businesses and personal projects.",
-  },
-  "automation-development": {
-    title: "Business & Personal Automation Development | Hawaiʻi Island",
-    description:
-      "Custom automation for repetitive tasks, customer follow-up, reporting, approvals, reminders, data handling, and personal productivity.",
-  },
-  "ai-implementation": {
-    title: "Practical AI Implementation for Hawaiʻi Businesses",
-    description:
-      "Responsible AI implementation for customer support, document processing, reporting, internal knowledge, administration, and cost reduction.",
+      "Minor repairs, installations, mounting, assembly, adjustments and property punch-list support that do not require a licensed trade professional.",
   },
   "workflow-optimization": {
     title: "Workflow Optimization & SOP Development | Hawaiʻi Island",
     description:
-      "Business workflow analysis, process redesign, SOP development, improved handoffs, and operational efficiency consulting.",
+      "Process mapping, SOP development, improved handoffs, clear accountability and practical operational improvement for Hawaiʻi Island organizations.",
+  },
+  "technology-installation": {
+    title: "Technology Installation & Refreshes | Hawaiʻi Island",
+    description:
+      "Mesh Wi-Fi, televisions, streaming devices, connected equipment, internet-provider coordination and residential or commercial technology refreshes.",
+  },
+  "training-support": {
+    title: "Training Videos, Documentation & Support | Hawaiʻi Island",
+    description:
+      "Employee onboarding videos, system walkthroughs, homeowner instructions, written guides and practical support libraries.",
+  },
+  "website-development": {
+    title: "Website Development | Hawaiʻi Island",
+    description:
+      "Responsive business websites, redesigns, landing pages, lead forms, integrations, analytics and practical long-term maintenance.",
   },
   "business-insight": {
-    title: "Business Insight, Reporting & Operational Analysis | Hawaiʻi Island",
+    title: "Business Insight & Operational Analysis | Hawaiʻi Island",
     description:
-      "Actionable business reporting, operational analysis, dashboards, trend reviews, and decision support for Hawaiʻi Island organizations.",
+      "Leadership reporting, dashboards, trend analysis, performance reviews and decision support for practical operational improvement.",
   },
-  "vendor-coordination": {
-    title: "Vendor Coordination & Project Assistance | Hawaiʻi Island",
+  "automation-development": {
+    title: "Automation Development | Hawaiʻi Island",
     description:
-      "Local vendor identification, estimate coordination, scheduling, communication, project updates, and specialized trade referrals.",
+      "Automations for customer follow-up, reporting, approvals, reminders, data handling and repetitive administrative workflows.",
   },
-  "handyman-services": {
-    title: "Professional Handyman Services | Hawaiʻi Island",
+  "ai-implementation": {
+    title: "Practical AI Implementation | Hawaiʻi Island",
     description:
-      "Minor repairs, installations, mounting, assembly, adjustments, property punch-list work, and manufacturer-guided support on Hawaiʻi Island.",
+      "Responsible AI implementation for customer support, internal knowledge, documents, reporting and administrative workflows.",
   },
-  "property-field-services": {
-    title: "Owner-Directed Property Field Services | Hawaiʻi Island",
+  "application-development": {
+    title: "Application Development & Implementation | Hawaiʻi Island",
     description:
-      "Owner-directed visual property checks, photo documentation, vendor access, delivery verification, storm checks, and onsite field support for Hawaiʻi Island property owners. No leasing or property management services.",
-  },
-  "home-inspections": {
-    title: "Home Inspections for Buyers & Sellers | Hawaiʻi Island",
-    description:
-      "Professional residential home inspections for buyers, sellers, and homeowners on Hawaiʻi Island, with a client-friendly report, photographs, prioritized findings, and practical recommendations.",
+      "Custom internal tools, operational dashboards, spreadsheet modernization and third-party application implementation.",
   },
 };
+
+const services = [
+  {
+    id: "property-field-services",
+    title: "Property Field Services",
+    shortTitle: "Property Field Services",
+    icon: Home,
+    accent: "bg-emerald-50 text-emerald-700",
+    category: "property",
+    blurb:
+      "Owner-directed onsite checks, factual documentation, access assistance and clearly authorized field support.",
+    hero: "Reliable local field support while the owner retains every management decision.",
+    overview:
+      "ATS provides project-based, owner-directed field services for property owners who need a dependable person on Hawaiʻi Island to observe, document, provide authorized access and complete clearly defined tasks. Each visit follows a written scope or checklist. ATS operates as an independent service vendor—not as a property manager, caretaker, custodian, leasing agent or real estate representative.",
+    image: "/images/property-field-services-hero.jpg",
+    examples: [
+      {
+        title: "Scheduled Visual Property Check",
+        description:
+          "Visit accessible areas under an agreed checklist, photograph requested components and provide dated factual notes about visible conditions.",
+      },
+      {
+        title: "Vendor Access & Appointment Support",
+        description:
+          "Meet an owner-selected vendor, provide authorized access, document arrival and departure and report visible completion status.",
+      },
+      {
+        title: "Incident, Storm or Leak Check",
+        description:
+          "Respond to an owner request, document observable conditions and promptly relay information so the owner can authorize the next step.",
+      },
+      {
+        title: "Delivery & Installation Verification",
+        description:
+          "Document authorized deliveries, visible item condition, placement and apparent completion with photographs or video.",
+      },
+      {
+        title: "Technology & Connectivity Check",
+        description:
+          "Check owner-identified televisions, Wi-Fi equipment, smart devices and connected appliances and complete approved basic troubleshooting.",
+      },
+      {
+        title: "Post-Service Documentation",
+        description:
+          "Return after authorized work to photograph visible results and note apparent completion or remaining concerns without providing a warranty or professional certification.",
+      },
+    ],
+    outcomes: [
+      "Dated photographs and factual field notes",
+      "Faster owner awareness of visible concerns",
+      "Reliable onsite access and appointment support",
+      "Clear owner control over all decisions",
+    ],
+    details: [
+      {
+        title: "Visual checks and documentation",
+        description:
+          "Exterior and interior walkthroughs of accessible areas, requested photographs or video, indicator or meter photographs and factual notes about visible conditions.",
+      },
+      {
+        title: "Access and onsite presence",
+        description:
+          "Authorized entry for vendors, deliveries, internet providers, installers or scheduled appointments, with arrival, access and departure documentation.",
+      },
+      {
+        title: "Owner-directed coordination",
+        description:
+          "Appointment support, relaying owner-approved information and documenting visible progress. The owner selects vendors and approves scope and cost.",
+      },
+      {
+        title: "Supplies, deliveries and inventory",
+        description:
+          "Owner-authorized pickup, delivery, placement, basic inventory counts and documentation of items present at the property.",
+      },
+      {
+        title: "Technology field support",
+        description:
+          "Connectivity checks, device setup, equipment resets, television and streaming support and coordination with internet or technology providers.",
+      },
+      {
+        title: "Escalation of visible concerns",
+        description:
+          "Prompt notice when a visit reveals observable water, damage, security, pest, utility or safety concerns, followed by action only after authorization.",
+      },
+    ],
+    exclusions: [
+      "Advertising, listing, showing or offering property for rent",
+      "Finding, screening, approving or rejecting tenants or guests",
+      "Negotiating rent, deposits, concessions, occupancy or lease terms",
+      "Preparing, administering, modifying or enforcing leases",
+      "Collecting, holding or accounting for rent or security deposits",
+      "Making tenant, guest, rental, eviction or landlord-tenant decisions",
+      "Representing the owner as a property manager, caretaker, custodian, broker or salesperson",
+      "Performing work that requires a contractor, trade, engineering, pest-control or other professional license",
+    ],
+    disclaimer:
+      "Property Field Services are non-invasive, owner-directed observations and tasks. They are not a home inspection, engineering evaluation, code-compliance inspection, appraisal, warranty or guarantee. The owner retains all management, financial, leasing and legal authority.",
+  },
+  {
+    id: "home-inspections",
+    title: "Home Inspections",
+    shortTitle: "Home Inspections",
+    icon: ClipboardCheck,
+    accent: "bg-blue-50 text-blue-700",
+    category: "property",
+    blurb:
+      "Detailed residential inspections with photographs, clear priorities and practical recommendations for buyers, sellers and owners.",
+  },
+  {
+    id: "vendor-coordination",
+    title: "Vendor Coordination",
+    shortTitle: "Vendor Coordination",
+    icon: Users,
+    accent: "bg-cyan-50 text-cyan-700",
+    category: "property",
+    blurb:
+      "Project-specific provider research, shortlisting, scheduling, access and documented follow-through across Hawaiʻi Island.",
+  },
+  {
+    id: "handyman-services",
+    title: "Handyman Services",
+    shortTitle: "Handyman Services",
+    icon: Hammer,
+    accent: "bg-orange-50 text-orange-700",
+    category: "property",
+    blurb:
+      "Minor repairs, installations, adjustments and property punch-list work within a clearly defined non-licensed scope.",
+    hero: "Detail-oriented hands-on support for practical property needs.",
+    overview:
+      "ATS provides minor repair, installation, mounting, assembly and adjustment services when the work does not require a contractor or specialty-trade license. We document scope before work begins, follow manufacturer instructions when applicable and stop or refer the project when concealed conditions or expanded scope require a qualified professional.",
+    image: "/images/handyman-services-hero.jpg",
+    examples: [
+      {
+        title: "Mounting and installation",
+        description:
+          "Compatible televisions, shelves, wall accessories, smart devices, hardware and equipment installed within the approved scope.",
+      },
+      {
+        title: "Minor repairs and adjustments",
+        description:
+          "Cabinet, door, furniture, hardware, fixture and general punch-list assistance that does not involve regulated trade work.",
+      },
+      {
+        title: "Assembly and property setup",
+        description:
+          "Furniture, storage systems, compatible equipment and owner-provided items assembled and positioned according to instructions.",
+      },
+      {
+        title: "Manufacturer-guided support",
+        description:
+          "Troubleshooting or compatible component replacement using published manufacturer procedures or manufacturer support when appropriate.",
+      },
+      {
+        title: "Rental and residence punch lists",
+        description:
+          "Defined lists of minor cosmetic, hardware and setup items completed between stays, before owner arrival or during maintenance periods.",
+      },
+      {
+        title: "Scope review and referral",
+        description:
+          "Visible conditions are reviewed before work. Projects outside the handyman scope are referred to an appropriately qualified provider.",
+      },
+    ],
+    outcomes: [
+      "Clear written scope",
+      "Professional communication",
+      "Manufacturer-aware execution",
+      "Appropriate referral when licensing is required",
+    ],
+    details: [
+      {
+        title: "Before work begins",
+        description:
+          "ATS confirms the requested task, visible conditions, access, materials, estimated time and whether the project appears to remain within the permitted minor-service scope.",
+      },
+      {
+        title: "During the project",
+        description:
+          "Work areas are protected, progress is communicated and unexpected conditions are documented before any change in scope is considered.",
+      },
+      {
+        title: "At completion",
+        description:
+          "The completed work is reviewed, the area is left orderly and the client receives photographs or notes when requested.",
+      },
+    ],
+    disclaimer:
+      "Handyman services exclude work that requires a licensed contractor or regulated trade professional, including permitted structural, roofing, plumbing, electrical, fuel-gas and similar work. Projects are not divided to avoid licensing requirements.",
+  },
+  {
+    id: "workflow-optimization",
+    title: "Workflow Optimization",
+    shortTitle: "Workflow Optimization",
+    icon: Workflow,
+    accent: "bg-teal-50 text-teal-700",
+    category: "operations",
+    blurb:
+      "Process mapping, SOPs, clearer ownership and improved handoffs designed around how work actually moves.",
+    hero: "Simplify work, reduce friction and strengthen operational consistency.",
+    overview:
+      "ATS reviews how tasks, decisions and information move through an organization, identifies unnecessary steps and designs practical workflows that are easier to teach, track and improve. Solutions are grounded in the daily operating reality of the people who use them.",
+    examples: [
+      { title: "SOP development", description: "Create usable procedures with roles, standards, decision points, exceptions and escalation steps." },
+      { title: "Cross-department handoffs", description: "Clarify ownership and information transfer between operations, support, accounting, vendors and leadership." },
+      { title: "Approval process redesign", description: "Reduce redundant touchpoints and create clearer decision authority and follow-up." },
+      { title: "Inspection and readiness programs", description: "Build repeatable checklists, status definitions, accountability and reporting for property or service operations." },
+      { title: "Issue tracking and escalation", description: "Create structured pathways for documenting, prioritizing and resolving recurring operational concerns." },
+      { title: "Implementation support", description: "Train users, test the new workflow, gather feedback and refine the process after rollout." },
+    ],
+    outcomes: ["Clearer accountability", "Fewer missed handoffs", "More consistent execution", "Processes that can scale"],
+  },
+  {
+    id: "technology-installation",
+    title: "Technology Installation",
+    shortTitle: "Technology Installation",
+    icon: Wifi,
+    accent: "bg-sky-50 text-sky-700",
+    category: "technology",
+    blurb:
+      "Whole-property connectivity, televisions, streaming equipment, connected devices and practical technology refreshes.",
+    hero: "Reliable technology for homes, businesses and managed residences.",
+    overview:
+      "ATS installs, configures and troubleshoots technology for homeowners, businesses, vacation rentals and property teams. Projects may include internet-provider coordination, mesh Wi-Fi, televisions, streaming devices, connected appliances, printers, displays and user-ready documentation.",
+    examples: [
+      { title: "Mesh Wi-Fi and connectivity", description: "Assess coverage, place compatible equipment, configure the network and verify connectivity in priority areas." },
+      { title: "Television and streaming refresh", description: "Install compatible televisions, streaming devices and accessories with clean cable management and user setup." },
+      { title: "Internet-provider coordination", description: "Support provider appointments, equipment replacement, activation and service troubleshooting." },
+      { title: "Connected devices and appliances", description: "Configure compatible smart-home devices, appliances, printers, displays and shared equipment." },
+      { title: "Rental-property technology standards", description: "Create consistent television, Wi-Fi and guest-instruction setups across one or multiple residences." },
+      { title: "Business equipment deployment", description: "Install and configure approved displays, printers, network devices and shared workplace equipment." },
+    ],
+    outcomes: ["Improved coverage", "Cleaner installations", "Fewer support calls", "Clearer user instructions"],
+  },
+  {
+    id: "training-support",
+    title: "Training and Support",
+    shortTitle: "Training & Support",
+    icon: Video,
+    accent: "bg-violet-50 text-violet-700",
+    category: "technology",
+    blurb:
+      "Training videos, written guides and support resources that turn complicated processes into repeatable guidance.",
+    hero: "Help employees, owners and users perform with confidence.",
+    overview:
+      "ATS creates focused training videos, walkthroughs, quick-reference documents and support libraries for applications, procedures, devices and operational standards. Content is designed for the real environment in which people will use it.",
+    examples: [
+      { title: "Employee onboarding", description: "Short modules covering systems, procedures, standards, escalation and role expectations." },
+      { title: "How-to support library", description: "A searchable collection of videos and written guides that reduces repeated support requests." },
+      { title: "Homeowner and guest instructions", description: "Clear guidance for televisions, Wi-Fi, smart devices and other property systems." },
+      { title: "New-system rollout support", description: "Training and documentation that accompany a software, workflow or equipment implementation." },
+      { title: "SOP-to-training conversion", description: "Translate written procedures into practical demonstrations, examples and knowledge checks." },
+      { title: "Refresh and maintenance", description: "Update training materials as systems, policies and operating conditions change." },
+    ],
+    outcomes: ["Faster onboarding", "Fewer repeated questions", "More consistent execution", "Greater user confidence"],
+  },
+  {
+    id: "website-development",
+    title: "Website Development",
+    shortTitle: "Website Development",
+    icon: Globe2,
+    accent: "bg-indigo-50 text-indigo-700",
+    category: "digital",
+    blurb:
+      "Responsive websites that explain your services, strengthen credibility and convert visitors into qualified inquiries.",
+    hero: "Build a professional website around real business goals.",
+    overview:
+      "ATS designs and develops modern websites for businesses, professionals, property services and personal ventures. Each site is structured around clear messaging, mobile usability, performance, accessibility, lead generation and practical long-term maintenance.",
+    examples: [
+      { title: "New service-business website", description: "Create a polished site with clear services, trust signals, lead forms and a direct customer path." },
+      { title: "Website redesign", description: "Modernize structure, visual presentation, mobile performance, messaging and calls to action." },
+      { title: "Landing pages", description: "Build focused pages for specific services, campaigns, audiences or geographic markets." },
+      { title: "Forms and integrations", description: "Connect contact forms, scheduling, analytics, payments or other compatible business tools." },
+      { title: "Search foundations", description: "Implement page titles, descriptions, structured content, sitemap and crawl-friendly routing." },
+      { title: "Ongoing improvements", description: "Update services, copy, calls to action, imagery and functionality as the business evolves." },
+    ],
+    outcomes: ["Stronger credibility", "Mobile-friendly experience", "Clearer customer journey", "A scalable digital foundation"],
+  },
+  {
+    id: "business-insight",
+    title: "Insight & Analysis",
+    shortTitle: "Insight & Analysis",
+    icon: BarChart3,
+    accent: "bg-amber-50 text-amber-700",
+    category: "operations",
+    blurb:
+      "Leadership-ready reporting and operational analysis that identifies trends, risks and practical opportunities.",
+    hero: "Turn operational information into clearer decisions.",
+    overview:
+      "ATS organizes operational information into useful dashboards, trend reviews and recommendations. The goal is not more reporting for its own sake—it is a clearer understanding of what is happening, why it matters and what should be addressed next.",
+    examples: [
+      { title: "Performance trend review", description: "Identify recurring delays, workload patterns, service gaps and resource constraints." },
+      { title: "Leadership dashboard", description: "Present key indicators, priorities and exceptions in a concise decision-ready format." },
+      { title: "Vendor and maintenance analysis", description: "Review recurring issues, response times, cost patterns and service outcomes." },
+      { title: "Property operations reporting", description: "Create structured reporting for readiness, inspections, open issues and project status." },
+      { title: "Process opportunity analysis", description: "Evaluate effort, bottlenecks and avoidable operating costs to identify improvement priorities." },
+      { title: "Executive summaries", description: "Translate detailed information into clear conclusions, risks and recommended next steps." },
+    ],
+    outcomes: ["Clearer reporting", "Better prioritization", "Stronger decisions", "Improved visibility"],
+  },
+  {
+    id: "automation-development",
+    title: "Automation Development",
+    shortTitle: "Automation Development",
+    icon: Zap,
+    accent: "bg-fuchsia-50 text-fuchsia-700",
+    category: "digital",
+    blurb:
+      "Practical automations that reduce repetitive work, improve follow-up and keep important processes moving.",
+    hero: "Automate routine work without losing operational control.",
+    overview:
+      "ATS designs automations that connect compatible tools, reduce manual entry and improve consistency. Each automation begins with a defined business need, clear exception handling and an understanding of where human review is still required.",
+    examples: [
+      { title: "Lead and customer follow-up", description: "Route inquiries, create tasks, notify staff and support timely follow-up." },
+      { title: "Administrative workflows", description: "Automate recurring reports, approvals, reminders, document handling and internal notifications." },
+      { title: "Property and service updates", description: "Organize inspection, project or vendor information into structured status updates." },
+      { title: "Data transfer and cleanup", description: "Reduce repeat entry between compatible systems and standardize incoming information." },
+      { title: "Personal productivity", description: "Simplify scheduling, reminders, household administration and recurring information tasks." },
+      { title: "Automation review and controls", description: "Document triggers, exceptions, ownership, security and recovery steps before rollout." },
+    ],
+    outcomes: ["Less repetitive work", "Fewer manual errors", "Faster response times", "Better process visibility"],
+  },
+  {
+    id: "ai-implementation",
+    title: "AI Implementation",
+    shortTitle: "AI Implementation",
+    icon: Bot,
+    accent: "bg-purple-50 text-purple-700",
+    category: "digital",
+    blurb:
+      "Responsible AI implementation for defined business needs, with privacy, data quality and human review built in.",
+    hero: "Use AI where it creates measurable operational value.",
+    overview:
+      "ATS helps organizations identify realistic AI opportunities, select appropriate tools, prepare internal knowledge, establish review procedures and train users. The objective is to solve a defined problem—not to add AI without a clear operational purpose.",
+    examples: [
+      { title: "Internal knowledge assistant", description: "Help staff find approved procedures, service information and reference material more quickly." },
+      { title: "Document assistance", description: "Summarize, organize and extract recurring information from appropriate documents." },
+      { title: "Customer-support drafting", description: "Create guided response assistance with clear human review and escalation requirements." },
+      { title: "Reporting assistance", description: "Accelerate first drafts, recurring summaries and analysis of structured operational information." },
+      { title: "AI use-case assessment", description: "Identify where AI may help, where it should not be used and what controls are required." },
+      { title: "Training and governance", description: "Define approved use, privacy expectations, review responsibility and quality checks." },
+    ],
+    outcomes: ["Reduced administrative effort", "Faster access to information", "More consistent support", "Responsible human oversight"],
+    disclaimer:
+      "AI performance and cost savings vary by use case. Implementations should be reviewed for privacy, security, data quality, appropriate access and human decision-making requirements.",
+  },
+  {
+    id: "application-development",
+    title: "Application Development",
+    shortTitle: "Application Development",
+    icon: Code2,
+    accent: "bg-blue-50 text-blue-700",
+    category: "digital",
+    blurb:
+      "Custom internal tools, dashboards and application implementation designed around the work your organization performs.",
+    hero: "Build the right tool and implement it with confidence.",
+    overview:
+      "ATS develops practical applications and helps organizations implement third-party platforms with less disruption. The focus is usability, adoption, documentation and measurable operational value rather than unnecessary technical complexity.",
+    examples: [
+      { title: "Operations dashboard", description: "Centralize work orders, project updates, owner requests, inspections or performance information." },
+      { title: "Spreadsheet modernization", description: "Replace fragmented sheets and manual approvals with a structured, trackable application." },
+      { title: "Third-party application rollout", description: "Configure a platform, map workflows, prepare documentation and support user adoption." },
+      { title: "Inspection and field tools", description: "Create practical forms, checklists, photo records and status reporting for onsite work." },
+      { title: "Internal request portal", description: "Organize service, approval or information requests into a clear intake and tracking process." },
+      { title: "Application improvement", description: "Review an existing tool and improve usability, reporting, process fit or integration." },
+    ],
+    outcomes: ["Less manual work", "Better visibility", "Improved adoption", "Stronger operational control"],
+  },
+];
+
+const inspectionTypes = [
+  {
+    id: "full-residential",
+    title: "Full Residential Home Inspection",
+    short: "Comprehensive review of accessible systems and components from site conditions through roofing, interiors and major installed systems.",
+    image: "/images/inspection-full-residential.jpg",
+    icon: Home,
+    bestFor: "Buyers, sellers and owners who want the broadest single inspection scope.",
+    includes: [
+      "Site, drainage, grading and accessible exterior conditions",
+      "Foundation, structure, roof, attic and visible building envelope",
+      "Electrical, plumbing, cooling, ventilation and water-heating systems",
+      "Interior rooms, kitchen, bathrooms, laundry, garage and lanais",
+      "Photographs, priorities, limitations and practical recommendations",
+    ],
+    deliverable:
+      "A complete client-friendly report with an executive summary, system-by-system findings, Red/Yellow/Green urgency priorities and recommended next actions.",
+  },
+  {
+    id: "buyer",
+    title: "Buyer’s Home Inspection",
+    short: "A detailed due-diligence inspection that helps a buyer understand visible conditions before completing the purchase.",
+    image: "/images/inspection-buyer.jpg",
+    icon: Users,
+    bestFor: "Prospective buyers during the inspection or due-diligence period.",
+    includes: [
+      "The full residential inspection scope when accessible and included",
+      "Safety, repair, maintenance and specialist-evaluation concerns",
+      "Items that may affect near-term budgeting or ownership planning",
+      "Clear distinction between urgent concerns and normal maintenance",
+      "Review discussion focused on practical buyer questions",
+    ],
+    deliverable:
+      "A prioritized report that supports informed discussions with the buyer’s real-estate and professional advisory team without assigning repair costs or negotiating terms.",
+  },
+  {
+    id: "pre-listing",
+    title: "Pre-Listing Home Inspection",
+    short: "A proactive inspection before marketing the property, designed to reduce avoidable surprises during escrow.",
+    image: "/images/inspection-pre-listing.jpg",
+    icon: FileText,
+    bestFor: "Owners and listing teams preparing a property for sale.",
+    includes: [
+      "Visible conditions likely to appear in a later buyer inspection",
+      "Maintenance and repair items the owner may choose to address",
+      "Specialist-evaluation recommendations where appropriate",
+      "Documentation of inaccessible or non-operational components",
+      "A practical preparation sequence based on urgency and impact",
+    ],
+    deliverable:
+      "A seller-focused condition report that helps the owner plan repairs, obtain specialist input and organize disclosures with the appropriate professionals.",
+  },
+  {
+    id: "maintenance",
+    title: "Home Maintenance Inspection",
+    short: "A condition and maintenance review that helps current owners protect the home and plan upcoming work.",
+    image: "/images/inspection-maintenance.jpg",
+    icon: Wrench,
+    bestFor: "Current homeowners, second-home owners and long-term maintenance planning.",
+    includes: [
+      "Visible deterioration, deferred maintenance and developing concerns",
+      "Water-management, corrosion, ventilation and exterior-sealant conditions",
+      "Aging systems and components that should be monitored or serviced",
+      "Seasonal, annual and near-term maintenance priorities",
+      "Recommended trade or specialist categories for follow-up",
+    ],
+    deliverable:
+      "A maintenance-oriented report organized by urgency and likely timeframe so the owner can create a practical property-care plan.",
+  },
+  {
+    id: "condo-townhome",
+    title: "Condo and Townhome Inspection",
+    short: "A residential inspection tailored to the unit, accessible exclusive-use areas and clearly distinguishable shared-building conditions.",
+    image: "/images/inspection-condo-townhome.jpg",
+    icon: Building2,
+    bestFor: "Condominium and townhome buyers, sellers and owners.",
+    includes: [
+      "Interior systems and components within the inspected unit",
+      "Accessible lanais, assigned areas and unit-specific equipment",
+      "Visible conditions at windows, doors, plumbing, electrical and HVAC",
+      "Observations that may involve a shared or association-maintained component",
+      "Clear scope limitations for inaccessible common elements",
+    ],
+    deliverable:
+      "A unit-focused report that distinguishes inspected components from visible conditions that may require association documents, management confirmation or specialist review.",
+  },
+  {
+    id: "new-construction",
+    title: "New Construction Home Inspection",
+    short: "An independent visual review of installed work and readily accessible systems before final acceptance or warranty milestones.",
+    image: "/images/inspection-new-construction.jpg",
+    icon: HardHat,
+    bestFor: "New-build buyers, owners approaching final walkthrough and warranty-period reviews.",
+    includes: [
+      "Visible workmanship, incomplete items and installation concerns",
+      "Operation of accessible installed systems and representative components",
+      "Interior, exterior, roof, attic and site observations when accessible",
+      "Documentation suitable for discussion with the builder",
+      "A clear record of limitations and items requiring specialist evaluation",
+    ],
+    deliverable:
+      "A photographic report of visible conditions and incomplete or concerning items. It does not replace municipal inspections, engineering review or the builder’s quality-control obligations.",
+  },
+  {
+    id: "reinspection",
+    title: "Repair Verification and Reinspection",
+    short: "A focused return visit to document whether specified reported items appear to have been addressed.",
+    image: "/images/inspection-reinspection.jpg",
+    icon: RefreshCw,
+    bestFor: "Clients seeking follow-up documentation after agreed repairs or specialist work.",
+    includes: [
+      "Review of the original reported item and accessible repair area",
+      "Visible comparison with prior photographs or descriptions",
+      "Basic operation where safe, appropriate and within scope",
+      "Documentation of remaining, changed or inaccessible conditions",
+      "Referral back to the repairing professional when certification is required",
+    ],
+    deliverable:
+      "A focused reinspection report describing visible conditions at the return visit. It is not a contractor warranty, engineering certification or guarantee of concealed work.",
+  },
+  {
+    id: "moisture",
+    title: "Moisture and Water-Intrusion Inspection",
+    short: "A targeted investigation using thermal imaging, a moisture meter and visual indicators to evaluate suspected water intrusion.",
+    image: "/images/inspection-moisture-detail.jpg",
+    icon: Droplets,
+    badge: "Reduced bundled rate available",
+    bestFor: "Suspected leaks, staining, musty conditions, post-storm concerns and areas with previous water events.",
+    includes: [
+      "Thermal scanning of relevant accessible surfaces under suitable conditions",
+      "Moisture-meter testing at representative or suspect locations",
+      "Visual review of likely entry points, drainage and adjacent materials",
+      "Photographic documentation of observed patterns and readings",
+      "Recommendations for plumbing, roofing, envelope, mitigation or other specialist review",
+    ],
+    deliverable:
+      "A targeted report identifying observed anomalies, readings, likely pathways and recommended next steps. Thermal imaging does not see through walls and cannot by itself confirm mold, concealed damage or the exact source of moisture.",
+  },
+  {
+    id: "irrigation",
+    title: "Irrigation System Inspection",
+    short: "A focused operational review of accessible irrigation zones, visible components and observed coverage conditions.",
+    image: "/images/inspection-irrigation.jpg",
+    icon: Sprout,
+    badge: "Reduced bundled rate available",
+    bestFor: "Homes with landscaped areas, high water use, dry zones, overspray, leaks or aging irrigation equipment.",
+    includes: [
+      "Operation of accessible zones and representative emitters",
+      "Visible leaks, damaged heads, overspray and obvious coverage gaps",
+      "Controller settings and accessible valve or filter conditions",
+      "Drainage or water-contact concerns near the building when observable",
+      "Recommendations for irrigation or landscaping follow-up",
+    ],
+    deliverable:
+      "An irrigation condition summary with photographs and observed operational concerns. Underground piping, exact flow calculations, water-quality testing and landscape-design performance are outside the standard scope.",
+  },
+  {
+    id: "pool-spa",
+    title: "Pool/Spa and Equipment Inspection",
+    short: "A visual and operational review of accessible pool or spa components, equipment and safety-related conditions, with thermal imaging where useful.",
+    image: "/images/inspection-pool-spa.jpg",
+    icon: Waves,
+    badge: "Reduced bundled rate available",
+    bestFor: "Properties with pools, spas, water features or associated equipment.",
+    includes: [
+      "Accessible surfaces, coping, visible structure and waterline conditions",
+      "Pumps, filters, heaters, controls and visible piping under normal operation",
+      "Accessible electrical bonding or safety observations within the inspection scope",
+      "Barriers, gates and readily visible safety-related conditions",
+      "Thermal observations when they provide useful supplemental information",
+    ],
+    deliverable:
+      "A pool/spa condition report with photographs and recommended specialist follow-up. It is not a leak-detection service, structural engineering evaluation, water-chemistry certification or code-compliance inspection.",
+  },
+  {
+    id: "arrival-departure",
+    title: "Custom Arrival and Departure Inspections",
+    short: "A custom checklist and photographic condition record for owners who use their residence as a rental or periodically occupied home.",
+    image: "/images/inspection-arrival-departure.jpg",
+    icon: Camera,
+    bestFor: "Vacation-rental owners, second-home owners and owner-managed rental properties.",
+    includes: [
+      "A client-approved arrival, departure or turnover checklist",
+      "Photographs of agreed rooms, furnishings, equipment and visible conditions",
+      "Documentation of missing, damaged or non-operational items observed during the visit",
+      "Basic readiness checks defined in the written scope",
+      "Prompt escalation of visible urgent conditions to the owner",
+    ],
+    deliverable:
+      "A dated condition record tailored to the owner’s checklist. This service does not include leasing, guest placement, rent handling, property management, housekeeping certification or responsibility for concealed damage.",
+  },
+];
+
+const providerFamilyGroups = [
+  {
+    title: "Engineering, structure and major projects",
+    families: [
+      "Structural / Civil Engineering",
+      "Geotechnical Engineering",
+      "General Building / Multi-Trade Repair",
+      "Foundation & Concrete Repair",
+      "Masonry, Stone & Retaining Walls",
+      "Excavation, Grading & Drainage",
+      "Carpentry, Decks, Lanais & Exterior Stairs",
+    ],
+  },
+  {
+    title: "Exterior envelope, roofing and openings",
+    families: [
+      "Painting — Interior & Exterior",
+      "Waterproofing & Membrane Systems",
+      "Protective & Coastal Coatings",
+      "Roofing",
+      "Gutters, Downspouts & Roof Drainage",
+      "Glazing, Windows & Exterior Doors",
+      "Screens & Minor Enclosure Service",
+      "Fences, Gates, Guards & Rails",
+      "Garage-Door Opener Minor Service",
+      "Garage Doors & Storm Shutters",
+      "Commercial / Steel / Fire Doors",
+    ],
+  },
+  {
+    title: "Interior finishes",
+    families: ["Flooring & Carpet", "Tile & Stone"],
+  },
+  {
+    title: "Plumbing, water, wastewater and gas",
+    families: [
+      "Plumbing & Water Heating",
+      "Propane / Fuel-Gas Piping & Appliance Connections",
+      "Catchment Installation, Pumps & Treatment",
+      "Catchment Cleaning & Minor Maintenance",
+      "Septic / Cesspool Pumping & Service",
+      "Wastewater Installation & Cesspool Conversion",
+    ],
+  },
+  {
+    title: "Electrical, mechanical and building systems",
+    families: [
+      "Electrical",
+      "Solar PV & Battery Storage",
+      "HVAC, Mini-Splits & Ventilation",
+      "Commercial Refrigeration",
+      "Security, Alarm & Low Voltage",
+      "Fire Protection, Alarms & Suppression",
+    ],
+  },
+  {
+    title: "Pools, solar heating and grounds",
+    families: ["Pools & Spas", "Pool Solar & Pool Heating", "Tree Trimming, Removal & Arborist Services"],
+  },
+  {
+    title: "Pest, restoration and environmental hazards",
+    families: [
+      "Termite, WDO & Pest Control",
+      "Water / Fire / Mold Mitigation",
+      "Restoration Reconstruction",
+      "Asbestos, Lead & Hazardous-Material Specialists",
+    ],
+  },
+];
 
 function normalizePath(pathname) {
   if (!pathname || pathname === "/") return "/";
@@ -133,667 +795,633 @@ function pathForPage(page) {
 }
 
 function Button({ children, onClick, variant = "primary", size = "md", className = "", ...props }) {
-  const base = "inline-flex items-center justify-center gap-2 rounded-2xl font-semibold transition duration-200 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60";
+  const base =
+    "inline-flex items-center justify-center gap-2 rounded-xl font-semibold transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60";
   const variants = {
-    primary: "bg-[#17324D] text-white shadow-sm hover:bg-[#214765]",
-    accent: "bg-[#1D84B5] text-white shadow-sm hover:bg-[#176f98]",
-    outline: "border border-slate-300 bg-white text-slate-900 hover:border-[#1D84B5] hover:text-[#1D84B5]",
-    light: "bg-white text-[#17324D] hover:bg-slate-100",
-    ghost: "bg-transparent text-slate-700 hover:bg-slate-100 hover:text-[#17324D]",
+    primary: "bg-[#1268D5] text-white shadow-sm hover:bg-[#0D57B5]",
+    navy: "bg-[#061B33] text-white shadow-sm hover:bg-[#0B2B4D]",
+    outline: "border border-slate-300 bg-white text-[#061B33] hover:border-[#1268D5] hover:text-[#1268D5]",
+    light: "bg-white text-[#061B33] shadow-sm hover:bg-slate-100",
+    ghost: "bg-transparent text-slate-700 hover:bg-slate-100 hover:text-[#061B33]",
   };
   const sizes = { sm: "px-4 py-2 text-sm", md: "px-5 py-3 text-sm", lg: "px-6 py-3.5 text-base" };
-  return <button onClick={onClick} className={`${base} ${variants[variant] || variants.primary} ${sizes[size] || sizes.md} ${className}`.trim()} {...props}>{children}</button>;
-}
-
-const CARD_TONES = {
-  light: {
-    background: "#FFFFFF",
-    title: "#17324D",
-    text: "#475569",
-    border: "rgba(203, 213, 225, 0.8)",
-  },
-  dark: {
-    background: "#17324D",
-    title: "#FFFFFF",
-    text: "#CBD5E1",
-    border: "rgba(23, 50, 77, 1)",
-  },
-  soft: {
-    background: "#F2FBFB",
-    title: "#17324D",
-    text: "#475569",
-    border: "#CBE8E7",
-  },
-  sand: {
-    background: "#F7F3EB",
-    title: "#17324D",
-    text: "#475569",
-    border: "#E9E0D2",
-  },
-};
-
-function Card({ children, className = "", tone = "light" }) {
-  const theme = CARD_TONES[tone] || CARD_TONES.light;
-
   return (
-    <div
-      style={{
-        backgroundColor: theme.background,
-        color: theme.text,
-        borderColor: theme.border,
-        "--card-title-color": theme.title,
-        "--card-text-color": theme.text,
-      }}
-      className={`rounded-3xl border shadow-[0_14px_45px_rgba(23,50,77,0.07)] ${className}`.trim()}
+    <button
+      onClick={onClick}
+      className={`${base} ${variants[variant] || variants.primary} ${sizes[size] || sizes.md} ${className}`.trim()}
+      {...props}
     >
       {children}
+    </button>
+  );
+}
+
+function Card({ children, className = "" }) {
+  return <div className={`rounded-2xl border border-slate-200 bg-white shadow-[0_12px_34px_rgba(6,27,51,0.07)] ${className}`.trim()}>{children}</div>;
+}
+
+function SectionHeading({ eyebrow, title, description, align = "left" }) {
+  return (
+    <div className={`max-w-3xl space-y-4 ${align === "center" ? "mx-auto text-center" : ""}`.trim()}>
+      {eyebrow && <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#1268D5]">{eyebrow}</p>}
+      <h2 className="text-3xl font-bold tracking-tight text-[#061B33] md:text-4xl">{title}</h2>
+      {description && <p className="text-base leading-8 text-slate-600 md:text-lg">{description}</p>}
     </div>
   );
 }
 
-function CardHeader({ children, className = "" }) {
-  return <div className={`p-6 md:p-7 ${className}`.trim()}>{children}</div>;
-}
-
-function CardContent({ children, className = "" }) {
-  return <div className={`px-6 pb-6 md:px-7 md:pb-7 ${className}`.trim()}>{children}</div>;
-}
-
-function CardTitle({ children, className = "" }) {
-  return (
-    <h3
-      style={{ color: "var(--card-title-color, #17324D)" }}
-      className={`font-semibold ${className}`.trim()}
-    >
-      {children}
-    </h3>
-  );
-}
-
-function CardDescription({ children, className = "" }) {
-  return (
-    <p
-      style={{ color: "var(--card-text-color, #475569)" }}
-      className={className.trim()}
-    >
-      {children}
-    </p>
-  );
-}
-
-const services = [
-  {
-    id: "application-development", category: "technology", title: "Application Development & Implementation", shortTitle: "Application Development", icon: Code2, accent: "bg-blue-50 text-blue-700",
-    blurb: "Custom internal tools, dashboards, and application rollouts designed around how your organization actually works.",
-    hero: "Build the right tools and implement them with confidence.",
-    overview: "We develop practical software and help businesses implement new applications with less disruption. Our focus is usability, adoption, and measurable operational value rather than unnecessary complexity.",
-    examples: [
-      { title: "Custom Operations Dashboard", description: "Centralize work orders, project updates, owner requests, and performance reporting in one practical interface." },
-      { title: "Third-Party Application Rollout", description: "Configure a new platform, document workflows, train users, and support a smooth transition into daily operations." },
-      { title: "Spreadsheet Process Modernization", description: "Replace fragmented spreadsheets and manual approvals with a structured, trackable internal application." },
-    ],
-    outcomes: ["Less manual work", "Better visibility", "Improved adoption", "Stronger operational control"],
-  },
-  {
-    id: "technology-installation", category: "technology", title: "Technology Installation & Refresh Services", shortTitle: "Technology Installation", icon: Wifi, accent: "bg-teal-50 text-teal-700",
-    blurb: "Residential and commercial technology installation, connectivity improvements, device setup, and full-property refreshes.",
-    hero: "Reliable technology for homes, businesses, and managed properties.",
-    overview: "We install, upgrade, and troubleshoot technology for homeowners, businesses, vacation rentals, and property managers. From new televisions and mesh Wi-Fi to connected appliances and office equipment, we help create a dependable technology environment across the entire property.",
-    examples: [
-      { title: "Whole-Property Connectivity Refresh", description: "Coordinate with the internet provider, assess coverage, install a mesh network, and verify reliable connectivity throughout a home or business." },
-      { title: "Television & Entertainment Upgrade", description: "Install new televisions, streaming devices, accessories, and cable-management solutions for homes, offices, and vacation rentals." },
-      { title: "Connected Devices & Appliances", description: "Configure smart-home devices, connected appliances, printers, displays, and shared equipment so they work together reliably." },
-    ],
-    outcomes: ["Improved Wi-Fi coverage", "Cleaner installations", "Fewer support issues", "Better guest and employee experiences"],
-  },
-  {
-    id: "training-support", category: "technology", title: "Training Videos & Support", shortTitle: "Training & Support", icon: Video, accent: "bg-violet-50 text-violet-700",
-    blurb: "Clear, engaging training materials that help employees, homeowners, and end users adopt new systems with confidence.",
-    hero: "Turn complicated processes into clear, repeatable guidance.",
-    overview: "We create practical training videos, walkthroughs, written guides, and support resources for new applications, procedures, devices, and operational workflows.",
-    examples: [
-      { title: "Employee Onboarding Series", description: "Short, focused videos explaining systems, standards, workflows, and escalation steps for new team members." },
-      { title: "How-To Support Library", description: "A searchable collection of video and written instructions that reduces repetitive support requests." },
-      { title: "Homeowner & Guest Instructions", description: "Simple tutorials explaining television, Wi-Fi, smart-home, and connected-device use." },
-    ],
-    outcomes: ["Faster onboarding", "Fewer repeated questions", "More consistent execution", "Greater user confidence"],
-  },
-  {
-    id: "website-development", category: "digital", title: "Website Development", shortTitle: "Website Development", icon: Globe2, accent: "bg-sky-50 text-sky-700",
-    blurb: "Professional, responsive websites designed to strengthen credibility, explain your services, and convert visitors into qualified inquiries.",
-    hero: "Build a professional website that supports real business goals.",
-    overview: "We design and develop modern websites for businesses, professionals, property services, and personal ventures. Each site is built around clear messaging, mobile usability, performance, lead generation, and straightforward long-term maintenance.",
-    examples: [
-      { title: "Business Service Website", description: "Create a polished website that explains services, builds trust, captures leads, and provides customers with a clear next step." },
-      { title: "Website Refresh & Modernization", description: "Update an outdated website with improved structure, responsive design, clearer messaging, stronger calls to action, and modern technology." },
-      { title: "Landing Pages & Integrations", description: "Build focused campaign pages and connect forms, scheduling tools, analytics, payment systems, or other existing business technologies." },
-    ],
-    outcomes: ["Stronger online credibility", "Mobile-friendly customer experience", "More qualified inquiries", "A scalable digital foundation"],
-  },
-  {
-    id: "automation-development", category: "digital", title: "Automation Development", shortTitle: "Automation Development", icon: Zap, accent: "bg-fuchsia-50 text-fuchsia-700",
-    blurb: "Custom automations using new or existing technologies to reduce repetitive work for businesses and individuals.",
-    hero: "Automate repetitive work and keep important processes moving.",
-    overview: "We design practical automations that connect existing tools, reduce manual entry, improve follow-up, and simplify recurring business or personal tasks. Solutions can use platforms you already own or introduce new technology when it offers clear value.",
-    examples: [
-      { title: "Lead & Customer Follow-Up", description: "Route website inquiries, send notifications, create tasks, update records, and trigger timely follow-up automatically." },
-      { title: "Administrative Workflow Automation", description: "Automate recurring reports, approvals, reminders, document handling, data entry, and internal notifications." },
-      { title: "Personal Productivity Automation", description: "Simplify scheduling, reminders, information organization, household administration, and other repeatable personal workflows." },
-    ],
-    outcomes: ["Less repetitive work", "Fewer manual errors", "Faster response times", "Lower operating effort"],
-  },
-  {
-    id: "ai-implementation", category: "digital", title: "New AI Implementation", shortTitle: "AI Implementation", icon: Bot, accent: "bg-indigo-50 text-indigo-700",
-    blurb: "Responsible AI implementation that helps businesses improve service, accelerate routine work, and reduce avoidable operating costs.",
-    hero: "Put practical AI to work across your business.",
-    overview: "We help businesses identify realistic AI opportunities, select appropriate tools, configure workflows, prepare internal knowledge, train users, and implement human-review processes. The goal is not to add AI for its own sake—it is to solve specific business needs with measurable operational value.",
-    examples: [
-      { title: "AI-Assisted Customer Support", description: "Create guided response systems, internal knowledge assistants, and customer-service workflows that help teams respond faster and more consistently." },
-      { title: "Document & Reporting Assistance", description: "Use AI to summarize information, draft reports, organize documents, extract recurring details, and accelerate administrative work." },
-      { title: "AI Workflow Assessment & Rollout", description: "Evaluate business processes, identify appropriate AI use cases, implement selected tools, train employees, and establish responsible review procedures." },
-    ],
-    outcomes: ["Reduced administrative workload", "Faster access to information", "More consistent service", "Lower costs where automation is appropriate"],
-    disclaimer: "AI recommendations are tailored to the client’s privacy, security, data-quality, and human-review requirements. Cost savings and performance improvements vary by use case.",
-  },
-  {
-    id: "workflow-optimization", category: "business", title: "Workflow Optimization", shortTitle: "Workflow Optimization", icon: Workflow, accent: "bg-cyan-50 text-cyan-700",
-    blurb: "Streamlined workflows, clearer ownership, and better handoffs across teams and departments.",
-    hero: "Simplify work and remove operational friction.",
-    overview: "We review how work moves through your organization, identify unnecessary steps, clarify responsibilities, and design workflows that support greater consistency and efficiency.",
-    examples: [
-      { title: "Approval Process Redesign", description: "Reduce unnecessary touchpoints, clarify decision ownership, and improve turnaround time." },
-      { title: "Cross-Department Handoffs", description: "Improve communication between operations, support, accounting, vendors, and leadership." },
-      { title: "Standard Operating Procedures", description: "Create practical SOPs that make routine work easier to teach, repeat, and measure." },
-    ],
-    outcomes: ["Faster execution", "Fewer missed handoffs", "Clearer accountability", "More scalable operations"],
-  },
-  {
-    id: "business-insight", category: "business", title: "Business Insight & Analysis", shortTitle: "Insight & Analysis", icon: BarChart3, accent: "bg-amber-50 text-amber-700",
-    blurb: "Actionable reporting and operational analysis that helps leaders identify trends, risks, and opportunities.",
-    hero: "Turn operational information into better decisions.",
-    overview: "We translate business and operational information into practical insights. Rather than overwhelming clients with raw data, we focus on the patterns and recommendations that support better performance.",
-    examples: [
-      { title: "Performance Trend Review", description: "Identify recurring delays, service gaps, workload patterns, and resource constraints." },
-      { title: "Leadership Reporting", description: "Create concise dashboards and summaries that help decision-makers understand what requires attention." },
-      { title: "Operational Opportunity Analysis", description: "Evaluate processes, costs, and service performance to identify practical improvement opportunities." },
-    ],
-    outcomes: ["Clearer reporting", "Better prioritization", "Stronger decisions", "Improved visibility"],
-  },
-  {
-    id: "property-field-services",
-    category: "property",
-    title: "Owner-Directed Property Field Services",
-    shortTitle: "Property Field Services",
-    icon: Home,
-    accent: "bg-emerald-50 text-emerald-700",
-    blurb: "On-island visual checks, factual photo documentation, access support, and owner-authorized field coordination for multiple property owners.",
-    hero: "Reliable local field support while the owner retains every management and leasing decision.",
-    overview: "Aloha Technology Services LLC provides project-based, owner-directed field services for property owners who need a dependable person on Hawaiʻi Island to observe, document, provide access, and complete clearly authorized tasks. We operate as an independent service vendor—not as a property manager, caretaker, custodian, leasing agent, or real estate representative. Each visit is performed under a defined written scope, and the owner retains control of all rental, tenant, financial, legal, and property-management decisions.",
-    examples: [
-      { title: "Scheduled Visual Property Check", description: "Visit the property under an agreed checklist, observe readily visible conditions, photograph the requested areas, and send a dated factual report to the owner." },
-      { title: "Vendor Access & Appointment Support", description: "Meet an owner-selected vendor, provide authorized property access, document arrival and departure, and report visible completion status without directing licensed trade work." },
-      { title: "Storm, Leak, Alarm, or Incident Check", description: "Respond to an owner request to visually check a reported concern, document observable conditions, and promptly relay findings so the owner can decide what action to authorize." },
-      { title: "Delivery & Installation Verification", description: "Receive or document an authorized delivery, confirm visible item condition and placement, and provide photographs or notes requested by the owner." },
-      { title: "Technology & Connectivity Check", description: "Check owner-identified televisions, Wi-Fi equipment, smart devices, or connected appliances and perform approved basic troubleshooting within the technology-service scope." },
-      { title: "Post-Service Documentation", description: "Return after authorized work to photograph visible results, note apparent completion or remaining concerns, and send documentation to the owner. This is not a warranty or professional inspection." },
-    ],
-    outcomes: [
-      "Dated photographs and factual field notes",
-      "Faster owner awareness of visible concerns",
-      "Reliable onsite access and appointment support",
-      "Clear owner control over every decision",
-    ],
-    detailsEyebrow: "Available field services",
-    detailsTitle: "Owner-authorized onsite support",
-    detailsDescription: "Services are limited to the written work order or recurring checklist approved by the owner. ATS reports observable facts and does not exercise property-management authority.",
-    details: [
-      { title: "Visual Checks & Documentation", description: "Exterior and interior walkthroughs of accessible areas, requested photographs or video, meter or indicator photographs, and factual notes about visible conditions." },
-      { title: "Access & Onsite Presence", description: "Authorized entry for vendors, deliveries, internet providers, installers, or other scheduled appointments, with arrival, access, and departure documentation." },
-      { title: "Owner-Directed Vendor Assistance", description: "Scheduling support, relaying owner-approved information, confirming appointment details, and documenting visible progress. The owner selects the vendor and approves scope and cost." },
-      { title: "Supplies, Deliveries & Inventory", description: "Owner-authorized pickup, delivery, placement, basic inventory counts, and documentation of items at the property." },
-      { title: "Technology Field Support", description: "Connectivity checks, device setup, equipment resets, television and streaming support, smart-device assistance, and coordination with internet or technology providers." },
-      { title: "Escalation of Visible Concerns", description: "Prompt notice when a visit reveals water, damage, security, pest, utility, or safety concerns, followed by action only after owner authorization except when emergency services must be contacted." },
-    ],
-    deliverablesEyebrow: "Owner documentation",
-    deliverablesTitle: "What the owner receives",
-    deliverablesDescription: "Deliverables are matched to the agreed scope and are intended to give the owner timely, factual information—not professional opinions or management decisions.",
-    deliverables: [
-      "Dated visit confirmation and service checklist",
-      "Requested photographs, video, readings, or visible-condition notes",
-      "Vendor, delivery, access, or appointment documentation",
-      "Prompt escalation notice for observable urgent conditions",
-      "A clear record of owner instructions and completed authorized tasks",
-    ],
-    exclusionsTitle: "Services ATS does not provide",
-    exclusionsDescription: "These activities are outside the Property Field Services scope and must remain with the owner or an appropriately licensed professional.",
-    exclusions: [
-      "Advertising, marketing, listing, showing, or offering property for rent",
-      "Finding, soliciting, screening, approving, or rejecting tenants or guests",
-      "Negotiating rent, deposits, concessions, occupancy, or lease terms",
-      "Preparing, signing, modifying, administering, or enforcing leases",
-      "Collecting, holding, depositing, disbursing, or accounting for rent or security deposits",
-      "Making tenant, guest, rental, eviction, or landlord-tenant decisions",
-      "Representing the owner as a property manager, caretaker, custodian, broker, or salesperson",
-      "Performing work that requires a real estate, contractor, trade, engineering, pest-control, or other professional license",
-    ],
-    ctaLabel: "Request Property Field Services",
-    disclaimer: "Aloha Technology Services LLC provides independent, owner-directed field services only. ATS is not a licensed Hawaiʻi real estate broker or salesperson and does not provide property management, caretaker or custodian services, leasing, rental advertising, tenant or guest placement, rent or security-deposit handling, lease administration, occupancy decisions, or landlord-tenant representation. Visual field checks are non-invasive observations and are not a residential home inspection, engineering evaluation, code-compliance inspection, pest inspection, appraisal, warranty, or guarantee. Owners retain all decision-making authority and must use appropriately licensed professionals whenever the requested work requires a license.",
-  },
-  {
-    id: "vendor-coordination", category: "property", title: "Vendor Coordination & Project Assistance", shortTitle: "Vendor Coordination", icon: Users, accent: "bg-emerald-50 text-emerald-700",
-    blurb: "Owner-authorized vendor identification, scheduling support, access assistance, and documented project follow-through.",
-    hero: "Local project assistance carried out from clear client instructions.",
-    overview: "We help homeowners, property managers, and businesses identify qualified Big Island vendors and support owner-authorized scheduling, access, communication, and documentation. ATS does not control client funds, direct licensed trade work, or exercise property-management or leasing authority.",
-    examples: [
-      { title: "Repair Vendor Coordination", description: "Identify appropriate local professionals, communicate the issue, request availability, and help coordinate access." },
-      { title: "Home Improvement Assistance", description: "Support estimate collection, scheduling, project communication, and client updates for improvement projects." },
-      { title: "Specialized Trade Referrals", description: "Coordinate licensed professionals when work requires electrical, plumbing, HVAC, roofing, or other specialized expertise." },
-    ],
-    outcomes: ["Less coordination time", "Clearer communication", "Better project visibility", "Reliable local support"],
-    disclaimer: "Third-party work is separately quoted and completed under the vendor’s applicable licensing, terms, and warranties. ATS provides owner-authorized coordination and documentation only and does not act as a property manager, leasing representative, general contractor, or licensed trade professional.",
-  },
-  {
-    id: "home-inspections", category: "property", title: "Residential Home Inspections", shortTitle: "Home Inspections", icon: CheckCircle2, accent: "bg-sky-50 text-sky-700",
-    blurb: "Professional, client-friendly residential inspections for buyers, sellers, and homeowners who need a clearer understanding of a property's visible condition.",
-    hero: "Make informed property decisions with a clear, prioritized inspection report.",
-    overview: "Our residential home inspection is a visual, non-invasive review of readily accessible systems and components at the time of inspection. The service is designed to help buyers understand a property before closing, help sellers identify concerns before listing, and help homeowners plan maintenance and repairs with greater confidence.",
-    examples: [
-      { title: "Pre-Purchase Home Inspection", description: "A detailed inspection for prospective buyers that documents visible conditions, identifies safety or repair concerns, and provides a practical action plan for due diligence and closing discussions." },
-      { title: "Pre-Listing Seller Inspection", description: "A proactive inspection before marketing the property, helping sellers understand visible concerns, plan repairs, gather specialist evaluations when appropriate, and reduce avoidable surprises during escrow." },
-      { title: "Homeowner & Maintenance Inspection", description: "A property-condition review for current owners who want to prioritize maintenance, monitor aging systems, prepare for improvements, or establish a clearer repair plan." },
-    ],
-    outcomes: ["A prioritized executive summary", "System-by-system documented findings", "Clear repair and specialist recommendations", "A professional client-friendly report"],
-    detailsTitle: "What the inspection covers",
-    detailsDescription: "Coverage is based on the property's installed systems, accessibility, operating conditions, safety, and the agreed inspection scope.",
-    details: [
-      { title: "Site, Drainage & Coastal Exposure", description: "Visible grading, drainage, walkways, retaining conditions, vegetation clearances, shoreline and salt exposure, and other site factors that can affect water entry, corrosion, termite risk, and long-term maintenance." },
-      { title: "Foundation & Structural Components", description: "Accessible slabs, foundation walls, piers, posts, columns, floor framing, wall and roof framing, crawlspaces, visible connectors, and indications of movement, moisture, decay, corrosion, or alteration." },
-      { title: "Exterior, Windows, Doors & Roofing", description: "Exterior cladding and finishes, sealants, flashings, penetrations, representative windows and doors, roof coverings, drainage, attic areas, insulation, ventilation, and visible evidence of leakage or deterioration." },
-      { title: "Plumbing, Electrical, HVAC & Propane", description: "Visible and accessible supply and drain components, water heating and catchment systems where present, electrical service and representative devices, cooling and ventilation, indoor moisture indicators, and propane or fuel-gas components." },
-      { title: "Interior, Kitchen, Bathrooms & Utility Areas", description: "Interior rooms and finishes, representative doors, windows, receptacles and fixtures, built-in kitchen appliances, bathrooms, laundry, garage, and utility areas." },
-      { title: "Lanais, Decks, Pests & Ancillary Systems", description: "Decks, lanais, balconies, stairs and guards, visible termite and wood-decay indicators, detached structures, accessible ancillary systems, and Hawaiʻi-specific coastal considerations." },
-    ],
-    deliverablesTitle: "What clients receive",
-    deliverables: [
-      "A client-friendly written inspection report with documented observations and photographs",
-      "Condition status for each inspected component, including serviceable, maintenance, deficient, safety, specialist evaluation, limited, and informational findings",
-      "Red, Yellow, and Green urgency priorities that distinguish immediate concerns, near-term action, and maintenance or monitoring",
-      "An executive summary and client action plan focused on the most important findings",
-      "A consolidated repair plan with recommended trades or specialist referrals when appropriate",
-      "Documented inspection methods, access limitations, and systems that could not be fully inspected",
-    ],
-    ctaLabel: "Request an Inspection Quote",
-    disclaimer: "The inspection records visible conditions of readily accessible residential components at the time of inspection. It is not a warranty, guarantee, engineering analysis, destructive investigation, environmental assessment, licensed pest certification, appraisal, or comprehensive code-compliance inspection. Concealed, inaccessible, shut-down, unsafe, or excluded components may not be inspected. Recommendations should be completed by appropriately qualified professionals.",
-  },
-  {
-    id: "handyman-services", category: "property", title: "Handyman Services", shortTitle: "Handyman Services", icon: Hammer, accent: "bg-orange-50 text-orange-700",
-    blurb: "Practical, detail-oriented assistance for minor repairs, installations, adjustments, and property punch-list work.",
-    hero: "Reliable hands-on support for everyday property needs.",
-    overview: "We provide professional handyman support for homeowners, managed properties, vacation rentals, and businesses. When manufacturer-specific procedures apply, we consult available product documentation or work directly with manufacturer support whenever appropriate.",
-    examples: [
-      { title: "Mounting & Installation", description: "Televisions, shelving, wall-mounted accessories, smart devices, hardware, and compatible equipment." },
-      { title: "Minor Repairs & Adjustments", description: "Cabinet, door, furniture, hardware, fixture, and general property punch-list assistance." },
-      { title: "Manufacturer-Guided Support", description: "Coordinate with manufacturers or follow applicable product guidance for compatible repairs and replacement components." },
-    ],
-    outcomes: ["Professional workmanship", "Clear communication", "Manufacturer-aware repairs", "Convenient local support"],
-    disclaimer: "Handyman services are limited to work that does not require a licensed contractor or specialized trade professional.",
-  },
-];
-
-const serviceGroups = [
-  { id: "technology", label: "Technology Solutions", icon: Laptop, description: "Applications, installations, connectivity, training, and technology refreshes.", serviceIds: ["application-development", "technology-installation", "training-support"] },
-  { id: "digital", label: "Web, Automation & AI", icon: Globe2, description: "Website development, custom automation, and practical AI implementation for business and personal needs.", serviceIds: ["website-development", "automation-development", "ai-implementation"] },
-  { id: "business", label: "Business Solutions", icon: Building2, description: "Workflow improvement, operational analysis, reporting, and process support.", serviceIds: ["workflow-optimization", "business-insight"] },
-  { id: "property", label: "Property Field & Home Services", icon: Home, description: "Owner-directed property field services, residential home inspections, vendor assistance, handyman support, property technology, and project documentation.", serviceIds: ["property-field-services", "home-inspections", "vendor-coordination", "handyman-services"] },
-];
-
-function SectionHeading({ eyebrow, title, description, align = "left" }) {
-  return <div className={`max-w-3xl space-y-4 ${align === "center" ? "mx-auto text-center" : ""}`.trim()}>
-    <p className="text-sm font-semibold uppercase tracking-[0.22em] text-[#1D84B5]">{eyebrow}</p>
-    <h2 className="text-3xl font-bold tracking-tight text-[#17324D] md:text-4xl">{title}</h2>
-    <p className="text-base leading-8 text-slate-600 md:text-lg">{description}</p>
-  </div>;
-}
-
 function ServiceCard({ service, onOpen }) {
   const Icon = service.icon;
-  return <motion.div whileHover={{ y: -5 }} transition={{ duration: 0.2 }} className="h-full">
-    <Card className="h-full overflow-hidden">
-      <div className="h-1.5 bg-gradient-to-r from-[#1D84B5] via-[#3FA7A3] to-[#74C69D]" />
-      <CardHeader className="space-y-5">
-        <div className={`flex h-12 w-12 items-center justify-center rounded-2xl ${service.accent}`}><Icon className="h-6 w-6" /></div>
-        <div className="space-y-2"><CardTitle className="text-xl">{service.title}</CardTitle><CardDescription className="leading-7">{service.blurb}</CardDescription></div>
-      </CardHeader>
-      <CardContent><Button variant="ghost" onClick={() => onOpen(service.id)} className="px-0">View service <ArrowRight className="h-4 w-4" /></Button></CardContent>
-    </Card>
-  </motion.div>;
-}
-
-function GroupCard({ group, onOpen }) {
-  const Icon = group.icon;
-  const groupServices = group.serviceIds.map((id) => services.find((service) => service.id === id)).filter(Boolean);
-  return <Card className="h-full overflow-hidden">
-    <CardHeader className="space-y-5">
-      <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#EAF6F7] text-[#17324D]"><Icon className="h-7 w-7" /></div>
-      <div className="space-y-2"><CardTitle className="text-2xl">{group.label}</CardTitle><CardDescription className="leading-7">{group.description}</CardDescription></div>
-    </CardHeader>
-    <CardContent className="space-y-4">
-      {groupServices.map((service) => <button key={service.id} onClick={() => onOpen(service.id)} className="flex w-full items-center justify-between rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-left text-sm font-medium text-slate-700 transition hover:border-[#3FA7A3] hover:bg-[#F2FBFB] hover:text-[#17324D]"><span>{service.shortTitle}</span><ArrowRight className="h-4 w-4" /></button>)}
-    </CardContent>
-  </Card>;
+  return (
+    <motion.div whileHover={{ y: -5 }} transition={{ duration: 0.2 }} className="h-full">
+      <Card className="flex h-full flex-col overflow-hidden">
+        <div className="h-1.5 bg-gradient-to-r from-[#1268D5] via-[#2A91CB] to-[#49BDA7]" />
+        <div className="flex flex-1 flex-col p-6">
+          <div className={`flex h-12 w-12 items-center justify-center rounded-2xl ${service.accent}`}>
+            <Icon className="h-6 w-6" />
+          </div>
+          <h3 className="mt-5 text-xl font-bold text-[#061B33]">{service.title}</h3>
+          <p className="mt-3 flex-1 leading-7 text-slate-600">{service.blurb}</p>
+          <Button variant="ghost" onClick={() => onOpen(service.id)} className="mt-5 justify-start px-0">
+            Explore service <ArrowRight className="h-4 w-4" />
+          </Button>
+        </div>
+      </Card>
+    </motion.div>
+  );
 }
 
 function HomePage({ onOpen }) {
-  return <div className="space-y-24">
-    <section className="relative overflow-hidden rounded-[2.25rem] bg-[#17324D] px-6 py-12 text-white md:px-10 md:py-16 lg:px-14">
-      <div className="absolute -right-28 -top-28 h-80 w-80 rounded-full bg-[#1D84B5]/25 blur-3xl" />
-      <div className="absolute -bottom-32 left-1/4 h-80 w-80 rounded-full bg-[#3FA7A3]/20 blur-3xl" />
-      <div className="relative grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
-        <div className="space-y-8">
-          <div className="space-y-5">
-            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-[#84DCCF]">Technology • Digital • Property • Operations</p>
-            <h1 className="max-w-4xl text-4xl font-bold leading-tight tracking-tight md:text-6xl">Practical solutions for Hawaiʻi businesses, homes, and properties.</h1>
-            <p className="max-w-2xl text-lg leading-8 text-slate-200">Locally owned and operated on the Big Island, Aloha Technology Services LLC helps businesses, homeowners, and property managers build websites, implement automation and AI, improve operations, modernize technology, coordinate trusted vendors, and complete projects with confidence.</p>
-          </div>
-          <div className="flex flex-wrap gap-4">
-            <Button size="lg" variant="light" onClick={() => onOpen("contact")}>Request a Consultation</Button>
-            <Button size="lg" variant="outline" className="border-white/30 bg-white/5 text-white hover:border-white hover:bg-white/10 hover:text-white" onClick={() => document.getElementById("services-overview")?.scrollIntoView({ behavior: "smooth" })}>Explore Services</Button>
-          </div>
-          <div className="grid gap-3 sm:grid-cols-3">
-            {["Locally owned on Hawaiʻi Island", "Residential and commercial support", "Written proposals before work begins"].map((item) => <div key={item} className="rounded-2xl border border-white/15 bg-white/10 px-4 py-4 text-sm font-medium text-slate-100">{item}</div>)}
-          </div>
-        </div>
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="rounded-[2rem] border border-white/15 bg-white/10 p-6 backdrop-blur"
-        >
-          <p className="mb-5 text-sm font-semibold uppercase tracking-[0.2em] text-[#84DCCF]">
-            How we can help
-          </p>
-          <div className="grid gap-4">
-            {serviceGroups.map((group) => {
-              const Icon = group.icon;
-              return (
-                <div
-                  key={group.id}
-                  className="flex items-start gap-4 rounded-2xl border border-white/10 bg-white/10 p-4"
-                >
-                  <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-white text-[#17324D]">
-                    <Icon className="h-5 w-5" />
+  const propertyServices = services.slice(0, 4);
+  const remainingServices = services.slice(4);
+  return (
+    <div className="space-y-20 md:space-y-24">
+      <section className="overflow-hidden rounded-[2rem] bg-[#061B33] text-white shadow-2xl">
+        <div className="grid lg:grid-cols-[1.02fr_0.98fr]">
+          <div className="relative flex items-center px-7 py-14 md:px-12 lg:px-14 lg:py-16">
+            <div className="absolute -left-32 -top-32 h-80 w-80 rounded-full bg-[#1268D5]/25 blur-3xl" />
+            <div className="relative space-y-7">
+              <p className="text-sm font-bold uppercase tracking-[0.22em] text-[#77D7CF]">Locally owned on Hawaiʻi Island</p>
+              <h1 className="max-w-3xl text-4xl font-bold leading-tight tracking-tight md:text-6xl">
+                Property expertise. Practical technology. Dependable local support.
+              </h1>
+              <p className="max-w-2xl text-lg leading-8 text-slate-200">
+                Aloha Technology Services LLC is organized around the work we most value: supporting properties, inspecting homes, coordinating qualified providers and solving practical operational and technology challenges.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <Button size="lg" variant="light" onClick={() => onOpen("home-inspections")}>
+                  Explore Home Inspections
+                </Button>
+                <Button size="lg" className="border border-white/20 bg-white/10 hover:bg-white/20" onClick={() => onOpen("contact")}>
+                  Request Service
+                </Button>
+              </div>
+              <div className="grid gap-3 sm:grid-cols-3">
+                {["Hawaiʻi Island focused", "Photo-documented service", "Clear written scope"].map((item) => (
+                  <div key={item} className="rounded-xl border border-white/15 bg-white/10 px-4 py-3 text-sm font-semibold text-slate-100">
+                    {item}
                   </div>
-                  <div>
-                    <p className="font-semibold text-white">{group.label}</p>
-                    <p className="mt-1 text-sm leading-6 text-slate-300">
-                      {group.description}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
+                ))}
+              </div>
+            </div>
           </div>
-        </motion.div>
-      </div>
-    </section>
-
-    <section className="rounded-[2rem] border border-[#CBE8E7] bg-[#F2FBFB] px-6 py-8 md:px-10">
-      <div className="grid gap-6 md:grid-cols-[auto_1fr] md:items-center">
-        <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[#3FA7A3] text-white"><MapPin className="h-7 w-7" /></div>
-        <div><h2 className="text-2xl font-semibold text-[#17324D]">Proudly locally owned and operated on Hawaiʻi Island</h2><p className="mt-2 max-w-4xl leading-7 text-slate-600">We understand the unique logistics of island businesses, vacation rentals, managed residences, and homeowner projects. Our goal is to provide responsive local support, clear communication, and practical solutions from the first conversation through completion.</p></div>
-      </div>
-    </section>
-
-    <section id="services-overview" className="space-y-10 scroll-mt-28">
-      <SectionHeading eyebrow="Our services" title="One local resource for digital, technology, business, and property support" description="Our services are organized into four practical categories so you can quickly find the support that best fits your project." align="center" />
-      <div className="grid gap-7 md:grid-cols-2 xl:grid-cols-4">{serviceGroups.map((group) => <GroupCard key={group.id} group={group} onOpen={onOpen} />)}</div>
-    </section>
-
-    <section className="rounded-[2rem] border border-indigo-100 bg-gradient-to-br from-sky-50 via-white to-indigo-50 px-6 py-10 md:px-10 md:py-12">
-      <div className="space-y-10">
-        <SectionHeading eyebrow="Digital growth & efficiency" title="Websites, automation, and AI built around practical needs" description="Strengthen your online presence, connect the tools you already use, automate repetitive work, and introduce AI where it can create clear operational value." />
-        <div className="grid gap-7 lg:grid-cols-3">
-          {services.filter((service) => service.category === "digital").map((service) => <ServiceCard key={service.id} service={service} onOpen={onOpen} />)}
-        </div>
-        <div className="rounded-2xl border border-indigo-100 bg-white/80 px-5 py-4 text-sm leading-6 text-slate-600">
-          New technology is recommended only when it supports a defined goal. We can work with existing platforms, connect new tools, train users, and establish appropriate privacy, security, and human-review practices.
-        </div>
-      </div>
-    </section>
-
-    <section className="rounded-[2rem] bg-[#F7F3EB] px-6 py-10 md:px-10 md:py-12">
-      <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
-        <div className="space-y-5"><p className="text-sm font-semibold uppercase tracking-[0.22em] text-[#1D84B5]">Featured service</p><h2 className="text-3xl font-bold tracking-tight text-[#17324D] md:text-4xl">Technology refreshes for entire homes and businesses</h2><p className="leading-8 text-slate-600">We can help replace outdated televisions, coordinate with internet providers, install mesh networks, improve whole-property Wi-Fi coverage, configure connected appliances, and set up the devices your family, guests, or team depend on every day.</p><Button variant="accent" onClick={() => onOpen("technology-installation")}>Explore Technology Refreshes <ArrowRight className="h-4 w-4" /></Button></div>
-        <div className="grid gap-4 sm:grid-cols-2">
-          {[{ icon: Wifi, title: "Mesh Wi-Fi", text: "Improve coverage across larger homes, offices, and managed properties." },{ icon: PlayCircle, title: "TV & Streaming", text: "Install new televisions, streaming devices, and entertainment equipment." },{ icon: Network, title: "Provider Coordination", text: "Communicate with internet providers and help resolve service or equipment issues." },{ icon: Smartphone, title: "Connected Devices", text: "Configure smart-home devices, appliances, printers, displays, and shared equipment." }].map(({ icon: Icon, title, text }) => <div key={title} className="rounded-2xl border border-white/80 bg-white p-5 shadow-sm"><Icon className="h-6 w-6 text-[#1D84B5]" /><h3 className="mt-4 font-semibold text-[#17324D]">{title}</h3><p className="mt-2 text-sm leading-6 text-slate-600">{text}</p></div>)}
-        </div>
-      </div>
-    </section>
-
-    <section className="space-y-10"><SectionHeading eyebrow="Property field support" title="Documented onsite support while owners retain control" description="From owner-directed visual checks and vendor access to residential home inspections, technology, and minor project assistance, we provide clear field documentation without offering property management or leasing services." /><div className="grid gap-7 md:grid-cols-2 xl:grid-cols-4">{services.filter((service) => service.category === "property").map((service) => <ServiceCard key={service.id} service={service} onOpen={onOpen} />)}</div></section>
-
-    <section className="grid gap-8 lg:grid-cols-2">
-      <Card><CardHeader><CardTitle className="text-2xl">Why choose Aloha Technology Services LLC?</CardTitle><CardDescription className="mt-2 leading-7">We combine technical capability, operational experience, local vendor coordination, and practical property support.</CardDescription></CardHeader><CardContent className="grid gap-4 text-slate-700">{["Locally owned and operated on Hawaiʻi Island", "Support for businesses, homeowners, vacation rentals, and property managers", "Clear communication and documented project proposals", "Manufacturer-aware support when product-specific guidance applies", "Coordination with qualified local vendors for specialized work", "Solutions designed around long-term usability and value"].map((item) => <div key={item} className="flex gap-3"><CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#3B7A57]" /><span>{item}</span></div>)}</CardContent></Card>
-      <Card tone="dark"><CardHeader><CardTitle className="text-2xl">Project-based pricing</CardTitle><CardDescription className="mt-2 leading-7">Every property, business, and project has different requirements.</CardDescription></CardHeader><CardContent className="space-y-5"><p className="leading-7">Pricing is determined on a case-by-case basis after reviewing the requested work, project scope, required materials, location, access, and anticipated time.</p><p className="leading-7">When appropriate, clients receive a written proposal outlining scope, estimated labor, materials or equipment, third-party costs, scheduling considerations, and proposed pricing.</p><Button variant="light" onClick={() => onOpen("contact")}>Request a Project Review</Button></CardContent></Card>
-    </section>
-
-    <section className="rounded-[2rem] bg-gradient-to-r from-[#1D84B5] to-[#3FA7A3] px-6 py-12 text-white md:px-10"><div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between"><div className="max-w-3xl"><p className="text-sm font-semibold uppercase tracking-[0.22em] text-white/75">Start a conversation</p><h2 className="mt-3 text-3xl font-bold tracking-tight md:text-4xl">Have a technology, property, or operational challenge?</h2><p className="mt-4 leading-7 text-white/90">Tell us what you are trying to accomplish. We will help you identify the right next step and prepare a clear proposal when appropriate.</p></div><Button variant="light" size="lg" onClick={() => onOpen("contact")}>Request a Consultation <ArrowRight className="h-4 w-4" /></Button></div></section>
-  </div>;
-}
-
-function ServicePage({ service, onOpen }) {
-  const Icon = service.icon;
-  return <div className="space-y-16">
-    <section className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
-      <div className="space-y-7"><div className={`flex h-14 w-14 items-center justify-center rounded-2xl ${service.accent}`}><Icon className="h-7 w-7" /></div><div className="space-y-4"><p className="text-sm font-semibold uppercase tracking-[0.22em] text-[#1D84B5]">Service</p><h1 className="text-4xl font-bold tracking-tight text-[#17324D] md:text-5xl">{service.title}</h1><p className="text-xl leading-8 text-slate-600">{service.hero}</p></div><p className="max-w-3xl text-base leading-8 text-slate-600 md:text-lg">{service.overview}</p><div className="flex flex-wrap gap-3"><Button onClick={() => onOpen("contact")}>{service.ctaLabel || "Request a Consultation"}</Button><Button variant="outline" onClick={() => onOpen("home")}>Back to Home</Button></div></div>
-      <Card><CardHeader><CardTitle className="text-xl">What clients gain</CardTitle><CardDescription className="mt-2 leading-7">Practical outcomes designed around the actual needs of the project.</CardDescription></CardHeader><CardContent className="grid gap-4">{service.outcomes.map((item) => <div key={item} className="flex gap-3 text-slate-700"><CheckCircle2 className="mt-0.5 h-5 w-5 text-[#3B7A57]" /><span>{item}</span></div>)}</CardContent></Card>
-    </section>
-    <section className="space-y-8"><SectionHeading eyebrow="Examples" title="How this service can help" description="Each engagement is tailored to the property, business, equipment, workflow, and outcome involved." /><div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">{service.examples.map((example) => <Card key={example.title} className="h-full"><CardHeader><CardTitle className="text-xl leading-7">{example.title}</CardTitle></CardHeader><CardContent><p className="leading-7 text-slate-600">{example.description}</p></CardContent></Card>)}</div></section>
-    {service.details && <section className="space-y-8"><SectionHeading eyebrow={service.detailsEyebrow || "Inspection scope"} title={service.detailsTitle || "What this service covers"} description={service.detailsDescription || "Coverage is tailored to the agreed service scope."} /><div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">{service.details.map((detail) => <Card key={detail.title} className="h-full"><CardHeader><CardTitle className="text-xl leading-7">{detail.title}</CardTitle></CardHeader><CardContent><p className="leading-7 text-slate-600">{detail.description}</p></CardContent></Card>)}</div></section>}
-    {service.deliverables && <section className="rounded-[2rem] border border-[#CBE8E7] bg-[#F2FBFB] px-6 py-10 md:px-10"><div className="grid gap-8 lg:grid-cols-[0.75fr_1.25fr] lg:items-start"><div><p className="text-sm font-semibold uppercase tracking-[0.22em] text-[#1D84B5]">{service.deliverablesEyebrow || "Client report"}</p><h2 className="mt-3 text-3xl font-bold tracking-tight text-[#17324D]">{service.deliverablesTitle || "What clients receive"}</h2><p className="mt-4 leading-7 text-slate-600">{service.deliverablesDescription || "The final report is organized to help clients understand what was observed, why it matters, and what action should be considered next."}</p></div><div className="grid gap-4">{service.deliverables.map((item) => <div key={item} className="flex gap-3 rounded-2xl border border-white/80 bg-white px-5 py-4 text-slate-700 shadow-sm"><CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#3B7A57]" /><span className="leading-6">{item}</span></div>)}</div></div></section>}
-    {service.exclusions && <section className="rounded-[2rem] border border-slate-200 bg-slate-50 px-6 py-10 md:px-10"><SectionHeading eyebrow="Scope boundaries" title={service.exclusionsTitle || "Services not included"} description={service.exclusionsDescription || "The following activities are outside this service scope."} /><div className="mt-8 grid gap-4 md:grid-cols-2">{service.exclusions.map((item) => <div key={item} className="flex gap-3 rounded-2xl border border-slate-200 bg-white px-5 py-4 text-slate-700 shadow-sm"><X className="mt-0.5 h-5 w-5 shrink-0 text-rose-600" /><span className="leading-6">{item}</span></div>)}</div></section>}
-    {service.disclaimer && <section className="rounded-3xl border border-amber-200 bg-amber-50 px-6 py-5 text-sm leading-6 text-amber-950"><strong>Important:</strong> {service.disclaimer}</section>}
-    <section className="rounded-[2rem] bg-[#17324D] px-8 py-10 text-white"><div className="max-w-3xl space-y-5"><p className="text-sm font-semibold uppercase tracking-[0.22em] text-[#84DCCF]">Next step</p><h2 className="text-3xl font-bold">Need help with {service.shortTitle.toLowerCase()}?</h2><p className="leading-8 text-slate-300">Tell us about the property, equipment, workflow, or project. We will review the details and discuss the most practical next step.</p><Button variant="light" onClick={() => onOpen("contact")}>{service.ctaLabel || "Request a Consultation"} <ArrowRight className="h-4 w-4" /></Button></div></section>
-  </div>;
-}
-
-function AboutPage({ onOpen }) {
-  const experienceHighlights = [
-    {
-      icon: Building2,
-      value: "50+",
-      label: "Luxury residences supported",
-      text: "Experience supporting high-value homes across Hawaiʻi Island resort and residential communities.",
-    },
-    {
-      icon: Users,
-      value: "60+",
-      label: "Local vendor relationships",
-      text: "Coordination experience across construction, HVAC, appliances, restoration, locksmith, internet, alarm, and specialty services.",
-    },
-    {
-      icon: Home,
-      value: "Thousands",
-      label: "Guest transitions supported",
-      text: "Operational experience preparing residences, coordinating service, and protecting the owner and guest experience.",
-    },
-    {
-      icon: BarChart3,
-      value: "Bachelor’s Degree",
-      label: "Analytical foundation",
-      text: "A college education that supports structured problem-solving, systems thinking, data analysis, and practical implementation.",
-    },
-  ];
-
-  const professionalFoundations = [
-    {
-      icon: Building2,
-      title: "Luxury property operations",
-      text: "Koa’s professional background includes residential and resort operations, property readiness, inspections, preventative maintenance, repair coordination, owner communication, guest service, project support, and quality control.",
-    },
-    {
-      icon: Zap,
-      title: "Supervised electrical experience",
-      text: "His apprentice-level and supervised electrical background included assisting with installation, wiring, and troubleshooting while working within defined plans, safety practices, and qualified oversight. This experience is presented as practical background, not as an electrical contractor license.",
-    },
-    {
-      icon: Home,
-      title: "Irrigation Technician",
-      text: "As an Irrigation Technician, Koa gained hands-on experience installing, maintaining, and troubleshooting irrigation systems while also supporting landscaping, grounds maintenance, and the consistent care required to keep outdoor areas functional and presentable.",
-    },
-    {
-      icon: Hammer,
-      title: "Flooring Installer",
-      text: "His flooring experience included installation support, surface and jobsite preparation, material handling, detailed finish work, and attention to the sequencing and quality standards that affect a completed interior space.",
-    },
-    {
-      icon: Workflow,
-      title: "Processes, SOPs, and training",
-      text: "He has created inspection procedures, readiness standards, damage-tracking systems, training resources, operational databases, and repeatable workflows designed to improve consistency and accountability.",
-    },
-    {
-      icon: Users,
-      title: "Vendor and project coordination",
-      text: "His experience includes reviewing proposals, comparing options, coordinating schedules, documenting progress, supporting invoice approval, and helping owners and teams work effectively with local service providers.",
-    },
-    {
-      icon: Laptop,
-      title: "Technology and business systems",
-      text: "His technical interests and operational experience support website development, application implementation, automation, responsible AI use, reporting, technology installation, training, and workflow improvement.",
-    },
-  ];
-
-  const serviceConnections = [
-    {
-      title: "Websites, applications, automation, and AI",
-      text: "College-level analytical training, systems thinking, hands-on technology work, and operational problem-solving provide the foundation for building practical digital tools rather than technology for technology’s sake.",
-    },
-    {
-      title: "Workflow optimization, reporting, and training",
-      text: "Years of documenting inspections, coordinating teams, building SOPs, tracking issues, and improving handoffs shape ATS solutions for clearer operations and better decision-making.",
-    },
-    {
-      title: "Technology installation and troubleshooting",
-      text: "Supervised electrical exposure, practical troubleshooting, connected-home experience, and coordination with internet and equipment providers support careful technology installations while reinforcing when licensed electrical or specialty work must be referred out.",
-    },
-    {
-      title: "Home inspections and property field services",
-      text: "Experience with property conditions, landscaping, irrigation, flooring, finish work, maintenance coordination, and detailed documentation supports broader awareness during inspections and clearly defined onsite field services.",
-    },
-    {
-      title: "Handyman work and vendor coordination",
-      text: "Hands-on trade exposure helps Koa assess visible conditions, communicate scope clearly, complete appropriate minor work, and recognize when a licensed contractor or specialized professional is required.",
-    },
-    {
-      title: "A practical standard for finished work",
-      text: "Flooring, landscape, irrigation, electrical-support, and luxury-property experience developed an appreciation for preparation, sequencing, cleanliness, visual quality, functionality, and dependable follow-through.",
-    },
-  ];
-
-  return <div className="space-y-16">
-    <section className="overflow-hidden rounded-[2rem] bg-[#17324D] px-6 py-12 text-white md:px-10 md:py-14">
-      <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
-        <div className="space-y-6">
-          <p className="text-sm font-semibold uppercase tracking-[0.22em] text-[#84DCCF]">About Aloha Technology Services LLC</p>
-          <h1 className="max-w-4xl text-4xl font-bold tracking-tight md:text-5xl">Built from local experience across technology, property operations, and service.</h1>
-          <p className="max-w-3xl text-lg leading-8 text-slate-300">Aloha Technology Services LLC was founded by Kenyon “Koa” Smith to bring together technical problem-solving, hands-on field experience, business operations, and a deep understanding of Hawaiʻi Island homes, vendors, and client expectations.</p>
-          <div className="flex flex-wrap gap-3">
-            <Button variant="light" onClick={() => onOpen("contact")}>Discuss Your Project <ArrowRight className="h-4 w-4" /></Button>
-            <Button variant="outline" className="border-white bg-white text-[#17324D] shadow-sm hover:border-white hover:bg-slate-100 hover:text-[#17324D]" onClick={() => onOpen("home")}>Explore ATS Services</Button>
-          </div>
-        </div>
-        <div className="overflow-hidden rounded-[2rem] border border-white/15 bg-white/10 shadow-2xl backdrop-blur-sm">
-          <div className="relative overflow-hidden bg-slate-900">
+          <div className="relative min-h-[420px] lg:min-h-full">
             <img
-              src={FOUNDER_PORTRAIT}
-              alt="Kenyon “Koa” Smith, founder of Aloha Technology Services LLC"
-              width="1000"
-              height="800"
-              className="block aspect-[5/4] w-full object-cover"
+              src="/images/inspection-hero.jpg"
+              alt="Hawaiʻi Island residence used to represent home inspections and property services"
+              className="absolute inset-0 h-full w-full object-cover"
               loading="eager"
               fetchPriority="high"
               decoding="async"
             />
-            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#17324D] via-[#17324D]/85 to-transparent px-6 pb-5 pt-16">
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#84DCCF]">Founder</p>
-              <h2 className="mt-1 text-2xl font-bold">Kenyon “Koa” Smith</h2>
-            </div>
-          </div>
-          <div className="p-7">
-            <p className="leading-7 text-slate-300">Hawaiʻi Island operations professional, technical problem-solver, and owner of Aloha Technology Services LLC.</p>
-            <div className="mt-6 space-y-4 border-t border-white/15 pt-6 text-sm leading-6 text-slate-300">
-              <div className="flex gap-3"><MapPin className="mt-0.5 h-5 w-5 shrink-0 text-[#84DCCF]" /><span>Raised in Waimea and committed to serving Hawaiʻi Island communities.</span></div>
-              <div className="flex gap-3"><BarChart3 className="mt-0.5 h-5 w-5 shrink-0 text-[#84DCCF]" /><span>Bachelor’s Degree from the University of Hawaiʻi at Mānoa.</span></div>
-              <div className="flex gap-3"><Building2 className="mt-0.5 h-5 w-5 shrink-0 text-[#84DCCF]" /><span>Professional foundation in luxury residential, resort, property, and business operations.</span></div>
-              <div className="flex gap-3"><Hammer className="mt-0.5 h-5 w-5 shrink-0 text-[#84DCCF]" /><span>Hands-on background in supervised electrical work, irrigation systems, landscaping support, flooring installation, and finish work.</span></div>
-            </div>
+            <div className="absolute inset-0 bg-gradient-to-r from-[#061B33] via-[#061B33]/20 to-transparent lg:bg-gradient-to-l lg:from-transparent lg:via-transparent lg:to-[#061B33]/40" />
           </div>
         </div>
+      </section>
+
+      <section className="space-y-10">
+        <SectionHeading
+          eyebrow="Priority services"
+          title="Property and home services come first"
+          description="These services reflect the work ATS most prefers to perform and the areas where local field experience, detailed documentation and strong provider relationships create the greatest value."
+          align="center"
+        />
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          {propertyServices.map((service) => <ServiceCard key={service.id} service={service} onOpen={onOpen} />)}
+        </div>
+      </section>
+
+      <section className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+        <div className="overflow-hidden rounded-[2rem] shadow-xl">
+          <img src="/images/property-field-services-hero.jpg" alt="Field service professional documenting the exterior of a Hawaiʻi Island residence" className="aspect-[16/10] w-full object-cover" loading="lazy" />
+        </div>
+        <div className="space-y-6">
+          <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#1268D5]">Property Field Services</p>
+          <h2 className="text-3xl font-bold tracking-tight text-[#061B33] md:text-4xl">Clear onsite support without taking over the owner’s decisions</h2>
+          <p className="text-lg leading-8 text-slate-600">
+            ATS performs owner-directed visual checks, access support, delivery verification, incident documentation and defined onsite tasks. The owner retains all property-management, rental, financial and legal authority.
+          </p>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {["Dated photographs", "Written visit notes", "Authorized vendor access", "Prompt escalation"].map((item) => (
+              <div key={item} className="flex items-center gap-3 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-semibold text-[#061B33]">
+                <CheckCircle2 className="h-5 w-5 text-[#1E9C73]" /> {item}
+              </div>
+            ))}
+          </div>
+          <Button variant="navy" onClick={() => onOpen("property-field-services")}>View Property Field Services <ArrowRight className="h-4 w-4" /></Button>
+        </div>
+      </section>
+
+      <section className="rounded-[2rem] border border-blue-100 bg-gradient-to-br from-blue-50 via-white to-cyan-50 px-6 py-10 md:px-10 md:py-12">
+        <div className="grid gap-10 lg:grid-cols-[0.82fr_1.18fr] lg:items-center">
+          <div className="space-y-5">
+            <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#1268D5]">Home inspections</p>
+            <h2 className="text-3xl font-bold tracking-tight text-[#061B33] md:text-4xl">Eleven inspection options built around different property decisions</h2>
+            <p className="leading-8 text-slate-600">
+              From a full buyer inspection to thermal moisture assessment, irrigation, pool and spa reviews and custom rental arrival/departure documentation, each scope is explained clearly before the inspection begins.
+            </p>
+            <Button onClick={() => onOpen("home-inspections")}>Compare Inspection Services <ArrowRight className="h-4 w-4" /></Button>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {inspectionTypes.slice(0, 4).map((inspection) => (
+              <div key={inspection.id} className="rounded-2xl border border-white bg-white p-5 shadow-sm">
+                <inspection.icon className="h-6 w-6 text-[#1268D5]" />
+                <h3 className="mt-4 font-bold text-[#061B33]">{inspection.title}</h3>
+                <p className="mt-2 text-sm leading-6 text-slate-600">{inspection.short}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="space-y-10">
+        <SectionHeading
+          eyebrow="Operations, technology and digital services"
+          title="Additional capabilities arranged in your preferred order"
+          description="ATS can also improve workflows, install and support technology, create training resources, develop websites and build practical automation, AI and application solutions."
+          align="center"
+        />
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          {remainingServices.map((service) => <ServiceCard key={service.id} service={service} onOpen={onOpen} />)}
+        </div>
+      </section>
+
+      <section className="grid gap-8 lg:grid-cols-2">
+        <Card className="p-7 md:p-9">
+          <ShieldCheck className="h-9 w-9 text-[#1268D5]" />
+          <h2 className="mt-5 text-2xl font-bold text-[#061B33]">Scope clarity is part of the service</h2>
+          <p className="mt-4 leading-7 text-slate-600">
+            ATS defines what will be inspected, observed, installed, coordinated or completed before work begins. When a task requires a licensed contractor, engineer, pest professional or specialty trade, that boundary is communicated and the appropriate provider category is identified.
+          </p>
+        </Card>
+        <Card className="bg-[#061B33] p-7 text-white md:p-9">
+          <Search className="h-9 w-9 text-[#77D7CF]" />
+          <h2 className="mt-5 text-2xl font-bold">A deeper local provider resource</h2>
+          <p className="mt-4 leading-7 text-slate-300">
+            Our internal Hawaiʻi Island directory contains 580 researched entries representing 316 unique providers across 39 separated service families, with East and West Hawaiʻi coverage and a documented verification process.
+          </p>
+          <Button variant="light" className="mt-6" onClick={() => onOpen("vendor-coordination")}>Explore Vendor Coordination</Button>
+        </Card>
+      </section>
+
+      <section className="rounded-[2rem] bg-gradient-to-r from-[#0B2B4D] to-[#1268D5] px-7 py-12 text-white md:px-11">
+        <div className="flex flex-col gap-7 md:flex-row md:items-center md:justify-between">
+          <div className="max-w-3xl">
+            <p className="text-sm font-bold uppercase tracking-[0.2em] text-blue-200">Start with the actual need</p>
+            <h2 className="mt-3 text-3xl font-bold md:text-4xl">Tell us what is happening at the property or in the operation.</h2>
+            <p className="mt-4 leading-7 text-blue-100">ATS will help identify the appropriate inspection, field service, provider category or technical solution and prepare a clear next step.</p>
+          </div>
+          <Button variant="light" size="lg" onClick={() => onOpen("contact")}>Request a Consultation <ArrowRight className="h-4 w-4" /></Button>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function InspectionCard({ inspection, onSelect }) {
+  const Icon = inspection.icon;
+  return (
+    <Card className="group flex h-full flex-col overflow-hidden">
+      <div className="relative overflow-hidden">
+        <img src={inspection.image} alt={`${inspection.title} service`} className="aspect-[16/9] w-full object-cover transition duration-300 group-hover:scale-[1.03]" loading="lazy" />
+        <div className="absolute bottom-3 left-3 flex h-11 w-11 items-center justify-center rounded-full bg-[#1268D5] text-white shadow-lg">
+          <Icon className="h-5 w-5" />
+        </div>
+        {inspection.badge && <span className="absolute right-3 top-3 rounded-full bg-white/95 px-3 py-1 text-xs font-bold text-[#0D57B5] shadow">Add-on option</span>}
       </div>
-    </section>
-
-    <section className="space-y-10">
-      <SectionHeading eyebrow="Professional background" title="Experience that directly supports the work ATS provides" description="The services offered by ATS are grounded in real operational responsibility, technical education, onsite problem-solving, documentation, vendor coordination, and client service." />
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        {experienceHighlights.map(({ icon: Icon, value, label, text }) => <Card key={label} tone="soft"><CardContent className="p-6"><Icon className="h-7 w-7 text-[#1D84B5]" /><p className="mt-5 text-3xl font-bold tracking-tight text-[#17324D]">{value}</p><h3 className="mt-2 font-semibold text-[#17324D]">{label}</h3><p className="mt-3 text-sm leading-6 text-slate-600">{text}</p></CardContent></Card>)}
+      <div className="flex flex-1 flex-col p-5">
+        <h3 className="text-lg font-bold leading-6 text-[#061B33]">{inspection.title}</h3>
+        <p className="mt-3 flex-1 text-sm leading-6 text-slate-600">{inspection.short}</p>
+        <button onClick={() => onSelect(inspection.id)} className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-[#1268D5] hover:text-[#0D57B5]">
+          View details <ArrowRight className="h-4 w-4" />
+        </button>
       </div>
-    </section>
+    </Card>
+  );
+}
 
-    <section className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-      <Card tone="sand">
-        <CardHeader><CardTitle className="text-3xl">From Waimea to a career built on practical responsibility</CardTitle></CardHeader>
-        <CardContent className="space-y-5 text-base leading-8 text-slate-600">
-          <p>Koa grew up in Waimea on the Big Island and graduated from Parker School. He later earned a Bachelor’s Degree from the University of Hawaiʻi at Mānoa before returning home to build his career and remain close to family.</p>
-          <p>Before and alongside his operations career, Koa developed a practical foundation through apprentice-level and supervised electrical work, irrigation work, and flooring work. As an Irrigation Technician, his responsibilities included installing, maintaining, and troubleshooting irrigation systems while supporting landscaping and grounds care. His broader hands-on experience also included assisting with electrical installation, wiring, and troubleshooting, as well as flooring installation support, surface preparation, material handling, and detailed finish work.</p>
-          <p>Those experiences strengthened his understanding of jobsite conditions, work sequencing, safety, workmanship, preventive care, and the importance of recognizing when a task requires a licensed trade professional. His career later expanded into luxury residential and resort operations, where success depended on careful inspections, reliable communication, maintenance planning, vendor coordination, documentation, budget awareness, service recovery, and consistent follow-through.</p>
-          <p>Across those roles, he supported more than 50 high-value residences, worked with over 60 local vendors and service providers, and helped coordinate thousands of guest arrivals and departures. He also developed inspection standards, training materials, damage-tracking processes, and operating procedures used by teams supporting complex properties.</p>
-          <p>That combination of analytical training and field experience led to the creation of Aloha Technology Services LLC in 2024: a locally owned company focused on making technology, property support, and business operations more practical and easier to manage.</p>
-        </CardContent>
-      </Card>
+function HomeInspectionsPage({ onOpen }) {
+  const [selectedInspection, setSelectedInspection] = useState("full-residential");
+  const selected = inspectionTypes.find((item) => item.id === selectedInspection) || inspectionTypes[0];
 
-      <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-        {professionalFoundations.map(({ icon: Icon, title, text }) => <Card key={title}><CardContent className="p-6"><div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#EAF6F7] text-[#1D84B5]"><Icon className="h-6 w-6" /></div><h3 className="mt-5 text-xl font-semibold text-[#17324D]">{title}</h3><p className="mt-3 leading-7 text-slate-600">{text}</p></CardContent></Card>)}
-      </div>
-    </section>
+  const selectInspection = (id) => {
+    setSelectedInspection(id);
+    window.setTimeout(() => document.getElementById("inspection-detail")?.scrollIntoView({ behavior: "smooth", block: "start" }), 30);
+  };
 
-    <section className="rounded-[2rem] bg-[#F2FBFB] px-6 py-10 md:px-10 md:py-12">
-      <SectionHeading eyebrow="Why the experience matters" title="Every service is connected to work Koa has performed in the real world" description="ATS combines technical capability with an operator’s understanding of reliability, communication, scope, documentation, and the people affected by each project." />
-      <div className="mt-9 grid gap-5 md:grid-cols-2">
-        {serviceConnections.map((item) => <div key={item.title} className="rounded-2xl border border-[#CBE8E7] bg-white p-6 shadow-sm"><div className="flex gap-3"><CheckCircle2 className="mt-0.5 h-6 w-6 shrink-0 text-[#1D84B5]" /><div><h3 className="text-lg font-semibold text-[#17324D]">{item.title}</h3><p className="mt-2 leading-7 text-slate-600">{item.text}</p></div></div></div>)}
-      </div>
-    </section>
+  return (
+    <div className="space-y-16 md:space-y-20">
+      <section className="overflow-hidden rounded-[2rem] bg-[#061B33] text-white shadow-2xl">
+        <div className="grid lg:grid-cols-[0.95fr_1.05fr]">
+          <div className="px-7 py-12 md:px-11 lg:py-14">
+            <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#77D7CF]">Home inspections</p>
+            <h1 className="mt-5 text-4xl font-bold tracking-tight md:text-5xl">Thorough. Impartial. Insightful.</h1>
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-200">
+              Protect your investment and make more informed decisions with a detailed, visual and non-invasive inspection of readily accessible residential systems and components.
+            </p>
+            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+              {[
+                { icon: ShieldCheck, title: "Independent documentation", text: "Findings are based on observed conditions—not the outcome of a sale." },
+                { icon: Thermometer, title: "Advanced tools", text: "Thermal imaging and moisture measurements are used when appropriate." },
+                { icon: FileText, title: "Clear reporting", text: "Photographs, priorities, limitations and practical recommendations." },
+                { icon: MapPin, title: "Hawaiʻi Island context", text: "Local awareness of moisture, corrosion, drainage, pests and island logistics." },
+              ].map(({ icon: Icon, title, text }) => (
+                <div key={title} className="flex gap-3 rounded-xl border border-white/15 bg-white/10 p-4">
+                  <Icon className="mt-0.5 h-6 w-6 shrink-0 text-[#77D7CF]" />
+                  <div><p className="font-bold">{title}</p><p className="mt-1 text-sm leading-6 text-slate-300">{text}</p></div>
+                </div>
+              ))}
+            </div>
+            <Button variant="light" size="lg" className="mt-8" onClick={() => onOpen("contact")}>Request an Inspection Quote</Button>
+          </div>
+          <div className="relative min-h-[420px]">
+            <img src="/images/inspection-hero.jpg" alt="Hawaiʻi Island home representing residential inspection services" className="absolute inset-0 h-full w-full object-cover" loading="eager" fetchPriority="high" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#061B33]/55 to-transparent" />
+          </div>
+        </div>
+      </section>
 
-    <section className="grid gap-8 lg:grid-cols-2">
-      <Card>
-        <CardHeader><CardTitle className="text-2xl">A practical, client-centered approach</CardTitle></CardHeader>
-        <CardContent className="space-y-4 leading-7 text-slate-600"><p>ATS begins by understanding the actual problem, the people involved, the property or business environment, and the desired result. The recommended solution is then shaped around the client’s needs rather than forcing every project into the same package.</p><p>Clear scope, realistic expectations, documented communication, and dependable follow-through are treated as part of the service—not as extras.</p></CardContent>
-      </Card>
-      <Card>
-        <CardHeader><CardTitle className="text-2xl">Local commitment</CardTitle></CardHeader>
-        <CardContent className="space-y-4 leading-7 text-slate-600"><p>Being raised on Hawaiʻi Island shapes how Koa approaches relationships, communication, and responsibility. ATS is built to serve local businesses, homeowners, property owners, and organizations with respect for island logistics and the importance of trusted long-term relationships.</p><p>When a project requires expertise outside ATS’s scope, the goal is to communicate that clearly and help identify the appropriate next step or qualified professional.</p></CardContent>
-      </Card>
-    </section>
+      <section className="space-y-9">
+        <SectionHeading
+          eyebrow="Inspection services"
+          title="Choose the inspection that matches the decision you need to make"
+          description="Every service begins with a defined scope. Select any option to review who it is for, what is normally included and what the final deliverable explains."
+        />
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {inspectionTypes.map((inspection) => <InspectionCard key={inspection.id} inspection={inspection} onSelect={selectInspection} />)}
+        </div>
+      </section>
 
-    <section className="rounded-3xl border border-emerald-200 bg-emerald-50 px-6 py-5 text-sm leading-6 text-emerald-950"><strong>Property Field Services scope:</strong> ATS provides clearly defined, owner-directed onsite vendor services. ATS does not provide property management, caretaker or custodian services, leasing, tenant placement, rent or deposit handling, lease administration, or landlord-tenant representation.</section>
+      <section id="inspection-detail" className="scroll-mt-32 overflow-hidden rounded-[2rem] border border-blue-100 bg-blue-50/60">
+        <div className="grid lg:grid-cols-[0.92fr_1.08fr]">
+          <div className="relative min-h-[360px] lg:min-h-full">
+            <img src={selected.image} alt={`${selected.title} detail`} className="absolute inset-0 h-full w-full object-cover" loading="lazy" />
+          </div>
+          <div className="p-7 md:p-10">
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="rounded-full bg-[#1268D5] px-3 py-1 text-xs font-bold uppercase tracking-wide text-white">Selected service</span>
+              {selected.badge && <span className="rounded-full border border-blue-200 bg-white px-3 py-1 text-xs font-bold text-[#0D57B5]">{selected.badge}</span>}
+            </div>
+            <h2 className="mt-5 text-3xl font-bold tracking-tight text-[#061B33]">{selected.title}</h2>
+            <p className="mt-4 text-lg leading-8 text-slate-600">{selected.short}</p>
+            <div className="mt-7 rounded-xl border border-white bg-white p-5 shadow-sm">
+              <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#1268D5]">Best for</p>
+              <p className="mt-2 leading-7 text-slate-700">{selected.bestFor}</p>
+            </div>
+            <div className="mt-7">
+              <h3 className="text-xl font-bold text-[#061B33]">Typical scope</h3>
+              <div className="mt-4 grid gap-3">
+                {selected.includes.map((item) => (
+                  <div key={item} className="flex gap-3 text-slate-700"><CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#1E9C73]" /><span className="leading-6">{item}</span></div>
+                ))}
+              </div>
+            </div>
+            <div className="mt-7 rounded-xl bg-[#061B33] p-5 text-white">
+              <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#77D7CF]">What you receive</p>
+              <p className="mt-2 leading-7 text-slate-200">{selected.deliverable}</p>
+            </div>
+            <Button className="mt-7" onClick={() => onOpen("contact")}>Request This Inspection <ArrowRight className="h-4 w-4" /></Button>
+          </div>
+        </div>
+      </section>
 
-    <section className="rounded-[2rem] bg-[#17324D] px-8 py-10 text-white"><h2 className="text-3xl font-bold">Ready to discuss what you are trying to accomplish?</h2><p className="mt-4 max-w-3xl leading-8 text-slate-300">Share the project, challenge, property, system, or workflow. ATS will review the details and help identify a practical next step.</p><Button variant="light" className="mt-6" onClick={() => onOpen("contact")}>Contact Aloha Technology Services LLC <ArrowRight className="h-4 w-4" /></Button></section>
-  </div>;
+      <section className="rounded-[2rem] border border-emerald-100 bg-emerald-50 px-7 py-10 md:px-10">
+        <div className="grid gap-8 lg:grid-cols-[0.75fr_1.25fr] lg:items-start">
+          <div>
+            <p className="text-sm font-bold uppercase tracking-[0.2em] text-emerald-700">Bundled add-on options</p>
+            <h2 className="mt-3 text-3xl font-bold text-[#061B33]">Add targeted systems to another inspection</h2>
+            <p className="mt-4 leading-7 text-slate-600">
+              Moisture and water-intrusion, irrigation and pool/spa inspections may be quoted at a reduced bundled rate when performed during another qualifying inspection. Pricing depends on property size, system complexity, access, travel and the requested scope.
+            </p>
+          </div>
+          <div className="grid gap-4 md:grid-cols-3">
+            {inspectionTypes.filter((item) => item.badge).map((item) => (
+              <button key={item.id} onClick={() => selectInspection(item.id)} className="rounded-2xl border border-white bg-white p-5 text-left shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+                <item.icon className="h-7 w-7 text-emerald-700" />
+                <h3 className="mt-4 font-bold text-[#061B33]">{item.title}</h3>
+                <p className="mt-2 text-sm leading-6 text-slate-600">{item.short}</p>
+              </button>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="space-y-9">
+        <SectionHeading eyebrow="Your inspection report" title="Organized to support action—not confusion" description="The report explains what was observed, why it matters, what could not be inspected and what type of follow-up should be considered." />
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+          {[
+            { title: "Red — High / Immediate", text: "Urgent safety, active-damage or high-consequence conditions that warrant prompt action or specialist evaluation." },
+            { title: "Yellow — Medium / Soon", text: "Conditions requiring repair, maintenance, further evaluation or planning in the near term." },
+            { title: "Green — Okay / Monitor", text: "Serviceable conditions, routine maintenance items and components that should continue to be monitored." },
+            { title: "Limitations & referrals", text: "Inaccessible, shut-down or unsafe components are documented, along with the appropriate specialist category when needed." },
+          ].map((item) => (
+            <Card key={item.title} className="p-6"><h3 className="text-lg font-bold text-[#061B33]">{item.title}</h3><p className="mt-3 leading-7 text-slate-600">{item.text}</p></Card>
+          ))}
+        </div>
+      </section>
+
+      <section className="rounded-2xl border border-amber-200 bg-amber-50 px-6 py-5 text-sm leading-7 text-amber-950">
+        <strong>Inspection scope and limitations:</strong> Residential inspections are visual and non-invasive reviews of readily accessible components at the time of inspection. They are not warranties, guarantees, destructive investigations, engineering analyses, environmental assessments, licensed pest certifications, appraisals or comprehensive code-compliance inspections. Concealed, inaccessible, shut-down, unsafe or excluded components may not be inspected.
+      </section>
+
+      <section className="rounded-[2rem] bg-[#061B33] px-8 py-11 text-white">
+        <div className="flex flex-col gap-7 md:flex-row md:items-center md:justify-between">
+          <div className="max-w-3xl"><h2 className="text-3xl font-bold">Ready to discuss the property and inspection timing?</h2><p className="mt-4 leading-7 text-slate-300">Include the property location, approximate size, property type, desired date and whether you are buying, selling, maintaining or requesting a targeted inspection.</p></div>
+          <Button variant="light" size="lg" onClick={() => onOpen("contact")}>Book an Inspection</Button>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function VendorCoordinationPage({ onOpen }) {
+  const ratingBands = [
+    { score: "90–100", label: "Exceptional", text: "Best combined quality, reputation and relative value evidence." },
+    { score: "85–89", label: "Strong", text: "Very good option with limited material concerns in the available evidence." },
+    { score: "78–84", label: "Good", text: "Credible candidate; compare scope, references and current availability." },
+    { score: "70–77", label: "Compare", text: "Scope fit may exist, but licensing, review evidence or value requires closer comparison." },
+    { score: "Below 70", label: "Provisional", text: "Use only after enhanced verification and recent comparable references." },
+  ];
+  return (
+    <div className="space-y-16 md:space-y-20">
+      <section className="overflow-hidden rounded-[2rem] bg-[#061B33] text-white shadow-2xl">
+        <div className="grid lg:grid-cols-[0.95fr_1.05fr]">
+          <div className="px-7 py-12 md:px-11 lg:py-14">
+            <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#77D7CF]">Vendor coordination</p>
+            <h1 className="mt-5 text-4xl font-bold tracking-tight md:text-5xl">The right provider category. Researched. Compared. Verified again.</h1>
+            <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-200">
+              ATS maintains a detailed internal referral research directory for Hawaiʻi Island. We use it to identify appropriate provider families, compare available evidence and support owner-authorized communication, scheduling, access and project documentation.
+            </p>
+            <Button variant="light" size="lg" className="mt-8" onClick={() => onOpen("contact")}>Request Vendor Assistance</Button>
+          </div>
+          <div className="relative min-h-[420px]">
+            <img src="/images/vendor-coordination-hero.jpg" alt="Vendor coordination meeting and project documentation" className="absolute inset-0 h-full w-full object-cover" loading="eager" fetchPriority="high" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#061B33]/55 to-transparent" />
+          </div>
+        </div>
+      </section>
+
+      <section className="grid gap-5 sm:grid-cols-2 lg:grid-cols-5">
+        {[
+          { value: "580", label: "Directory entries" },
+          { value: "316", label: "Unique providers" },
+          { value: "39", label: "Separated families" },
+          { value: "285", label: "East entries" },
+          { value: "295", label: "West entries" },
+        ].map((stat) => (
+          <Card key={stat.label} className="p-6 text-center"><p className="text-4xl font-bold text-[#1268D5]">{stat.value}</p><p className="mt-2 text-sm font-semibold text-slate-600">{stat.label}</p></Card>
+        ))}
+      </section>
+
+      <section className="space-y-9">
+        <SectionHeading eyebrow="How ATS uses the directory" title="A structured research and coordination process" description="A directory entry is a starting point—not an endorsement. Every project is matched to the exact scope, location and risk involved, and regulated work requires current verification before a provider name is presented." />
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {[
+            { n: "01", title: "Define the actual scope", text: "Clarify the visible concern, desired outcome, location, timing, access and whether regulated work may be involved." },
+            { n: "02", title: "Select the provider family", text: "Match the need to the separated licensing, skill and risk category rather than relying on a broad search term." },
+            { n: "03", title: "Review location and service evidence", text: "Confirm a Hawaiʻi Island address or documented Big Island service path and compare East/West availability and travel considerations." },
+            { n: "04", title: "Evaluate quality-to-value evidence", text: "Review credential fit, local service confidence, reputation evidence, sample confidence and relative value position." },
+            { n: "05", title: "Verify current status", text: "Complete a same-day MyPVL and complaint/disciplinary check, confirm exact classification, insurance, permits and responsible licensee." },
+            { n: "06", title: "Support the client’s decision", text: "Coordinate proposals, communication, scheduling, access and documentation while the client selects the provider and approves scope and cost." },
+          ].map((step) => (
+            <Card key={step.n} className="p-6"><p className="text-sm font-black tracking-[0.18em] text-[#1268D5]">{step.n}</p><h3 className="mt-3 text-xl font-bold text-[#061B33]">{step.title}</h3><p className="mt-3 leading-7 text-slate-600">{step.text}</p></Card>
+          ))}
+        </div>
+      </section>
+
+      <section className="rounded-[2rem] border border-slate-200 bg-slate-50 px-7 py-10 md:px-10 md:py-12">
+        <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr]">
+          <div>
+            <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#1268D5]">Quality-to-value methodology</p>
+            <h2 className="mt-3 text-3xl font-bold text-[#061B33]">What an internal rating is based on</h2>
+            <p className="mt-4 leading-7 text-slate-600">
+              The rating is an editorial comparison aid. It does not guarantee performance and does not replace current license, insurance, scope, reference, proposal or warranty review.
+            </p>
+            <div className="mt-6 space-y-3">
+              {[
+                ["50%", "License, credential and exact-scope evidence"],
+                ["20%", "Hawaiʻi Island service and contact confidence"],
+                ["20%", "Reputation evidence and review-sample confidence"],
+                ["10%", "Relative value position"],
+              ].map(([value, text]) => (
+                <div key={value} className="flex gap-4 rounded-xl border border-slate-200 bg-white p-4"><span className="text-xl font-black text-[#1268D5]">{value}</span><span className="leading-6 text-slate-700">{text}</span></div>
+              ))}
+            </div>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {ratingBands.map((band) => (
+              <Card key={band.label} className="p-5"><div className="flex items-baseline justify-between gap-3"><h3 className="font-bold text-[#061B33]">{band.label}</h3><span className="text-sm font-black text-[#1268D5]">{band.score}</span></div><p className="mt-3 text-sm leading-6 text-slate-600">{band.text}</p></Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="space-y-9">
+        <SectionHeading eyebrow="Provider coverage" title="Thirty-nine separated provider families" description="Families are separated whenever licensing, skill, risk or the client’s decision differs. This prevents a general provider search from being treated as proof that a business is qualified for the exact work." />
+        <div className="grid gap-6 lg:grid-cols-2">
+          {providerFamilyGroups.map((group) => (
+            <Card key={group.title} className="p-6 md:p-7">
+              <h3 className="text-xl font-bold text-[#061B33]">{group.title}</h3>
+              <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                {group.families.map((family) => <div key={family} className="flex gap-3 text-sm leading-6 text-slate-700"><CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#1E9C73]" /><span>{family}</span></div>)}
+              </div>
+            </Card>
+          ))}
+        </div>
+      </section>
+
+      <section className="grid gap-8 lg:grid-cols-2">
+        <Card className="p-7 md:p-9">
+          <h2 className="text-2xl font-bold text-[#061B33]">Price tiers are planning positions—not quotes</h2>
+          <div className="mt-6 space-y-4">
+            {[
+              ["$", "Value-oriented", "Small/local provider, focused scope or lower overhead. Compare complete written scope and total project price."],
+              ["$$", "Typical local market", "Established local provider with balanced service, process and availability. Obtain comparable written proposals."],
+              ["$$$", "Premium / specialty", "Higher specialization, stronger process or complex materials and systems. Confirm the named specialist."],
+              ["$$$$", "Engineering / major project", "Design, structural, site, large-loss, luxury, multi-trade or high-liability scope requiring defined professional deliverables."],
+            ].map(([symbol, title, text]) => (
+              <div key={symbol} className="grid grid-cols-[48px_1fr] gap-4 rounded-xl border border-slate-200 bg-slate-50 p-4"><span className="text-2xl font-black text-[#1268D5]">{symbol}</span><div><p className="font-bold text-[#061B33]">{title}</p><p className="mt-1 text-sm leading-6 text-slate-600">{text}</p></div></div>
+            ))}
+          </div>
+        </Card>
+        <Card className="bg-[#061B33] p-7 text-white md:p-9">
+          <ShieldCheck className="h-9 w-9 text-[#77D7CF]" />
+          <h2 className="mt-5 text-2xl font-bold">Non-negotiable checks before a regulated referral</h2>
+          <div className="mt-6 space-y-4">
+            {[
+              "Exact legal entity, credential and classification match",
+              "Current status and complaint/disciplinary history",
+              "Insurance, permits, subcontractors and named licensees",
+              "Town, travel charge, availability and response time",
+              "Written scope, exclusions, itemized price and change-order method",
+              "Schedule, payment, cleanup, warranty and recent references",
+            ].map((item) => <div key={item} className="flex gap-3"><CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#77D7CF]" /><span className="leading-6 text-slate-200">{item}</span></div>)}
+          </div>
+        </Card>
+      </section>
+
+      <section className="rounded-2xl border border-amber-200 bg-amber-50 px-6 py-5 text-sm leading-7 text-amber-950">
+        <strong>Professional boundary:</strong> The directory is a dated research resource, not an endorsement, guarantee, warranty or direction to hire. ATS does not accept referral compensation, select a provider on the client’s behalf, guarantee third-party work or use an unconfirmed license for regulated work. Provider ratings, availability, licensing, insurance, reviews and pricing can change and must be checked for the specific project.
+      </section>
+
+      <section className="rounded-[2rem] bg-gradient-to-r from-[#0B2B4D] to-[#1268D5] px-8 py-11 text-white">
+        <div className="flex flex-col gap-7 md:flex-row md:items-center md:justify-between"><div className="max-w-3xl"><h2 className="text-3xl font-bold">Need the right provider category for a property concern?</h2><p className="mt-4 leading-7 text-blue-100">Share the issue, location, desired outcome and timing. ATS can review the appropriate provider family and explain the verification and coordination process.</p></div><Button variant="light" size="lg" onClick={() => onOpen("contact")}>Request Vendor Assistance</Button></div>
+      </section>
+    </div>
+  );
+}
+
+function GenericServicePage({ service, onOpen }) {
+  const Icon = service.icon;
+  return (
+    <div className="space-y-16">
+      <section className="grid gap-10 lg:grid-cols-[1.02fr_0.98fr] lg:items-center">
+        <div className="space-y-7">
+          <div className={`flex h-14 w-14 items-center justify-center rounded-2xl ${service.accent}`}><Icon className="h-7 w-7" /></div>
+          <div className="space-y-4"><p className="text-sm font-bold uppercase tracking-[0.2em] text-[#1268D5]">Service</p><h1 className="text-4xl font-bold tracking-tight text-[#061B33] md:text-5xl">{service.title}</h1><p className="text-xl leading-8 text-slate-600">{service.hero}</p></div>
+          <p className="max-w-3xl text-lg leading-8 text-slate-600">{service.overview}</p>
+          <div className="flex flex-wrap gap-3"><Button onClick={() => onOpen("contact")}>Request a Consultation</Button><Button variant="outline" onClick={() => onOpen("home")}>Back to Home</Button></div>
+        </div>
+        {service.image ? (
+          <div className="overflow-hidden rounded-[2rem] shadow-xl"><img src={service.image} alt={`${service.title} service`} className="aspect-[16/10] w-full object-cover" loading="eager" /></div>
+        ) : (
+          <Card className="bg-[#061B33] p-8 text-white">
+            <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#77D7CF]">What clients gain</p>
+            <div className="mt-6 space-y-4">{service.outcomes.map((item) => <div key={item} className="flex gap-3"><CheckCircle2 className="mt-0.5 h-5 w-5 text-[#77D7CF]" /><span className="leading-6 text-slate-200">{item}</span></div>)}</div>
+          </Card>
+        )}
+      </section>
+
+      {service.image && <section className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">{service.outcomes.map((item) => <Card key={item} className="p-5"><CheckCircle2 className="h-6 w-6 text-[#1E9C73]" /><p className="mt-3 font-bold text-[#061B33]">{item}</p></Card>)}</section>}
+
+      <section className="space-y-8">
+        <SectionHeading eyebrow="Examples" title="How this service can help" description="Every engagement is tailored to the property, equipment, workflow, users and desired result." />
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">{service.examples.map((example) => <Card key={example.title} className="p-6"><h3 className="text-xl font-bold text-[#061B33]">{example.title}</h3><p className="mt-3 leading-7 text-slate-600">{example.description}</p></Card>)}</div>
+      </section>
+
+      {service.details && <section className="rounded-[2rem] border border-blue-100 bg-blue-50 px-7 py-10 md:px-10"><SectionHeading eyebrow="Service approach" title="What the engagement includes" description="The exact deliverables are confirmed in the written scope before work begins." /><div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">{service.details.map((detail) => <Card key={detail.title} className="p-6"><h3 className="text-xl font-bold text-[#061B33]">{detail.title}</h3><p className="mt-3 leading-7 text-slate-600">{detail.description}</p></Card>)}</div></section>}
+
+      {service.exclusions && <section className="space-y-8"><SectionHeading eyebrow="Scope boundaries" title="Activities outside this service" description="These decisions and regulated activities must remain with the owner or an appropriately licensed professional." /><div className="grid gap-4 md:grid-cols-2">{service.exclusions.map((item) => <div key={item} className="flex gap-3 rounded-xl border border-slate-200 bg-slate-50 px-5 py-4"><X className="mt-0.5 h-5 w-5 shrink-0 text-rose-600" /><span className="leading-6 text-slate-700">{item}</span></div>)}</div></section>}
+
+      {service.disclaimer && <section className="rounded-2xl border border-amber-200 bg-amber-50 px-6 py-5 text-sm leading-7 text-amber-950"><strong>Important:</strong> {service.disclaimer}</section>}
+
+      <section className="rounded-[2rem] bg-[#061B33] px-8 py-11 text-white"><div className="flex flex-col gap-7 md:flex-row md:items-center md:justify-between"><div className="max-w-3xl"><h2 className="text-3xl font-bold">Need help with {service.shortTitle.toLowerCase()}?</h2><p className="mt-4 leading-7 text-slate-300">Describe the property, equipment, workflow or project and the result you are trying to achieve. ATS will review the scope and discuss the most practical next step.</p></div><Button variant="light" size="lg" onClick={() => onOpen("contact")}>Request Service</Button></div></section>
+    </div>
+  );
+}
+
+function AboutPage({ onOpen }) {
+  return (
+    <div className="space-y-16">
+      <section className="overflow-hidden rounded-[2rem] bg-[#061B33] text-white">
+        <div className="grid gap-10 px-7 py-12 md:px-11 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:py-14">
+          <div className="space-y-6">
+            <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#77D7CF]">About Aloha Technology Services LLC</p>
+            <h1 className="text-4xl font-bold tracking-tight md:text-5xl">Built from local experience across property operations, hands-on work and technology.</h1>
+            <p className="text-lg leading-8 text-slate-300">Aloha Technology Services LLC was founded by Kenyon “Koa” Smith to combine detailed property documentation, practical field support, vendor coordination, operational improvement and technology implementation for Hawaiʻi Island clients.</p>
+            <Button variant="light" onClick={() => onOpen("contact")}>Discuss Your Project <ArrowRight className="h-4 w-4" /></Button>
+          </div>
+          <div className="overflow-hidden rounded-[2rem] border border-white/15 bg-white/10">
+            <img src={FOUNDER_PORTRAIT} alt="Kenyon Koa Smith, founder of Aloha Technology Services LLC" className="aspect-[5/4] w-full object-cover" loading="eager" />
+            <div className="p-6"><p className="text-xs font-bold uppercase tracking-[0.18em] text-[#77D7CF]">Founder</p><h2 className="mt-1 text-2xl font-bold">Kenyon “Koa” Smith</h2><p className="mt-3 leading-7 text-slate-300">Hawaiʻi Island operations professional, technical problem-solver and owner of ATS.</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+        <Card className="p-7 md:p-9"><h2 className="text-3xl font-bold text-[#061B33]">A career built around practical responsibility</h2><div className="mt-5 space-y-4 leading-8 text-slate-600"><p>Koa grew up in Waimea, graduated from Parker School and earned a Bachelor’s Degree from the University of Hawaiʻi at Mānoa before returning home to build his career.</p><p>His hands-on background includes apprentice-level and supervised electrical work, irrigation-system installation and troubleshooting, landscaping and grounds support, flooring installation and detailed finish work. His later career expanded into luxury residential and resort operations involving property readiness, inspections, maintenance planning, owner communication, guest service, vendor coordination, budgeting, documentation and quality control.</p><p>Across those roles, Koa supported more than 50 high-value residences, coordinated with over 60 local vendors and helped manage thousands of guest arrivals and departures. He also developed inspection standards, SOPs, training materials, damage-tracking systems and operational tools.</p></div></Card>
+        <div className="grid gap-5 sm:grid-cols-2">
+          {[
+            { icon: Home, title: "Property operations", text: "Inspection, readiness, maintenance coordination, documentation and owner communication." },
+            { icon: Wrench, title: "Hands-on foundation", text: "Supervised electrical exposure, irrigation, landscaping support, flooring and finish work." },
+            { icon: Users, title: "Vendor coordination", text: "Proposal review, scheduling, access, project documentation and local-provider relationships." },
+            { icon: Workflow, title: "Processes and training", text: "SOPs, checklists, inspection standards, training resources and operational improvement." },
+            { icon: Laptop, title: "Technology systems", text: "Websites, applications, automation, AI, reporting, connectivity and user support." },
+            { icon: MapPin, title: "Local commitment", text: "Raised on Hawaiʻi Island with an understanding of island logistics and long-term relationships." },
+          ].map(({ icon: Icon, title, text }) => <Card key={title} className="p-6"><Icon className="h-7 w-7 text-[#1268D5]" /><h3 className="mt-4 text-xl font-bold text-[#061B33]">{title}</h3><p className="mt-3 leading-7 text-slate-600">{text}</p></Card>)}
+        </div>
+      </section>
+
+      <section className="rounded-[2rem] border border-blue-100 bg-blue-50 px-7 py-10 md:px-10"><SectionHeading eyebrow="The operating standard" title="Clear scope, factual documentation and dependable follow-through" description="ATS begins by understanding the actual problem, the people involved, the property or operational environment and the desired result. The service is then defined around those needs rather than forcing every project into the same package." /><div className="mt-8 grid gap-4 md:grid-cols-3">{["Define what ATS will and will not do", "Document observations and decisions clearly", "Refer regulated work to qualified professionals"].map((item) => <div key={item} className="flex gap-3 rounded-xl border border-white bg-white p-5"><CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#1E9C73]" /><span className="font-semibold leading-6 text-[#061B33]">{item}</span></div>)}</div></section>
+    </div>
+  );
 }
 
 function ContactPage() {
   const [state, handleSubmit] = useForm(FORM_ID);
   const [projectType, setProjectType] = useState("");
-  return <div className="space-y-12"><SectionHeading eyebrow="Contact" title="Tell us about your project" description="Share as much detail as you can. We will review your request and follow up about scope, availability, and the most practical next step." /><div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
-    <Card><CardHeader><CardTitle className="text-2xl">Request a consultation</CardTitle><CardDescription className="mt-2 leading-7">Pricing is determined case by case. When appropriate, a written proposal will be provided during the quoting process.</CardDescription></CardHeader><CardContent>{state.succeeded ? <div className="rounded-2xl border border-emerald-200 bg-emerald-50 p-6"><h3 className="text-lg font-semibold text-emerald-950">Thank you.</h3><p className="mt-2 leading-7 text-emerald-800">Your message has been sent successfully. We will be in touch soon.</p></div> : <form onSubmit={handleSubmit} className="space-y-5">
-      <div className="grid gap-4 md:grid-cols-2"><div><label htmlFor="name" className="mb-2 block text-sm font-semibold text-slate-700">Full name</label><input id="name" type="text" name="name" required className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-[#1D84B5] focus:ring-2 focus:ring-[#1D84B5]/15" /></div><div><label htmlFor="email" className="mb-2 block text-sm font-semibold text-slate-700">Email</label><input id="email" type="email" name="email" required className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-[#1D84B5] focus:ring-2 focus:ring-[#1D84B5]/15" /><ValidationError prefix="Email" field="email" errors={state.errors} /></div></div>
-      <div className="grid gap-4 md:grid-cols-2"><div><label htmlFor="phone" className="mb-2 block text-sm font-semibold text-slate-700">Phone number</label><input id="phone" type="tel" name="phone" className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-[#1D84B5] focus:ring-2 focus:ring-[#1D84B5]/15" /></div><div><label htmlFor="projectType" className="mb-2 block text-sm font-semibold text-slate-700">Project type</label><select id="projectType" name="projectType" required value={projectType} onChange={(event) => setProjectType(event.target.value)} className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 outline-none transition focus:border-[#1D84B5] focus:ring-2 focus:ring-[#1D84B5]/15"><option value="" disabled>Select a project type</option><option>Business Technology</option><option>Residential Technology</option><option>Owner-Directed Property Field Services</option><option>Home Inspection - Buying</option><option>Home Inspection - Selling</option><option>Home Inspection - Maintenance / Condition Review</option><option>Handyman Services</option><option>Vendor Coordination</option><option>Workflow / Business Operations</option><option>Application Development</option><option>Website Development</option><option>Automation Development</option><option>AI Implementation</option><option>Other</option></select></div></div>{projectType === "Owner-Directed Property Field Services" && <div className="rounded-2xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-sm leading-6 text-emerald-950"><strong>Property Field Services scope:</strong> ATS provides owner-directed onsite vendor services only. We do not provide property management, caretaker or custodian services, leasing, tenant placement, rent or deposit handling, or landlord-tenant representation.</div>}
-      <div className="grid gap-4 md:grid-cols-2"><div><label htmlFor="contactMethod" className="mb-2 block text-sm font-semibold text-slate-700">Preferred contact method</label><select id="contactMethod" name="contactMethod" className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 outline-none transition focus:border-[#1D84B5] focus:ring-2 focus:ring-[#1D84B5]/15"><option>Email</option><option>Phone</option><option>Text</option></select></div><div><label htmlFor="timeline" className="mb-2 block text-sm font-semibold text-slate-700">Desired timeline</label><select id="timeline" name="timeline" className="w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 outline-none transition focus:border-[#1D84B5] focus:ring-2 focus:ring-[#1D84B5]/15"><option>As soon as possible</option><option>Within 2–4 weeks</option><option>Within 1–3 months</option><option>Planning / gathering information</option></select></div></div>
-      <div><label htmlFor="location" className="mb-2 block text-sm font-semibold text-slate-700">Project location or area</label><input id="location" type="text" name="location" placeholder="Example: Waikoloa, Waimea, Kona" className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-[#1D84B5] focus:ring-2 focus:ring-[#1D84B5]/15" /></div>
-      <div><label htmlFor="message" className="mb-2 block text-sm font-semibold text-slate-700">Project details</label><textarea id="message" name="message" rows="7" required placeholder="Describe the issue, project, property, equipment, goals, and any timing considerations." className="w-full rounded-2xl border border-slate-300 px-4 py-3 outline-none transition focus:border-[#1D84B5] focus:ring-2 focus:ring-[#1D84B5]/15" /><ValidationError prefix="Message" field="message" errors={state.errors} /></div>
-      <input type="text" name="_gotcha" className="hidden" tabIndex="-1" autoComplete="off" /><Button type="submit" size="lg" disabled={state.submitting}>{state.submitting ? "Sending..." : "Request a Consultation"}</Button>
-    </form>}</CardContent></Card>
-    <div className="space-y-6"><Card tone="dark"><CardHeader><CardTitle className="text-2xl">Contact information</CardTitle><CardDescription className="mt-2 leading-7">Serving businesses, homeowners, vacation rentals, property managers, and personal clients across Hawaiʻi Island.</CardDescription></CardHeader><CardContent className="space-y-5"><div className="flex gap-3"><Mail className="mt-0.5 h-5 w-5 text-[#84DCCF]" /><a href={`mailto:${COMPANY_EMAIL}`} className="hover:text-white">{COMPANY_EMAIL}</a></div>{COMPANY_PHONE && <div className="flex gap-3"><Phone className="mt-0.5 h-5 w-5 text-[#84DCCF]" /><a href={`tel:${COMPANY_PHONE_HREF}`} className="hover:text-white">{COMPANY_PHONE}</a></div>}<div className="flex gap-3"><MapPin className="mt-0.5 h-5 w-5 text-[#84DCCF]" /><span>Locally owned and operated on the Big Island of Hawaiʻi</span></div></CardContent></Card><Card><CardHeader><CardTitle className="text-xl">What happens next?</CardTitle></CardHeader><CardContent className="space-y-4 text-slate-600">{["We review your project details.", "We follow up with questions or schedule a site review when needed.", "We determine the appropriate service, vendor, or project approach.", "A written proposal is provided when applicable."].map((item, index) => <div key={item} className="flex gap-4"><div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#EAF6F7] text-sm font-semibold text-[#17324D]">{index + 1}</div><p className="pt-1 leading-6">{item}</p></div>)}</CardContent></Card></div>
-  </div></div>;
+  const inspectionOptions = inspectionTypes.map((inspection) => `Home Inspection — ${inspection.title}`);
+  const projectOptions = [
+    "Property Field Services",
+    ...inspectionOptions,
+    "Vendor Coordination",
+    "Handyman Services",
+    "Workflow Optimization",
+    "Technology Installation",
+    "Training and Support",
+    "Website Development",
+    "Insight & Analysis",
+    "Automation Development",
+    "AI Implementation",
+    "Application Development",
+    "Other",
+  ];
+  return (
+    <div className="space-y-12">
+      <SectionHeading eyebrow="Contact" title="Tell us about the property, project or operational need" description="Share the location, desired outcome, timing and any known conditions. ATS will review the request and follow up about scope, availability and the most practical next step." />
+      <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+        <Card className="p-6 md:p-8">
+          <h2 className="text-2xl font-bold text-[#061B33]">Request service or a consultation</h2>
+          <p className="mt-2 leading-7 text-slate-600">Pricing is determined case by case. A written proposal or inspection quote is provided when appropriate.</p>
+          {state.succeeded ? (
+            <div className="mt-7 rounded-xl border border-emerald-200 bg-emerald-50 p-6"><h3 className="text-lg font-bold text-emerald-950">Mahalo. Your message was sent.</h3><p className="mt-2 leading-7 text-emerald-800">ATS will review the details and follow up as soon as possible.</p></div>
+          ) : (
+            <form onSubmit={handleSubmit} className="mt-7 space-y-5">
+              <div className="grid gap-4 md:grid-cols-2">
+                <div><label htmlFor="name" className="mb-2 block text-sm font-bold text-slate-700">Full name</label><input id="name" type="text" name="name" required className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-[#1268D5] focus:ring-2 focus:ring-blue-100" /></div>
+                <div><label htmlFor="email" className="mb-2 block text-sm font-bold text-slate-700">Email</label><input id="email" type="email" name="email" required className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-[#1268D5] focus:ring-2 focus:ring-blue-100" /><ValidationError prefix="Email" field="email" errors={state.errors} /></div>
+              </div>
+              <div className="grid gap-4 md:grid-cols-2">
+                <div><label htmlFor="phone" className="mb-2 block text-sm font-bold text-slate-700">Phone number</label><input id="phone" type="tel" name="phone" className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-[#1268D5] focus:ring-2 focus:ring-blue-100" /></div>
+                <div><label htmlFor="projectType" className="mb-2 block text-sm font-bold text-slate-700">Service requested</label><select id="projectType" name="projectType" required value={projectType} onChange={(event) => setProjectType(event.target.value)} className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none transition focus:border-[#1268D5] focus:ring-2 focus:ring-blue-100"><option value="" disabled>Select a service</option>{projectOptions.map((option) => <option key={option}>{option}</option>)}</select></div>
+              </div>
+              {projectType === "Property Field Services" && <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-sm leading-6 text-emerald-950"><strong>Scope note:</strong> Property Field Services are owner-directed onsite services only. ATS does not provide property management, caretaker or custodian services, leasing, tenant placement, rent handling or landlord-tenant representation.</div>}
+              {projectType.startsWith("Home Inspection") && <div className="rounded-xl border border-blue-200 bg-blue-50 px-5 py-4 text-sm leading-6 text-blue-950"><strong>Helpful details:</strong> Include the property address or area, property type, approximate square footage, occupied or vacant status, desired date and any known areas of concern.</div>}
+              <div className="grid gap-4 md:grid-cols-2"><div><label htmlFor="contactMethod" className="mb-2 block text-sm font-bold text-slate-700">Preferred contact method</label><select id="contactMethod" name="contactMethod" className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3"><option>Email</option><option>Phone</option><option>Text</option></select></div><div><label htmlFor="timeline" className="mb-2 block text-sm font-bold text-slate-700">Desired timeline</label><select id="timeline" name="timeline" className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3"><option>As soon as possible</option><option>Within 2–4 weeks</option><option>Within 1–3 months</option><option>Planning / gathering information</option></select></div></div>
+              <div><label htmlFor="location" className="mb-2 block text-sm font-bold text-slate-700">Property or project location</label><input id="location" type="text" name="location" placeholder="Example: Waikoloa, Waimea, Kona or Hilo" className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-[#1268D5] focus:ring-2 focus:ring-blue-100" /></div>
+              <div><label htmlFor="message" className="mb-2 block text-sm font-bold text-slate-700">Project details</label><textarea id="message" name="message" rows="8" required placeholder="Describe the property, observed concern, requested service, desired result and timing." className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-[#1268D5] focus:ring-2 focus:ring-blue-100" /><ValidationError prefix="Message" field="message" errors={state.errors} /></div>
+              <input type="text" name="_gotcha" className="hidden" tabIndex="-1" autoComplete="off" />
+              <Button type="submit" size="lg" disabled={state.submitting}>{state.submitting ? "Sending..." : "Send Request"}</Button>
+            </form>
+          )}
+        </Card>
+        <div className="space-y-6">
+          <Card className="bg-[#061B33] p-7 text-white"><h2 className="text-2xl font-bold">Contact information</h2><p className="mt-3 leading-7 text-slate-300">Serving homeowners, property owners, businesses, vacation-rental stakeholders and operational teams across Hawaiʻi Island.</p><div className="mt-6 space-y-5"><div className="flex gap-3"><Mail className="mt-0.5 h-5 w-5 text-[#77D7CF]" /><a href={`mailto:${COMPANY_EMAIL}`} className="hover:text-white">{COMPANY_EMAIL}</a></div><div className="flex gap-3"><Phone className="mt-0.5 h-5 w-5 text-[#77D7CF]" /><a href={`tel:${COMPANY_PHONE_HREF}`} className="hover:text-white">{COMPANY_PHONE}</a></div><div className="flex gap-3"><MapPin className="mt-0.5 h-5 w-5 text-[#77D7CF]" /><span>Locally owned and operated on Hawaiʻi Island</span></div></div></Card>
+          <Card className="p-7"><h2 className="text-xl font-bold text-[#061B33]">What happens next?</h2><div className="mt-5 space-y-4">{["ATS reviews the service request and location.", "We follow up with questions or schedule a site review when needed.", "The scope, limitations, timing and pricing approach are confirmed.", "A written proposal or inspection quote is provided when applicable."].map((item, index) => <div key={item} className="flex gap-4"><div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-50 text-sm font-black text-[#1268D5]">{index + 1}</div><p className="pt-1 leading-6 text-slate-600">{item}</p></div>)}</div></Card>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default function TechnicalSolutionsCompanyWebsite() {
@@ -809,7 +1437,6 @@ export default function TechnicalSolutionsCompanyWebsite() {
       setServicesOpen(false);
       window.scrollTo({ top: 0, behavior: "auto" });
     };
-
     window.addEventListener("popstate", handlePopState);
     return () => window.removeEventListener("popstate", handlePopState);
   }, []);
@@ -817,8 +1444,7 @@ export default function TechnicalSolutionsCompanyWebsite() {
   useEffect(() => {
     const seo = PAGE_SEO[activePage] || PAGE_SEO.home;
     const canonicalUrl = `${SITE_URL}${pathForPage(activePage)}`;
-    const socialImageUrl = `${SITE_URL}${seo.image || DEFAULT_SOCIAL_IMAGE}`;
-
+    const socialImageUrl = `${SITE_URL}${seo.image || SOCIAL_IMAGE}`;
     document.title = seo.title;
 
     const setMeta = (selector, attribute, value, content) => {
@@ -837,7 +1463,6 @@ export default function TechnicalSolutionsCompanyWebsite() {
     setMeta('meta[property="og:description"]', "property", "og:description", seo.description);
     setMeta('meta[property="og:url"]', "property", "og:url", canonicalUrl);
     setMeta('meta[property="og:image"]', "property", "og:image", socialImageUrl);
-    setMeta('meta[property="og:image:alt"]', "property", "og:image:alt", activePage === "about" ? "Kenyon Koa Smith, founder of Aloha Technology Services LLC" : "Aloha Technology Services LLC");
     setMeta('meta[name="twitter:title"]', "name", "twitter:title", seo.title);
     setMeta('meta[name="twitter:description"]', "name", "twitter:description", seo.description);
     setMeta('meta[name="twitter:image"]', "name", "twitter:image", socialImageUrl);
@@ -861,186 +1486,78 @@ export default function TechnicalSolutionsCompanyWebsite() {
     setServicesOpen(false);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
-  return <div className="min-h-screen bg-white text-slate-900">
-    <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/95 backdrop-blur">
-      <div className="mx-auto flex min-h-28 max-w-7xl items-center justify-between gap-5 px-4 py-2 sm:px-6 lg:px-8">
-        <button
-          onClick={() => openPage("home")}
-          className="block h-24 min-w-0 flex-1 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md lg:max-w-[620px]"
-          aria-label="Return to the Aloha Technology Services LLC homepage"
-        >
-          <img
-            src="/images/aloha-technology-services-header-banner.png"
-            alt="Aloha Technology Services LLC — Website, Automation, AI, Technology, Property and Operations"
-            width="1914"
-            height="413"
-            className="block h-full w-full object-fill"
-            loading="eager"
-            fetchPriority="high"
-            decoding="async"
-          />
-        </button>
 
-        <nav className="hidden shrink-0 items-center gap-2 lg:flex">
-          <button
-            onClick={() => openPage("home")}
-            className={`rounded-2xl px-4 py-2 text-sm font-medium transition ${activePage === "home" ? "bg-[#17324D] text-white shadow-sm" : "text-slate-600 hover:bg-slate-100 hover:text-[#17324D]"}`}
-          >
-            Home
+  const renderPage = () => {
+    if (activePage === "home") return <HomePage onOpen={openPage} />;
+    if (activePage === "home-inspections") return <HomeInspectionsPage onOpen={openPage} />;
+    if (activePage === "vendor-coordination") return <VendorCoordinationPage onOpen={openPage} />;
+    if (activePage === "about") return <AboutPage onOpen={openPage} />;
+    if (activePage === "contact") return <ContactPage />;
+    if (activeService) return <GenericServicePage service={activeService} onOpen={openPage} />;
+    return <HomePage onOpen={openPage} />;
+  };
+
+  return (
+    <div className="min-h-screen bg-white text-slate-900">
+      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#061B33] text-white shadow-lg">
+        <div className="mx-auto flex min-h-20 max-w-7xl items-center justify-between gap-5 px-4 py-2 sm:px-6 lg:px-8">
+          <button onClick={() => openPage("home")} className="flex min-w-0 items-center" aria-label="Return to the Aloha Technology Services LLC homepage">
+            <img src={LOGO} alt="Aloha Technology Services LLC" className="h-16 w-auto max-w-[250px] object-contain sm:max-w-[300px]" loading="eager" fetchPriority="high" />
           </button>
 
-          <div className="relative">
-            <button
-              onClick={() => setServicesOpen((value) => !value)}
-              className={`flex items-center gap-2 rounded-2xl px-4 py-2 text-sm font-medium transition ${activeService ? "bg-[#17324D] text-white shadow-sm" : "text-slate-600 hover:bg-slate-100 hover:text-[#17324D]"}`}
-            >
-              Services <ChevronDown className="h-4 w-4" />
-            </button>
-
-            {servicesOpen && (
-              <div className="absolute right-0 top-12 w-[900px] max-w-[calc(100vw-2rem)] rounded-3xl border border-slate-200 bg-white p-6 shadow-2xl">
-                <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-                  {serviceGroups.map((group) => (
-                    <div key={group.id}>
-                      <p className="mb-3 font-semibold text-[#17324D]">{group.label}</p>
-                      <div className="space-y-1">
-                        {group.serviceIds.map((id) => {
-                          const service = services.find((item) => item.id === id);
-                          if (!service) return null;
-                          return (
-                            <button
-                              key={service.id}
-                              onClick={() => openPage(service.id)}
-                              className="block w-full rounded-xl px-3 py-2 text-left text-sm text-slate-600 transition hover:bg-[#F2FBFB] hover:text-[#17324D]"
-                            >
-                              {service.shortTitle}
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  ))}
+          <nav className="hidden items-center gap-1 lg:flex">
+            <button onClick={() => openPage("home")} className={`rounded-lg px-3 py-2 text-sm font-semibold transition ${activePage === "home" ? "bg-white/15 text-white" : "text-slate-200 hover:bg-white/10 hover:text-white"}`}>Home</button>
+            <div className="relative">
+              <button onClick={() => setServicesOpen((value) => !value)} className={`flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-semibold transition ${activeService && !["home-inspections", "vendor-coordination"].includes(activePage) ? "bg-white/15 text-white" : "text-slate-200 hover:bg-white/10 hover:text-white"}`}>Services <ChevronDown className="h-4 w-4" /></button>
+              {servicesOpen && (
+                <div className="absolute left-0 top-12 w-[760px] max-w-[calc(100vw-2rem)] rounded-2xl border border-slate-200 bg-white p-5 text-slate-900 shadow-2xl">
+                  <p className="mb-4 text-xs font-black uppercase tracking-[0.18em] text-[#1268D5]">Services in preferred order</p>
+                  <div className="grid gap-2 md:grid-cols-2">{services.map((service, index) => <button key={service.id} onClick={() => openPage(service.id)} className="flex items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm font-semibold text-slate-700 transition hover:bg-blue-50 hover:text-[#061B33]"><span className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-100 text-xs font-black text-[#1268D5]">{index + 1}</span>{service.shortTitle}</button>)}</div>
                 </div>
-              </div>
-            )}
-          </div>
+              )}
+            </div>
+            <button onClick={() => openPage("home-inspections")} className={`rounded-lg px-3 py-2 text-sm font-semibold transition ${activePage === "home-inspections" ? "bg-white/15 text-white" : "text-slate-200 hover:bg-white/10 hover:text-white"}`}>Home Inspections</button>
+            <button onClick={() => openPage("vendor-coordination")} className={`rounded-lg px-3 py-2 text-sm font-semibold transition ${activePage === "vendor-coordination" ? "bg-white/15 text-white" : "text-slate-200 hover:bg-white/10 hover:text-white"}`}>Vendor Coordination</button>
+            <button onClick={() => openPage("about")} className={`rounded-lg px-3 py-2 text-sm font-semibold transition ${activePage === "about" ? "bg-white/15 text-white" : "text-slate-200 hover:bg-white/10 hover:text-white"}`}>About</button>
+            <button onClick={() => openPage("contact")} className={`rounded-lg px-3 py-2 text-sm font-semibold transition ${activePage === "contact" ? "bg-white/15 text-white" : "text-slate-200 hover:bg-white/10 hover:text-white"}`}>Contact</button>
+            <Button size="sm" onClick={() => openPage("contact")}>Book an Inspection</Button>
+          </nav>
 
-          <button
-            onClick={() => openPage("about")}
-            className={`rounded-2xl px-4 py-2 text-sm font-medium transition ${activePage === "about" ? "bg-[#17324D] text-white shadow-sm" : "text-slate-600 hover:bg-slate-100 hover:text-[#17324D]"}`}
-          >
-            About
+          <button className="rounded-lg border border-white/20 p-2 lg:hidden" onClick={() => setMobileOpen((value) => !value)} aria-label="Toggle navigation menu">
+            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
+        </div>
 
-          <Button size="sm" variant="accent" onClick={() => openPage("contact")}>
-            Request Consultation
-          </Button>
+        {mobileOpen && (
+          <div className="border-t border-white/10 bg-[#061B33] lg:hidden">
+            <div className="mx-auto max-w-7xl space-y-2 px-4 py-5 sm:px-6">
+              <button onClick={() => openPage("home")} className="block w-full rounded-xl bg-white/10 px-4 py-3 text-left font-semibold">Home</button>
+              <details className="rounded-xl bg-white/10"><summary className="cursor-pointer px-4 py-3 font-semibold">Services</summary><div className="space-y-1 px-3 pb-3">{services.map((service, index) => <button key={service.id} onClick={() => openPage(service.id)} className="block w-full rounded-lg px-3 py-2 text-left text-sm text-slate-200 hover:bg-white/10"><span className="mr-2 text-[#77D7CF]">{index + 1}.</span>{service.shortTitle}</button>)}</div></details>
+              <button onClick={() => openPage("about")} className="block w-full rounded-xl bg-white/10 px-4 py-3 text-left font-semibold">About</button>
+              <button onClick={() => openPage("contact")} className="block w-full rounded-xl bg-[#1268D5] px-4 py-3 text-left font-semibold">Contact / Book an Inspection</button>
+            </div>
+          </div>
+        )}
+      </header>
+
+      <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 md:py-14 lg:px-8">
+        <nav aria-label="All website pages" className="sr-only">
+          <a href="/">Home</a><a href="/about">About</a><a href="/contact">Contact</a>{services.map((service) => <a key={service.id} href={pathForPage(service.id)}>{service.title}</a>)}
         </nav>
+        {renderPage()}
+      </main>
 
-        <button
-          className="rounded-xl border border-slate-200 p-2 lg:hidden"
-          onClick={() => setMobileOpen((value) => !value)}
-          aria-label="Toggle menu"
-        >
-          {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
-      </div>
-
-      {mobileOpen && (
-        <div className="border-t border-slate-200 bg-white lg:hidden">
-          <div className="mx-auto max-w-7xl space-y-3 px-4 py-5 sm:px-6">
-            <button onClick={() => openPage("home")} className="block w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-left font-semibold text-[#17324D] shadow-sm">
-              Home
-            </button>
-            <details className="rounded-2xl border border-slate-200 bg-white shadow-sm">
-              <summary className="cursor-pointer px-4 py-3 font-semibold text-[#17324D]">Services</summary>
-              <div className="space-y-4 px-4 pb-4">
-                {serviceGroups.map((group) => (
-                  <div key={group.id}>
-                    <p className="mb-2 text-sm font-semibold text-[#17324D]">{group.label}</p>
-                    <div className="space-y-1">
-                      {group.serviceIds.map((id) => {
-                        const service = services.find((item) => item.id === id);
-                        if (!service) return null;
-                        return (
-                          <button
-                            key={service.id}
-                            onClick={() => openPage(service.id)}
-                            className="block w-full rounded-xl px-3 py-2 text-left text-sm text-slate-600 hover:bg-slate-50"
-                          >
-                            {service.shortTitle}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </details>
-            <button onClick={() => openPage("about")} className="block w-full rounded-2xl border border-slate-200 bg-white px-4 py-3 text-left font-semibold text-[#17324D] shadow-sm">
-              About
-            </button>
-            <button onClick={() => openPage("contact")} className="block w-full rounded-2xl bg-[#1D84B5] px-4 py-3 text-left font-semibold text-white shadow-md">
-              Request Consultation
-            </button>
+      <footer className="mt-20 bg-[#061B33] text-white">
+        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+          <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr_0.85fr]">
+            <div><img src={LOGO} alt="Aloha Technology Services LLC" className="h-24 w-auto max-w-full object-contain object-left" loading="lazy" /><p className="mt-5 max-w-xl leading-7 text-slate-300">Locally owned and operated on Hawaiʻi Island. Property field services, home inspections, vendor coordination, handyman support, operations and practical technology solutions.</p><div className="mt-5 flex flex-wrap gap-4 text-sm"><a href={`mailto:${COMPANY_EMAIL}`} className="text-blue-200 hover:text-white">{COMPANY_EMAIL}</a><a href={`tel:${COMPANY_PHONE_HREF}`} className="text-blue-200 hover:text-white">{COMPANY_PHONE}</a></div></div>
+            <div><h2 className="font-bold">Priority services</h2><div className="mt-4 space-y-3">{services.slice(0,4).map((service) => <button key={service.id} onClick={() => openPage(service.id)} className="block text-left text-sm text-slate-300 hover:text-white">{service.title}</button>)}</div></div>
+            <div><h2 className="font-bold">Company</h2><div className="mt-4 space-y-3"><button onClick={() => openPage("home")} className="block text-sm text-slate-300 hover:text-white">Home</button><button onClick={() => openPage("about")} className="block text-sm text-slate-300 hover:text-white">About</button><button onClick={() => openPage("contact")} className="block text-sm text-slate-300 hover:text-white">Contact</button></div></div>
           </div>
+          <div className="mt-10 border-t border-white/10 pt-6 text-sm leading-6 text-slate-400">© 2026 {COMPANY_NAME}. Service availability, scope and pricing are confirmed project by project. Third-party providers perform work under their own licensing, insurance, terms and warranties.</div>
         </div>
-      )}
-    </header>
-    <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6 md:py-16 lg:px-8">
-      <nav aria-label="All website pages" className="sr-only">
-        <a href="/">Home</a>
-        <a href="/about">About Aloha Technology Services LLC</a>
-        <a href="/contact">Contact Aloha Technology Services LLC</a>
-        {services.map((service) => (
-          <a key={service.id} href={pathForPage(service.id)}>
-            {service.title}
-          </a>
-        ))}
-      </nav>
-      {activePage === "home" && <HomePage onOpen={openPage} />}{activeService && <ServicePage service={activeService} onOpen={openPage} />}{activePage === "about" && <AboutPage onOpen={openPage} />}{activePage === "contact" && <ContactPage />}
-    </main>
-    <footer className="mt-20 border-t border-slate-200 bg-slate-50">
-      <div className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
-        <button
-          onClick={() => openPage("home")}
-          className="block w-full overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-[0_14px_45px_rgba(23,50,77,0.10)] transition hover:shadow-[0_20px_60px_rgba(23,50,77,0.15)]"
-          aria-label="Return to the Aloha Technology Services LLC homepage"
-        >
-          <img
-            src="/images/aloha-technology-services-footer-banner.png"
-            alt="Aloha Technology Services LLC services banner"
-            className="block h-auto w-full"
-            loading="lazy"
-            decoding="async"
-          />
-        </button>
-
-        <div className="mt-7 flex flex-col gap-5 rounded-[2rem] border border-slate-200 bg-white p-5 shadow-sm md:flex-row md:items-center md:justify-between">
-          <div>
-            <p className="font-semibold text-[#17324D]">Aloha Technology Services LLC</p>
-            <p className="mt-1 max-w-2xl text-sm leading-6 text-slate-500">
-              Locally owned and operated on Hawaiʻi Island. Website, automation, AI, technology, property, and operational support for businesses, homeowners, and property managers.
-            </p>
-          </div>
-
-          <div className="flex flex-wrap gap-3">
-            <button onClick={() => openPage("home")} className="rounded-full border border-[#17324D] bg-[#17324D] px-5 py-3 text-sm font-semibold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-[#214765] hover:shadow-lg">
-              Home
-            </button>
-            <button onClick={() => openPage("about")} className="rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-[#17324D] shadow-md transition hover:-translate-y-0.5 hover:border-[#1D84B5] hover:text-[#1D84B5] hover:shadow-lg">
-              About
-            </button>
-            <button onClick={() => openPage("contact")} className="rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-[#17324D] shadow-md transition hover:-translate-y-0.5 hover:border-[#1D84B5] hover:text-[#1D84B5] hover:shadow-lg">
-              Contact
-            </button>
-            <a href={`mailto:${COMPANY_EMAIL}`} className="rounded-full border border-[#1D84B5] bg-[#1D84B5] px-5 py-3 text-sm font-semibold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-[#176f98] hover:shadow-lg">
-              Email
-            </a>
-          </div>
-        </div>
-      </div>
-    </footer>
-    <AlohaAssistant onNavigate={openPage} />
-  </div>;
+      </footer>
+      <AlohaAssistant onNavigate={openPage} />
+    </div>
+  );
 }

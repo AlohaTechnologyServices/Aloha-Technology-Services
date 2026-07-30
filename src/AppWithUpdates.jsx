@@ -84,22 +84,15 @@ function updateMobileServicesMenu() {
   });
 }
 
-function markHighContrastCard(label, selector) {
-  document.querySelectorAll(selector).forEach((element) => {
-    if (element.textContent?.trim() !== label) return;
-
-    const card = element.closest("div.rounded-2xl") || element.parentElement;
-    card?.classList.add("ats-high-contrast-card");
-  });
-}
-
 function improveCardContrast() {
-  markHighContrastCard("A deeper local provider resource", "h2");
-  markHighContrastCard(
-    "Non-negotiable checks before a regulated referral",
-    "h2",
-  );
-  markHighContrastCard("What clients gain", "p");
+  // Card.jsx always includes bg-white. Mark every Card that App.jsx also
+  // intended to render with the navy bg-[#061B33] utility so supplemental CSS
+  // can reliably restore the navy background regardless of Tailwind rule order.
+  document.querySelectorAll("div.rounded-2xl").forEach((card) => {
+    if (card.classList.contains("bg-[#061B33]")) {
+      card.classList.add("ats-dark-card");
+    }
+  });
 }
 
 function applyWebsiteUpdates() {

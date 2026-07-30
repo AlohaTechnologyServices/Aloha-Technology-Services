@@ -1,4 +1,4 @@
-/* ATS wording, service-menu, and readability refinements. */
+/* ATS wording, service-menu, and dark-card contrast refinements. */
 
 .ats-services-menu-grid {
   grid-template-columns: minmax(0, 1fr) !important;
@@ -21,21 +21,21 @@
   color: #77d7cf !important;
 }
 
-.ats-high-contrast-card {
+/*
+ * The shared Card component includes bg-white by default. Tailwind's generated
+ * utility order can cause that white background to override bg-[#061B33].
+ * AppWithUpdates adds this class only to cards that were intentionally styled
+ * as navy cards in App.jsx.
+ */
+.ats-dark-card {
+  background-color: #061b33 !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
   color: #ffffff !important;
 }
 
-.ats-high-contrast-card h1,
-.ats-high-contrast-card h2,
-.ats-high-contrast-card h3,
-.ats-high-contrast-card p,
-.ats-high-contrast-card span,
-.ats-high-contrast-card li {
-  color: #f8fafc !important;
-}
-
-.ats-high-contrast-card button,
-.ats-high-contrast-card button span {
+/* Light buttons inside navy cards must retain dark, readable text. */
+.ats-dark-card button,
+.ats-dark-card button span {
   color: #061b33 !important;
 }
 

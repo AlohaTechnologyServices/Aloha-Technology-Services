@@ -16,7 +16,44 @@ const TEXT_REPLACEMENTS = new Map([
     "Additional specialized services",
   ],
   ["Services in preferred order", "Specialized services"],
+  [
+    "The report explains what was observed, why it matters, what could not be inspected and what type of follow-up should be considered.",
+    "The report distinguishes serviceable components, maintenance needs, repair concerns, significant conditions, and inspection limitations or specialist referrals.",
+  ],
 ]);
+
+const INSPECTION_CLASSIFICATIONS = [
+  {
+    key: "blue",
+    title: "Blue — Serviceable",
+    text:
+      "The system or component was operating as intended at the time of inspection, with no material deficiency observed. Normal aging, routine upkeep, and conditions consistent with the component’s type and service life may still be present. Continued monitoring and regular maintenance are recommended.",
+  },
+  {
+    key: "green",
+    title: "Green — Maintenance",
+    text:
+      "The observation relates to routine maintenance, a manageable repair, a potential do-it-yourself item, or a recommended upgrade. These conditions generally do not represent an immediate safety concern or significant functional failure; however, prolonged neglect may contribute to deterioration, reduced performance, or progression to a Yellow or Red condition. Refer to the individual observation for the recommended action and timing.",
+  },
+  {
+    key: "yellow",
+    title: "Yellow — Repair / Evaluate",
+    text:
+      "The system or component was functional but was not operating as intended, showed a material defect, or presented a condition that warrants timely attention. If left unaddressed, the concern may contribute to property damage, reduced performance, diminished property value, or an unreasonable risk to people or property. Further evaluation by an appropriately qualified professional may be recommended.",
+  },
+  {
+    key: "red",
+    title: "Red — Significant / Prompt Action",
+    text:
+      "The observation identifies a significant defect, active or developing damage, a substantial system or component failure, or a condition that may pose a meaningful risk to people or property. Prompt evaluation and corrective action by an appropriately qualified professional are recommended. Refer to the individual observation for specific findings and next steps.",
+  },
+  {
+    key: "gray",
+    title: "Gray — Limitation / Referral",
+    text:
+      "A system, component, or area could not be fully inspected because it was inaccessible, concealed, obstructed, shut down, unsafe to operate, outside the agreed scope, or otherwise restricted. Gray may also identify a condition requiring evaluation by an appropriately qualified specialist. This classification does not, by itself, indicate that the component is defective.",
+  },
+];
 
 function replaceOutdatedWording() {
   const elements = document.querySelectorAll("h1, h2, h3, p, span");
@@ -92,33 +129,38 @@ function improveCardContrast() {
   });
 }
 
-function useDedicatedHomeInspectionHero() {
-  const heroImage = document.querySelector(
-    'img[alt="Hawaiʻi Island home representing residential inspection services"]',
+function updateInspectionClassificationSection() {
+  const sectionTitle = Array.from(document.querySelectorAll("section h2")).find(
+    (heading) => heading.textContent?.trim() === "Organized to support action—not confusion",
   );
 
-  if (heroImage && heroImage.getAttribute("src") !== "/images/home-inspection-hero.jpg") {
-    heroImage.setAttribute("src", "/images/home-inspection-hero.jpg");
-  }
-}
+  const section = sectionTitle?.closest("section");
+  if (!section) return;
 
-function improveInspectionImageLayout() {
-  const detailSection = document.getElementById("inspection-detail");
-  const detailGrid = detailSection?.firstElementChild;
-  const imageShell = detailGrid?.firstElementChild;
-  const image = imageShell?.querySelector("img");
+  const grid = Array.from(section.children).find(
+    (element) => element instanceof HTMLElement && element.classList.contains("grid"),
+  );
+  if (!grid) return;
 
-  if (imageShell) {
-    imageShell.classList.add("ats-inspection-detail-image-shell");
-  }
+  const existingTitles = Array.from(grid.querySelectorAll("h3")).map((item) => item.textContent?.trim());
+  const alreadyUpdated =
+    grid.dataset.atsClassificationVersion === "2" &&
+    existingTitles.length === INSPECTION_CLASSIFICATIONS.length &&
+    existingTitles[0] === INSPECTION_CLASSIFICATIONS[0].title;
 
-  if (image) {
-    image.classList.add("ats-inspection-detail-image");
-  }
+  grid.classList.add("ats-classification-grid");
+  if (alreadyUpdated) return;
 
-  document.querySelectorAll('img[alt$=" service"]').forEach((cardImage) => {
-    cardImage.classList.add("ats-inspection-card-image");
-  });
+  grid.dataset.atsClassificationVersion = "2";
+  grid.innerHTML = INSPECTION_CLASSIFICATIONS.map(
+    (item) => `
+      <article class="ats-classification-card ats-classification-${item.key}">
+        <div class="ats-classification-accent" aria-hidden="true"></div>
+        <h3>${item.title}</h3>
+        <p>${item.text}</p>
+      </article>
+    `,
+  ).join("");
 }
 
 function applyWebsiteUpdates() {
@@ -126,8 +168,7 @@ function applyWebsiteUpdates() {
   updateDesktopServicesMenu();
   updateMobileServicesMenu();
   improveCardContrast();
-  useDedicatedHomeInspectionHero();
-  improveInspectionImageLayout();
+  updateInspectionClassificationSection();
 }
 
 export default function AppWithUpdates() {

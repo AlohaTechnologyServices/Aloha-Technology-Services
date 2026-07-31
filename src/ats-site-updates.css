@@ -1,4 +1,4 @@
-/* ATS wording, service-menu, dark-card, and image-presentation refinements. */
+/* ATS wording, service-menu, dark-card contrast, and inspection classification refinements. */
 
 .ats-services-menu-grid {
   grid-template-columns: minmax(0, 1fr) !important;
@@ -32,32 +32,74 @@
   color: #061b33 !important;
 }
 
-/* All new inspection card images are 16:9, matching the existing card window. */
-.ats-inspection-card-image {
-  object-fit: cover !important;
-  object-position: center center !important;
-  image-rendering: auto;
+.ats-classification-grid {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  gap: 1.25rem !important;
 }
 
-/*
- * The selected inspection panel previously stretched its image column to the
- * full height of the text column. This forced a small source image into a very
- * tall crop. Keep the image at a deliberate aspect ratio instead.
- */
-.ats-inspection-detail-image-shell {
-  min-height: 0 !important;
-  width: 100% !important;
-  aspect-ratio: 16 / 9 !important;
-  align-self: start !important;
-  overflow: hidden !important;
-  background: #e8f1fb !important;
+.ats-classification-card {
+  position: relative;
+  overflow: hidden;
+  min-width: 0;
+  border: 1px solid #dbe3ea;
+  border-radius: 1rem;
+  background: #ffffff;
+  padding: 1.5rem;
+  box-shadow: 0 12px 34px rgba(6, 27, 51, 0.07);
 }
 
-.ats-inspection-detail-image {
-  object-fit: cover !important;
-  object-position: center center !important;
-  image-rendering: auto;
+.ats-classification-accent {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0.35rem;
+  background: #64748b;
 }
+
+.ats-classification-card h3 {
+  margin: 0;
+  color: #061b33;
+  font-size: 1.125rem;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.ats-classification-card p {
+  margin: 0.75rem 0 0;
+  color: #475569;
+  font-size: 0.95rem;
+  line-height: 1.75;
+}
+
+.ats-classification-blue {
+  background: #f2f7ff;
+  border-color: #b9d5fb;
+}
+.ats-classification-blue .ats-classification-accent { background: #1268d5; }
+
+.ats-classification-green {
+  background: #f1faf5;
+  border-color: #b7dfc8;
+}
+.ats-classification-green .ats-classification-accent { background: #177245; }
+
+.ats-classification-yellow {
+  background: #fffaf0;
+  border-color: #ecd18c;
+}
+.ats-classification-yellow .ats-classification-accent { background: #a15c00; }
+
+.ats-classification-red {
+  background: #fff5f3;
+  border-color: #e7b7b2;
+}
+.ats-classification-red .ats-classification-accent { background: #b42318; }
+
+.ats-classification-gray {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+.ats-classification-gray .ats-classification-accent { background: #64748b; }
 
 @media (min-width: 768px) {
   .ats-services-menu-grid {
@@ -65,10 +107,14 @@
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
     grid-template-rows: repeat(var(--ats-menu-rows, 6), minmax(0, auto)) !important;
   }
+
+  .ats-classification-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
 }
 
-@media (min-width: 1024px) {
-  .ats-inspection-detail-image-shell {
-    aspect-ratio: 4 / 3 !important;
+@media (min-width: 1180px) {
+  .ats-classification-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
   }
 }

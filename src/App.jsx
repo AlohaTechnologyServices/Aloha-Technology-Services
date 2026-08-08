@@ -1547,16 +1547,99 @@ export default function TechnicalSolutionsCompanyWebsite() {
         {renderPage()}
       </main>
 
-      <footer className="mt-20 bg-[#061B33] text-white">
-        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-          <div className="grid gap-10 lg:grid-cols-[1.15fr_0.85fr_0.85fr]">
-            <div><img src={LOGO} alt="Aloha Technology Services LLC" className="h-24 w-auto max-w-full object-contain object-left" loading="lazy" /><p className="mt-5 max-w-xl leading-7 text-slate-300">Locally owned and operated on Hawaiʻi Island. Property field services, home inspections, vendor coordination, handyman support, operations and practical technology solutions.</p><div className="mt-5 flex flex-wrap gap-4 text-sm"><a href={`mailto:${COMPANY_EMAIL}`} className="text-blue-200 hover:text-white">{COMPANY_EMAIL}</a><a href={`tel:${COMPANY_PHONE_HREF}`} className="text-blue-200 hover:text-white">{COMPANY_PHONE}</a></div></div>
-            <div><h2 className="font-bold">Priority services</h2><div className="mt-4 space-y-3">{services.slice(0,4).map((service) => <button key={service.id} onClick={() => openPage(service.id)} className="block text-left text-sm text-slate-300 hover:text-white">{service.title}</button>)}</div></div>
-            <div><h2 className="font-bold">Company</h2><div className="mt-4 space-y-3"><button onClick={() => openPage("home")} className="block text-sm text-slate-300 hover:text-white">Home</button><button onClick={() => openPage("about")} className="block text-sm text-slate-300 hover:text-white">About</button><button onClick={() => openPage("contact")} className="block text-sm text-slate-300 hover:text-white">Contact</button></div></div>
-          </div>
-          <div className="mt-10 border-t border-white/10 pt-6 text-sm leading-6 text-slate-400">© 2026 {COMPANY_NAME}. Service availability, scope and pricing are confirmed project by project. Third-party providers perform work under their own licensing, insurance, terms and warranties.</div>
+<footer className="mt-20 bg-[#061B33] text-white">
+  <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+    <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[1.2fr_0.7fr_1.15fr_0.6fr]">
+      <div>
+        <img
+          src={LOGO}
+          alt="Aloha Technology Services LLC"
+          className="h-24 w-auto max-w-full object-contain object-left"
+          loading="lazy"
+        />
+        <p className="mt-5 max-w-xl leading-7 text-slate-300">
+          Locally owned and operated on Hawaiʻi Island. Property field services,
+          home inspections, vendor coordination, handyman support, operations
+          and practical technology solutions.
+        </p>
+        <div className="mt-5 flex flex-wrap gap-4 text-sm">
+          <a
+            href={`mailto:${COMPANY_EMAIL}`}
+            className="text-blue-200 hover:text-white"
+          >
+            {COMPANY_EMAIL}
+          </a>
+          <a
+            href={`tel:${COMPANY_PHONE_HREF}`}
+            className="text-blue-200 hover:text-white"
+          >
+            {COMPANY_PHONE}
+          </a>
         </div>
-      </footer>
+      </div>
+
+      <div>
+        <h2 className="font-bold">Priority services</h2>
+        <div className="mt-4 space-y-3">
+          {services.slice(0, 4).map((service) => (
+            <button
+              key={service.id}
+              onClick={() => openPage(service.id)}
+              className="block text-left text-sm text-slate-300 transition hover:text-white"
+            >
+              {service.title}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <h2 className="font-bold">Specialized services</h2>
+        <div className="mt-4 grid gap-x-6 gap-y-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+          {services.slice(4).map((service) => (
+            <button
+              key={service.id}
+              onClick={() => openPage(service.id)}
+              className="block text-left text-sm text-slate-300 transition hover:text-white"
+            >
+              {service.title}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <h2 className="font-bold">Company</h2>
+        <div className="mt-4 space-y-3">
+          <button
+            onClick={() => openPage("home")}
+            className="block text-sm text-slate-300 hover:text-white"
+          >
+            Home
+          </button>
+          <button
+            onClick={() => openPage("about")}
+            className="block text-sm text-slate-300 hover:text-white"
+          >
+            About
+          </button>
+          <button
+            onClick={() => openPage("contact")}
+            className="block text-sm text-slate-300 hover:text-white"
+          >
+            Contact
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div className="mt-10 border-t border-white/10 pt-6 text-sm leading-6 text-slate-400">
+      © 2026 {COMPANY_NAME}. Service availability, scope and pricing are confirmed
+      project by project. Third-party providers perform work under their own
+      licensing, insurance, terms and warranties.
+    </div>
+  </div>
+</footer>
       <AlohaAssistant onNavigate={openPage} />
     </div>
   );

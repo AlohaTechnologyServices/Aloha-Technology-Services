@@ -1147,7 +1147,7 @@ function HomeInspectionsPage({ onOpen }) {
       <section className="rounded-[2rem] bg-[#061B33] px-8 py-11 text-white">
         <div className="flex flex-col gap-7 md:flex-row md:items-center md:justify-between">
           <div className="max-w-3xl"><h2 className="text-3xl font-bold">Ready to discuss the property and inspection timing?</h2><p className="mt-4 leading-7 text-slate-300">Include the property location, approximate size, property type, desired date and whether you are buying, selling, maintaining or requesting a targeted inspection.</p></div>
-          <Button variant="light" size="lg" onClick={() => onOpen("contact")}>Book an Inspection</Button>
+          <Button variant="light" size="lg" onClick={() => onOpen("contact")}>Book a Service</Button>
         </div>
       </section>
     </div>

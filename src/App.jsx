@@ -1370,7 +1370,11 @@ function AboutPage({ onOpen }) {
 function ContactPage() {
   const [state, handleSubmit] = useForm(FORM_ID);
   const [projectType, setProjectType] = useState("");
-  const inspectionOptions = inspectionTypes.map((inspection) => `Home Inspection — ${inspection.title}`);
+
+  const inspectionOptions = inspectionTypes.map(
+    (inspection) => `Home Inspection — ${inspection.title}`
+  );
+
   const projectOptions = [
     "Property Field Services",
     ...inspectionOptions,
@@ -1386,38 +1390,541 @@ function ContactPage() {
     "Application Development",
     "Other",
   ];
+
+  const standardInspectionDetails = [
+    "Property address or area and property type",
+    "Approximate square footage and year built, if known",
+    "Whether the property is occupied, vacant, furnished or under construction",
+    "Your role or reason for the inspection: buyer, seller, owner or other authorized client",
+    "Preferred inspection date and any contract, closing, walkthrough or other deadline",
+    "Access instructions and whether electric, water, gas/propane and other relevant utilities will be operating",
+    "Known concerns, recent repairs, prior leaks, damage or areas you especially want reviewed",
+  ];
+
+  const inspectionSpecificDetails = {
+    "Full Residential Home Inspection": [
+      "Any detached structures, lanais, garages, pools, irrigation, catchment, solar, generators or other special systems on the property",
+      "Any areas known to be inaccessible, locked or occupied",
+    ],
+    "Buyer’s Home Inspection": [
+      "Inspection or due-diligence deadline and closing timeframe",
+      "Agent, seller or access contact information if another party must coordinate entry",
+      "Known seller disclosures or repair concerns you would like the inspection to pay particular attention to",
+    ],
+    "Pre-Listing Home Inspection": [
+      "Target listing date",
+      "Known deferred maintenance, previous repairs or recurring concerns",
+      "Areas the owner is considering repairing or improving before listing",
+    ],
+    "Home Maintenance Inspection": [
+      "Primary maintenance goals or systems you want prioritized",
+      "Recurring concerns, aging equipment or areas that have needed repeated service",
+      "Major renovations, replacements or maintenance completed recently, if known",
+    ],
+    "Condo and Townhome Inspection": [
+      "Complex or association name, building and unit number",
+      "Floor or level and any assigned garage, storage, lanai or exclusive-use areas to be included",
+      "Known association-maintained versus owner-maintained systems, if available",
+    ],
+    "New Construction Home Inspection": [
+      "Builder or project name and current construction stage",
+      "Final-walkthrough, closing or warranty deadline",
+      "Any builder punch list, owner concern list or areas previously corrected",
+      "Whether installed systems and utilities will be fully operational for the inspection",
+    ],
+    "Repair Verification and Reinspection": [
+      "Original inspection date and the specific report items to be reinspected",
+      "Which repairs were completed and by whom, if known",
+      "Any invoices, repair descriptions or specialist documentation available for reference",
+      "Whether repaired areas will be fully accessible and operational",
+    ],
+    "Moisture and Water-Intrusion Inspection": [
+      "Exact locations of staining, moisture, odors, active leakage or other symptoms",
+      "When the concern was first observed and whether it changes with weather, plumbing use or HVAC operation",
+      "Known roof, plumbing, drainage or prior water-loss history",
+      "Previous repairs, drying, remediation or leak investigation already performed",
+    ],
+    "Irrigation System Inspection": [
+      "Controller make/model and approximate number of zones, if known",
+      "Water source and any known pumps, filters or pressure-control equipment",
+      "Known leaks, dry areas, overspray, drainage concerns or zones that do not operate correctly",
+      "Any access or operating restrictions for the controller, valves or landscaped areas",
+    ],
+    "Pool/Spa and Equipment Inspection": [
+      "Whether the property has a pool, spa, water feature or combination",
+      "Known equipment such as pumps, filters, heaters, salt systems, automation or specialty controls",
+      "Whether equipment is currently operating normally",
+      "Known leaks, surface concerns, equipment problems or safety concerns",
+    ],
+    "Custom Arrival and Departure Inspections": [
+      "Whether this is an arrival, departure, turnover or another owner-defined condition check",
+      "Scheduled arrival/departure date and the time window for the visit",
+      "Rooms, furnishings, equipment, inventory or readiness items you want documented",
+      "Your preferred photo/checklist requirements and any item that requires immediate escalation",
+      "Access instructions and the authorized owner contact for urgent findings",
+    ],
+  };
+
+  const serviceDetailGuidance = {
+    "Property Field Services": [
+      "Property address and the owner or authorized contact",
+      "Exact onsite task, visual check, access appointment or documentation requested",
+      "Rooms, exterior areas, equipment or conditions you want photographed or observed",
+      "Access method, gate instructions, appointment window and onsite contact information",
+      "Vendor, delivery, internet-provider or other appointment details, if applicable",
+      "Any known water, security, pest, utility, damage or safety concern that may require prompt escalation",
+      "What you want returned after the visit: photographs, factual notes, checklist, readings or other agreed documentation",
+    ],
+    "Vendor Coordination": [
+      "Property/project location and a clear description of the repair, improvement or service need",
+      "Provider category or trade you believe may be required, if known",
+      "Current stage: researching providers, requesting estimates, comparing proposals, scheduling work or following up",
+      "Any providers already contacted, proposals already received or work already attempted",
+      "Desired completion timeframe and any access, association, permit or scheduling restrictions",
+      "Known scope details, measurements, equipment make/model or project documents that may affect provider selection",
+      "Your priorities when comparing providers, such as availability, specialization, process, warranty or relative value",
+    ],
+    "Handyman Services": [
+      "Complete task or punch-list description, including the number of items and where each item is located",
+      "Approximate dimensions, mounting surfaces or existing conditions when installation is involved",
+      "Product, fixture or equipment make/model and manufacturer instructions when applicable",
+      "Whether materials, replacement parts or owner-supplied products have already been purchased",
+      "Known damage, prior repair attempts or concealed-condition concerns",
+      "Access requirements and preferred completion timeframe",
+      "Whether any portion may involve electrical, plumbing, structural, roofing, gas or other licensed trade work so ATS can identify the proper boundary before scheduling",
+    ],
+    "Workflow Optimization": [
+      "Business, department or process that needs improvement",
+      "How the current workflow operates from start to finish",
+      "People, departments or roles involved and where ownership or handoffs become unclear",
+      "Current tools, software, forms, spreadsheets, email steps or manual processes used",
+      "Frequency or volume of the work and the most common delays, errors or repeated effort",
+      "Desired result, performance improvement or problem you want the new workflow to solve",
+      "Existing SOPs, policies, approval requirements, exceptions or compliance constraints that must be preserved",
+      "Desired implementation timeframe and the people who will approve or use the new process",
+    ],
+    "Technology Installation": [
+      "Whether the project is for a home, rental property, office or other business environment",
+      "Equipment or devices to install, replace or troubleshoot, including make/model when known",
+      "Current internet provider, modem/router/mesh equipment and service plan when connectivity is involved",
+      "Approximate property size, number of floors and specific areas with weak coverage or device problems",
+      "Number and type of users, televisions, computers, printers, smart devices or connected appliances involved",
+      "Whether the project includes new equipment, existing equipment, mounting, cable management or provider coordination",
+      "Any access, wall/surface, power-location or equipment-placement restrictions",
+      "Preferred completion date. Do not send passwords through the contact form; secure access can be coordinated later.",
+    ],
+    "Training and Support": [
+      "Who the training is for and approximately how many users",
+      "System, device, workflow, procedure or topic that needs to be taught",
+      "Current documentation, screenshots, SOPs, source material or training resources already available",
+      "Preferred deliverables: video, written guide, quick-reference document, walkthrough or a combination",
+      "Approximate number of topics/modules and desired level of detail",
+      "Branding, voice, terminology or company standards the materials should follow",
+      "Where the training will be hosted or distributed and whether ATS will need access to a demonstration environment",
+      "Target completion date and any onboarding, launch or implementation deadline",
+    ],
+    "Website Development": [
+      "Existing website URL, domain or platform, if there is one",
+      "Whether this is a new website, redesign, landing page or improvement to an existing site",
+      "Primary business goal and the audience the website should serve",
+      "Pages, services, features and calls to action you want included",
+      "Branding, logo, photography, written content or other assets already available",
+      "Domain, hosting, email, analytics or other website services already in use",
+      "Required integrations such as contact forms, scheduling, payments, CRM, maps, analytics or social platforms",
+      "Reference websites or design preferences that help illustrate the desired direction",
+      "Target launch date and any budget range or phased approach you would like ATS to consider",
+    ],
+    "Insight & Analysis": [
+      "Business question, operational problem or decision the analysis should support",
+      "Data sources available, such as spreadsheets, reports, system exports, service records or financial/operational summaries",
+      "Time period the analysis should cover",
+      "Key metrics, service levels, costs, trends or recurring issues that matter most",
+      "Current reporting process and what is difficult to understand or act on today",
+      "Desired deliverable: dashboard, executive summary, recurring report, trend review or recommendation set",
+      "Who will use the analysis and what decisions they need to make",
+      "Any confidentiality, access or data-handling requirements and the desired completion date",
+    ],
+    "Automation Development": [
+      "Manual or repetitive process you want to automate",
+      "What event should trigger the process and what should happen afterward",
+      "Software, websites, forms, email accounts, spreadsheets or other tools currently involved",
+      "Information that enters the process and the output that should be created",
+      "How often the process runs and approximate transaction/message volume",
+      "Approvals, exceptions, error handling or situations that must remain under human control",
+      "Users or teams affected and any permission, privacy or security requirements",
+      "Desired result, time savings or service improvement and your preferred implementation timeframe",
+    ],
+    "AI Implementation": [
+      "Business problem or use case you want AI to address",
+      "Employees, customers or other users who would interact with the AI-enabled process",
+      "Documents, knowledge, data or systems the solution may need to use",
+      "Current software or workflow that the AI solution should support or integrate with",
+      "Privacy, confidentiality, regulated-data or access-control requirements",
+      "Desired output, response type or task the AI should perform",
+      "Where human review, approval or escalation must remain part of the process",
+      "Approximate usage volume and how you would measure whether the implementation is successful",
+      "Desired rollout timeframe and whether you are evaluating a pilot, phased implementation or full deployment",
+    ],
+    "Application Development": [
+      "Business problem or process the application should solve",
+      "Primary users, roles and permission levels",
+      "Main workflows, screens, forms or tasks users need to complete",
+      "Information the application needs to store, display or report",
+      "Current solution, spreadsheet, software or manual process being replaced or improved",
+      "Must-have features versus features that could wait for a later phase",
+      "Required integrations with existing systems, websites, APIs or data sources",
+      "Devices or platforms the application must support and any authentication/security requirements",
+      "Reporting, dashboard or notification requirements",
+      "Target MVP/launch date and any budget range or phased-development preference",
+    ],
+    Other: [
+      "Property, business or project location if location is relevant",
+      "A clear description of what is happening now",
+      "What you would like ATS to accomplish",
+      "People, equipment, property systems, software or vendors involved",
+      "Known constraints, deadlines, access requirements or prior attempts",
+      "Any measurements, model numbers, reports, quotes or other reference information available",
+      "Preferred timeframe and the best next step you are hoping to receive from ATS",
+    ],
+  };
+
+  const getProjectGuidance = (selectedService) => {
+    if (!selectedService) return null;
+
+    if (selectedService.startsWith("Home Inspection — ")) {
+      const inspectionTitle = selectedService.replace("Home Inspection — ", "");
+      return {
+        title: inspectionTitle,
+        items: [
+          ...standardInspectionDetails,
+          ...(inspectionSpecificDetails[inspectionTitle] || []),
+        ],
+        placeholder:
+          `Tell us about the ${inspectionTitle.toLowerCase()} request. Address the helpful details listed above, including the property, timing, access, known concerns and any inspection-specific information that may affect the scope.`,
+      };
+    }
+
+    const items = serviceDetailGuidance[selectedService] || serviceDetailGuidance.Other;
+    return {
+      title: selectedService === "Other" ? "your request" : selectedService,
+      items,
+      placeholder:
+        selectedService === "Other"
+          ? "Describe what you need help with and address the helpful details listed above."
+          : `Tell us about your ${selectedService.toLowerCase()} request and address the helpful details listed above. Include any other context that may affect scope, access, timing or the desired result.`,
+    };
+  };
+
+  const projectGuidance = getProjectGuidance(projectType);
+
   return (
     <div className="space-y-12">
-      <SectionHeading eyebrow="Contact" title="Tell us about the property, project or operational need" description="Share the location, desired outcome, timing and any known conditions. ATS will review the request and follow up about scope, availability and the most practical next step." />
+      <SectionHeading
+        eyebrow="Contact"
+        title="Tell us about the property, project or operational need"
+        description="Share the location, desired outcome, timing and any known conditions. ATS will review the request and follow up about scope, availability and the most practical next step."
+      />
+
       <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
         <Card className="p-6 md:p-8">
-          <h2 className="text-2xl font-bold text-[#061B33]">Request service or a consultation</h2>
-          <p className="mt-2 leading-7 text-slate-600">Pricing is determined case by case. A written proposal or inspection quote is provided when appropriate.</p>
+          <h2 className="text-2xl font-bold text-[#061B33]">
+            Request service or a consultation
+          </h2>
+          <p className="mt-2 leading-7 text-slate-600">
+            Pricing is determined case by case. A written proposal or inspection
+            quote is provided when appropriate.
+          </p>
+
           {state.succeeded ? (
-            <div className="mt-7 rounded-xl border border-emerald-200 bg-emerald-50 p-6"><h3 className="text-lg font-bold text-emerald-950">Mahalo. Your message was sent.</h3><p className="mt-2 leading-7 text-emerald-800">ATS will review the details and follow up as soon as possible.</p></div>
+            <div className="mt-7 rounded-xl border border-emerald-200 bg-emerald-50 p-6">
+              <h3 className="text-lg font-bold text-emerald-950">
+                Mahalo. Your message was sent.
+              </h3>
+              <p className="mt-2 leading-7 text-emerald-800">
+                ATS will review the details and follow up as soon as possible.
+              </p>
+            </div>
           ) : (
             <form onSubmit={handleSubmit} className="mt-7 space-y-5">
               <div className="grid gap-4 md:grid-cols-2">
-                <div><label htmlFor="name" className="mb-2 block text-sm font-bold text-slate-700">Full name</label><input id="name" type="text" name="name" required className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-[#1268D5] focus:ring-2 focus:ring-blue-100" /></div>
-                <div><label htmlFor="email" className="mb-2 block text-sm font-bold text-slate-700">Email</label><input id="email" type="email" name="email" required className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-[#1268D5] focus:ring-2 focus:ring-blue-100" /><ValidationError prefix="Email" field="email" errors={state.errors} /></div>
+                <div>
+                  <label
+                    htmlFor="name"
+                    className="mb-2 block text-sm font-bold text-slate-700"
+                  >
+                    Full name
+                  </label>
+                  <input
+                    id="name"
+                    type="text"
+                    name="name"
+                    required
+                    className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-[#1268D5] focus:ring-2 focus:ring-blue-100"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="mb-2 block text-sm font-bold text-slate-700"
+                  >
+                    Email
+                  </label>
+                  <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    required
+                    className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-[#1268D5] focus:ring-2 focus:ring-blue-100"
+                  />
+                  <ValidationError
+                    prefix="Email"
+                    field="email"
+                    errors={state.errors}
+                  />
+                </div>
               </div>
+
               <div className="grid gap-4 md:grid-cols-2">
-                <div><label htmlFor="phone" className="mb-2 block text-sm font-bold text-slate-700">Phone number</label><input id="phone" type="tel" name="phone" className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-[#1268D5] focus:ring-2 focus:ring-blue-100" /></div>
-                <div><label htmlFor="projectType" className="mb-2 block text-sm font-bold text-slate-700">Service requested</label><select id="projectType" name="projectType" required value={projectType} onChange={(event) => setProjectType(event.target.value)} className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none transition focus:border-[#1268D5] focus:ring-2 focus:ring-blue-100"><option value="" disabled>Select a service</option>{projectOptions.map((option) => <option key={option}>{option}</option>)}</select></div>
+                <div>
+                  <label
+                    htmlFor="phone"
+                    className="mb-2 block text-sm font-bold text-slate-700"
+                  >
+                    Phone number
+                  </label>
+                  <input
+                    id="phone"
+                    type="tel"
+                    name="phone"
+                    className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-[#1268D5] focus:ring-2 focus:ring-blue-100"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="projectType"
+                    className="mb-2 block text-sm font-bold text-slate-700"
+                  >
+                    Service requested
+                  </label>
+                  <select
+                    id="projectType"
+                    name="projectType"
+                    required
+                    value={projectType}
+                    onChange={(event) => setProjectType(event.target.value)}
+                    className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none transition focus:border-[#1268D5] focus:ring-2 focus:ring-blue-100"
+                  >
+                    <option value="" disabled>
+                      Select a service
+                    </option>
+                    {projectOptions.map((option) => (
+                      <option key={option}>{option}</option>
+                    ))}
+                  </select>
+                </div>
               </div>
-              {projectType === "Property Field Services" && <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-sm leading-6 text-emerald-950"><strong>Scope note:</strong> Property Field Services are owner-directed onsite services only. ATS does not provide property management, caretaker or custodian services, leasing, tenant placement, rent handling or landlord-tenant representation.</div>}
-              {projectType.startsWith("Home Inspection") && <div className="rounded-xl border border-blue-200 bg-blue-50 px-5 py-4 text-sm leading-6 text-blue-950"><strong>Helpful details:</strong> Include the property address or area, property type, approximate square footage, occupied or vacant status, desired date and any known areas of concern.</div>}
-              <div className="grid gap-4 md:grid-cols-2"><div><label htmlFor="contactMethod" className="mb-2 block text-sm font-bold text-slate-700">Preferred contact method</label><select id="contactMethod" name="contactMethod" className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3"><option>Email</option><option>Phone</option><option>Text</option></select></div><div><label htmlFor="timeline" className="mb-2 block text-sm font-bold text-slate-700">Desired timeline</label><select id="timeline" name="timeline" className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3"><option>As soon as possible</option><option>Within 2–4 weeks</option><option>Within 1–3 months</option><option>Planning / gathering information</option></select></div></div>
-              <div><label htmlFor="location" className="mb-2 block text-sm font-bold text-slate-700">Property or project location</label><input id="location" type="text" name="location" placeholder="Example: Waikoloa, Waimea, Kona or Hilo" className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-[#1268D5] focus:ring-2 focus:ring-blue-100" /></div>
-              <div><label htmlFor="message" className="mb-2 block text-sm font-bold text-slate-700">Project details</label><textarea id="message" name="message" rows="8" required placeholder="Describe the property, observed concern, requested service, desired result and timing." className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-[#1268D5] focus:ring-2 focus:ring-blue-100" /><ValidationError prefix="Message" field="message" errors={state.errors} /></div>
-              <input type="text" name="_gotcha" className="hidden" tabIndex="-1" autoComplete="off" />
-              <Button type="submit" size="lg" disabled={state.submitting}>{state.submitting ? "Sending..." : "Send Request"}</Button>
+
+              {projectType === "Property Field Services" && (
+                <div className="rounded-xl border border-emerald-200 bg-emerald-50 px-5 py-4 text-sm leading-6 text-emerald-950">
+                  <strong>Scope note:</strong> Property Field Services are
+                  owner-directed onsite services only. ATS does not provide
+                  property management, caretaker or custodian services, leasing,
+                  tenant placement, rent handling or landlord-tenant
+                  representation.
+                </div>
+              )}
+
+              {projectGuidance && (
+                <div
+                  id="project-guidance"
+                  className="rounded-xl border border-blue-200 bg-blue-50 px-5 py-5 text-blue-950"
+                >
+                  <div className="flex items-start gap-3">
+                    <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#1268D5]" />
+                    <div>
+                      <p className="text-sm font-bold">
+                        Helpful details for {projectGuidance.title}
+                      </p>
+                      <p className="mt-1 text-sm leading-6 text-blue-900">
+                        Providing the following information helps ATS understand
+                        the scope before follow-up and reduces unnecessary
+                        back-and-forth.
+                      </p>
+                    </div>
+                  </div>
+
+                  <ul className="mt-4 grid gap-x-6 gap-y-2 text-sm leading-6 md:grid-cols-2">
+                    {projectGuidance.items.map((item) => (
+                      <li key={item} className="flex gap-2">
+                        <span
+                          aria-hidden="true"
+                          className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#1268D5]"
+                        />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              <div className="grid gap-4 md:grid-cols-2">
+                <div>
+                  <label
+                    htmlFor="contactMethod"
+                    className="mb-2 block text-sm font-bold text-slate-700"
+                  >
+                    Preferred contact method
+                  </label>
+                  <select
+                    id="contactMethod"
+                    name="contactMethod"
+                    className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3"
+                  >
+                    <option>Email</option>
+                    <option>Phone</option>
+                    <option>Text</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="timeline"
+                    className="mb-2 block text-sm font-bold text-slate-700"
+                  >
+                    Desired timeline
+                  </label>
+                  <select
+                    id="timeline"
+                    name="timeline"
+                    className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3"
+                  >
+                    <option>As soon as possible</option>
+                    <option>Within 2–4 weeks</option>
+                    <option>Within 1–3 months</option>
+                    <option>Planning / gathering information</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="location"
+                  className="mb-2 block text-sm font-bold text-slate-700"
+                >
+                  Property or project location
+                </label>
+                <input
+                  id="location"
+                  type="text"
+                  name="location"
+                  placeholder="Example: Waikoloa, Waimea, Kona or Hilo"
+                  className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-[#1268D5] focus:ring-2 focus:ring-blue-100"
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="message"
+                  className="mb-2 block text-sm font-bold text-slate-700"
+                >
+                  {projectGuidance
+                    ? `Project details — ${projectGuidance.title}`
+                    : "Project details"}
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="10"
+                  required
+                  aria-describedby={projectGuidance ? "project-guidance" : undefined}
+                  placeholder={
+                    projectGuidance
+                      ? projectGuidance.placeholder
+                      : "Select a service above to see the information that will help ATS evaluate your request."
+                  }
+                  className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-[#1268D5] focus:ring-2 focus:ring-blue-100"
+                />
+                <ValidationError
+                  prefix="Message"
+                  field="message"
+                  errors={state.errors}
+                />
+              </div>
+
+              <input
+                type="text"
+                name="_gotcha"
+                className="hidden"
+                tabIndex="-1"
+                autoComplete="off"
+              />
+
+              <Button
+                type="submit"
+                size="lg"
+                disabled={state.submitting}
+              >
+                {state.submitting ? "Sending..." : "Send Request"}
+              </Button>
             </form>
           )}
         </Card>
+
         <div className="space-y-6">
-          <Card className="bg-[#061B33] p-7 text-white"><h2 className="text-2xl font-bold">Contact information</h2><p className="mt-3 leading-7 text-slate-300">Serving homeowners, property owners, businesses, vacation-rental stakeholders and operational teams across Hawaiʻi Island.</p><div className="mt-6 space-y-5"><div className="flex gap-3"><Mail className="mt-0.5 h-5 w-5 text-[#77D7CF]" /><a href={`mailto:${COMPANY_EMAIL}`} className="hover:text-white">{COMPANY_EMAIL}</a></div><div className="flex gap-3"><Phone className="mt-0.5 h-5 w-5 text-[#77D7CF]" /><a href={`tel:${COMPANY_PHONE_HREF}`} className="hover:text-white">{COMPANY_PHONE}</a></div><div className="flex gap-3"><MapPin className="mt-0.5 h-5 w-5 text-[#77D7CF]" /><span>Locally owned and operated on Hawaiʻi Island</span></div></div></Card>
-          <Card className="p-7"><h2 className="text-xl font-bold text-[#061B33]">What happens next?</h2><div className="mt-5 space-y-4">{["ATS reviews the service request and location.", "We follow up with questions or schedule a site review when needed.", "The scope, limitations, timing and pricing approach are confirmed.", "A written proposal or inspection quote is provided when applicable."].map((item, index) => <div key={item} className="flex gap-4"><div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-50 text-sm font-black text-[#1268D5]">{index + 1}</div><p className="pt-1 leading-6 text-slate-600">{item}</p></div>)}</div></Card>
+          <Card className="bg-[#061B33] p-7 text-white">
+            <h2 className="text-2xl font-bold">Contact information</h2>
+            <p className="mt-3 leading-7 text-slate-300">
+              Serving homeowners, property owners, businesses, vacation-rental
+              stakeholders and operational teams across Hawaiʻi Island.
+            </p>
+            <div className="mt-6 space-y-5">
+              <div className="flex gap-3">
+                <Mail className="mt-0.5 h-5 w-5 text-[#77D7CF]" />
+                <a
+                  href={`mailto:${COMPANY_EMAIL}`}
+                  className="hover:text-white"
+                >
+                  {COMPANY_EMAIL}
+                </a>
+              </div>
+              <div className="flex gap-3">
+                <Phone className="mt-0.5 h-5 w-5 text-[#77D7CF]" />
+                <a
+                  href={`tel:${COMPANY_PHONE_HREF}`}
+                  className="hover:text-white"
+                >
+                  {COMPANY_PHONE}
+                </a>
+              </div>
+              <div className="flex gap-3">
+                <MapPin className="mt-0.5 h-5 w-5 text-[#77D7CF]" />
+                <span>Locally owned and operated on Hawaiʻi Island</span>
+              </div>
+            </div>
+          </Card>
+
+          <Card className="p-7">
+            <h2 className="text-xl font-bold text-[#061B33]">
+              What happens next?
+            </h2>
+            <div className="mt-5 space-y-4">
+              {[
+                "ATS reviews the service request and location.",
+                "We follow up with questions or schedule a site review when needed.",
+                "The scope, limitations, timing and pricing approach are confirmed.",
+                "A written proposal or inspection quote is provided when applicable.",
+              ].map((item, index) => (
+                <div key={item} className="flex gap-4">
+                  <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-blue-50 text-sm font-black text-[#1268D5]">
+                    {index + 1}
+                  </div>
+                  <p className="pt-1 leading-6 text-slate-600">{item}</p>
+                </div>
+              ))}
+            </div>
+          </Card>
         </div>
       </div>
     </div>

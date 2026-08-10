@@ -1147,7 +1147,7 @@ function HomeInspectionsPage({ onOpen }) {
       <section className="rounded-[2rem] bg-[#061B33] px-8 py-11 text-white">
         <div className="flex flex-col gap-7 md:flex-row md:items-center md:justify-between">
           <div className="max-w-3xl"><h2 className="text-3xl font-bold">Ready to discuss the property and inspection timing?</h2><p className="mt-4 leading-7 text-slate-300">Include the property location, approximate size, property type, desired date and whether you are buying, selling, maintaining or requesting a targeted inspection.</p></div>
-          <Button variant="light" size="lg" onClick={() => onOpen("contact")}>Book a Service</Button>
+          <Button variant="light" size="lg" onClick={() => onOpen("contact")}>Book an Inspection/Button>
         </div>
       </section>
     </div>
@@ -1520,7 +1520,7 @@ export default function TechnicalSolutionsCompanyWebsite() {
             <button onClick={() => openPage("vendor-coordination")} className={`rounded-lg px-3 py-2 text-sm font-semibold transition ${activePage === "vendor-coordination" ? "bg-white/15 text-white" : "text-slate-200 hover:bg-white/10 hover:text-white"}`}>Vendor Coordination</button>
             <button onClick={() => openPage("about")} className={`rounded-lg px-3 py-2 text-sm font-semibold transition ${activePage === "about" ? "bg-white/15 text-white" : "text-slate-200 hover:bg-white/10 hover:text-white"}`}>About</button>
             <button onClick={() => openPage("contact")} className={`rounded-lg px-3 py-2 text-sm font-semibold transition ${activePage === "contact" ? "bg-white/15 text-white" : "text-slate-200 hover:bg-white/10 hover:text-white"}`}>Contact</button>
-            <Button size="sm" onClick={() => openPage("contact")}>Book an Inspection</Button>
+            <Button size="sm" onClick={() => openPage("contact")}>Book a Service</Button>
           </nav>
 
           <button className="rounded-lg border border-white/20 p-2 lg:hidden" onClick={() => setMobileOpen((value) => !value)} aria-label="Toggle navigation menu">

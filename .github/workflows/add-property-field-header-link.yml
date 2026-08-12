@@ -1,0 +1,72 @@
+name: Add Property Field Services header link
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/add-property-field-header-link.yml
+
+permissions:
+  contents: write
+
+jobs:
+  apply-header-link:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Patch desktop header navigation
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          path = Path("src/App.jsx")
+          text = path.read_text(encoding="utf-8")
+
+          old_active = 'activeService && !["home-inspections", "vendor-coordination"].includes(activePage)'
+          new_active = 'activeService && !["property-field-services", "home-inspections", "vendor-coordination"].includes(activePage)'
+          if text.count(old_active) != 1:
+              raise SystemExit(f"Expected exactly one Services active-state expression; found {text.count(old_active)}")
+          text = text.replace(old_active, new_active, 1)
+
+          property_button = '            <button onClick={() => openPage("property-field-services")} className={`rounded-lg px-3 py-2 text-sm font-semibold transition ${activePage === "property-field-services" ? "bg-white/15 text-white" : "text-slate-200 hover:bg-white/10 hover:text-white"}`}>Property Field Services</button>\n'
+
+          lines = text.splitlines(keepends=True)
+          target_indexes = [
+              i for i, line in enumerate(lines)
+              if 'openPage("home-inspections")' in line and '>Home Inspections</button>' in line
+          ]
+          if len(target_indexes) != 1:
+              raise SystemExit(f"Expected exactly one desktop Home Inspections header button; found {len(target_indexes)}")
+          if any('openPage("property-field-services")' in line and '>Property Field Services</button>' in line for line in lines):
+              raise SystemExit("Property Field Services desktop header button already exists")
+
+          lines.insert(target_indexes[0], property_button)
+          path.write_text(''.join(lines), encoding="utf-8")
+          PY
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Build website
+        run: npm run build
+
+      - name: Commit final header update
+        shell: bash
+        run: |
+          rm .github/workflows/add-property-field-header-link.yml
+          git config user.name "AlohaTechnologyServices"
+          git config user.email "alohatechnologyservice@gmail.com"
+          git add src/App.jsx .github/workflows/add-property-field-header-link.yml
+          git commit -m "Add Property Field Services header link"
+          git push origin main

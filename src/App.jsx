@@ -1702,7 +1702,7 @@ export default function TechnicalSolutionsCompanyWebsite() {
           <nav className="hidden items-center gap-1 lg:flex">
             <button onClick={() => openPage("home")} className={`rounded-lg px-3 py-2 text-sm font-semibold transition ${activePage === "home" ? "bg-white/15 text-white" : "text-slate-200 hover:bg-white/10 hover:text-white"}`}>Home</button>
             <div className="relative">
-              <button onClick={() => setServicesOpen((value) => !value)} className={`flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-semibold transition ${activeService && !["home-inspections", "vendor-coordination"].includes(activePage) ? "bg-white/15 text-white" : "text-slate-200 hover:bg-white/10 hover:text-white"}`}>Services <ChevronDown className="h-4 w-4" /></button>
+              <button onClick={() => setServicesOpen((value) => !value)} className={`flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-semibold transition ${activeService && !["property-field-services", "home-inspections", "vendor-coordination"].includes(activePage) ? "bg-white/15 text-white" : "text-slate-200 hover:bg-white/10 hover:text-white"}`}>Services <ChevronDown className="h-4 w-4" /></button>
               {servicesOpen && (
                 <div className="absolute left-0 top-12 w-[760px] max-w-[calc(100vw-2rem)] rounded-2xl border border-slate-200 bg-white p-5 text-slate-900 shadow-2xl">
                   <p className="mb-4 text-xs font-black uppercase tracking-[0.18em] text-[#1268D5]">Services in preferred order</p>
@@ -1710,6 +1710,7 @@ export default function TechnicalSolutionsCompanyWebsite() {
                 </div>
               )}
             </div>
+            <button onClick={() => openPage("property-field-services")} className={`rounded-lg px-3 py-2 text-sm font-semibold transition ${activePage === "property-field-services" ? "bg-white/15 text-white" : "text-slate-200 hover:bg-white/10 hover:text-white"}`}>Property Field Services</button>
             <button onClick={() => openPage("home-inspections")} className={`rounded-lg px-3 py-2 text-sm font-semibold transition ${(activePage === "home-inspections" || activePage.startsWith("inspection-")) ? "bg-white/15 text-white" : "text-slate-200 hover:bg-white/10 hover:text-white"}`}>Home Inspections</button>
             <button onClick={() => openPage("vendor-coordination")} className={`rounded-lg px-3 py-2 text-sm font-semibold transition ${activePage === "vendor-coordination" ? "bg-white/15 text-white" : "text-slate-200 hover:bg-white/10 hover:text-white"}`}>Vendor Coordination</button>
             <button onClick={() => openPage("about")} className={`rounded-lg px-3 py-2 text-sm font-semibold transition ${activePage === "about" ? "bg-white/15 text-white" : "text-slate-200 hover:bg-white/10 hover:text-white"}`}>About</button>

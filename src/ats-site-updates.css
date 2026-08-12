@@ -1,4 +1,4 @@
-/* ATS wording, service-menu, dark-card contrast, and inspection classification refinements. */
+/* ATS wording, service-menu, inspection-scope, pricing, contrast, and classification refinements. */
 
 .ats-services-menu-grid {
   grid-template-columns: minmax(0, 1fr) !important;
@@ -71,35 +71,201 @@
   line-height: 1.75;
 }
 
-.ats-classification-blue {
-  background: #f2f7ff;
-  border-color: #b9d5fb;
-}
+.ats-classification-blue { background: #f2f7ff; border-color: #b9d5fb; }
 .ats-classification-blue .ats-classification-accent { background: #1268d5; }
-
-.ats-classification-green {
-  background: #f1faf5;
-  border-color: #b7dfc8;
-}
+.ats-classification-green { background: #f1faf5; border-color: #b7dfc8; }
 .ats-classification-green .ats-classification-accent { background: #177245; }
-
-.ats-classification-yellow {
-  background: #fffaf0;
-  border-color: #ecd18c;
-}
+.ats-classification-yellow { background: #fffaf0; border-color: #ecd18c; }
 .ats-classification-yellow .ats-classification-accent { background: #a15c00; }
-
-.ats-classification-red {
-  background: #fff5f3;
-  border-color: #e7b7b2;
-}
+.ats-classification-red { background: #fff5f3; border-color: #e7b7b2; }
 .ats-classification-red .ats-classification-accent { background: #b42318; }
-
-.ats-classification-gray {
-  background: #f8fafc;
-  border-color: #cbd5e1;
-}
+.ats-classification-gray { background: #f8fafc; border-color: #cbd5e1; }
 .ats-classification-gray .ats-classification-accent { background: #64748b; }
+
+.ats-pricing-intro-panel {
+  display: grid;
+  gap: 1rem;
+  align-items: center;
+  border: 1px solid #cfe0f5;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, #f7fbff 0%, #ffffff 58%, #f0fbf9 100%);
+  padding: 1.25rem 1.4rem;
+  box-shadow: 0 10px 30px rgba(6, 27, 51, 0.05);
+}
+
+.ats-pricing-intro-panel h3,
+.ats-detail-heading-row h3,
+.ats-rate-table-wrap h4 {
+  color: #061b33;
+}
+
+.ats-pricing-intro-panel h3 {
+  margin: 0.25rem 0 0;
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.ats-pricing-intro-panel p {
+  margin: 0.5rem 0 0;
+  color: #526277;
+  line-height: 1.65;
+}
+
+.ats-detail-kicker {
+  display: block;
+  color: #1268d5;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.ats-detail-heading-row h3 {
+  margin: 0.3rem 0 0;
+  font-size: 1.15rem;
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+.ats-scope-section {
+  margin-top: 1.75rem;
+}
+
+.ats-scope-list,
+.ats-boundary-list,
+.ats-pricing-factors {
+  display: grid;
+  gap: 0.7rem;
+  margin-top: 1rem;
+}
+
+.ats-scope-list > div,
+.ats-boundary-list > div,
+.ats-pricing-factors > div {
+  display: grid;
+  grid-template-columns: 1.35rem 1fr;
+  gap: 0.65rem;
+  align-items: start;
+}
+
+.ats-scope-list span {
+  color: #177245;
+  font-weight: 900;
+}
+
+.ats-boundary-list span {
+  color: #a15c00;
+  font-weight: 900;
+}
+
+.ats-pricing-factors span {
+  color: #1268d5;
+  font-weight: 900;
+}
+
+.ats-scope-list p,
+.ats-boundary-list p,
+.ats-pricing-factors p {
+  margin: 0;
+  color: #334155;
+  line-height: 1.58;
+}
+
+.ats-scope-boundaries {
+  margin-top: 1.4rem;
+  border: 1px solid #f0d39a;
+  border-left: 4px solid #d69420;
+  border-radius: 0.9rem;
+  background: #fffaf1;
+  padding: 1.15rem 1.2rem;
+}
+
+.ats-inspection-pricing {
+  margin-top: 1.4rem;
+  border: 1px solid #cdddec;
+  border-radius: 1rem;
+  background: #ffffff;
+  padding: 1.25rem;
+  box-shadow: 0 8px 24px rgba(6, 27, 51, 0.05);
+}
+
+.ats-get-notice {
+  margin-top: 0.9rem;
+  border: 1px solid #b9d5fb;
+  border-left: 4px solid #1268d5;
+  border-radius: 0.75rem;
+  background: #f2f7ff;
+  padding: 0.75rem 0.9rem;
+  color: #0b315c;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.ats-rate-grid {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.ats-rate-table-wrap {
+  overflow: hidden;
+  border: 1px solid #dbe3ea;
+  border-radius: 0.85rem;
+  background: #fff;
+}
+
+.ats-rate-table-wrap h4 {
+  margin: 0;
+  border-bottom: 1px solid #dbe3ea;
+  background: #f8fafc;
+  padding: 0.8rem 0.95rem;
+  font-size: 0.92rem;
+  font-weight: 800;
+}
+
+.ats-rate-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.72rem 0.95rem;
+  color: #475569;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.ats-rate-row + .ats-rate-row {
+  border-top: 1px solid #edf1f5;
+}
+
+.ats-rate-row strong {
+  color: #061b33;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.ats-pricing-notes {
+  margin-top: 1rem;
+  border-radius: 0.8rem;
+  background: #f8fafc;
+  padding: 0.85rem 1rem;
+}
+
+.ats-pricing-notes p,
+.ats-pricing-intro {
+  margin: 0;
+  color: #526277;
+  font-size: 0.86rem;
+  line-height: 1.6;
+}
+
+.ats-pricing-notes p + p {
+  margin-top: 0.45rem;
+}
+
+.ats-pricing-intro {
+  margin-top: 0.9rem;
+}
 
 @media (min-width: 768px) {
   .ats-services-menu-grid {
@@ -110,6 +276,18 @@
 
   .ats-classification-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .ats-pricing-intro-panel {
+    grid-template-columns: minmax(0, 1.45fr) minmax(260px, 0.55fr);
+  }
+
+  .ats-pricing-intro-panel .ats-get-notice {
+    margin-top: 0;
+  }
+
+  .ats-rate-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

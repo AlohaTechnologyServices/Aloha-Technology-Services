@@ -38,6 +38,10 @@ import {
   Zap,
 } from "lucide-react";
 import AlohaAssistant from "./AlohaAssistant";
+import { inspectionServices, INSPECTION_PAGE_PATHS, INSPECTION_PAGE_SEO } from "./inspection/inspectionData";
+
+const HomeInspectionsHubPage = React.lazy(() => import("./inspection/HomeInspectionsHubPage"));
+const InspectionDetailPage = React.lazy(() => import("./inspection/InspectionDetailPage"));
 
 const COMPANY_NAME = "Aloha Technology Services LLC";
 const COMPANY_EMAIL = "hawaiiats@gmail.com";
@@ -65,6 +69,7 @@ const PAGE_PATHS = {
   "automation-development": "/services/automation-development",
   "ai-implementation": "/services/ai-implementation",
   "application-development": "/services/application-development",
+  ...INSPECTION_PAGE_PATHS,
 };
 
 const PATH_TO_PAGE = Object.fromEntries(
@@ -94,9 +99,9 @@ const PAGE_SEO = {
       "Owner-directed visual property checks, photo documentation, vendor access, delivery verification, incident checks and defined onsite support on Hawaiʻi Island.",
   },
   "home-inspections": {
-    title: "Home Inspections | Buyers, Sellers & Owners | Hawaiʻi Island",
+    title: "Home Inspections, Scopes & Pricing | Hawaiʻi Island | ATS",
     description:
-      "Detailed residential home inspections, moisture and thermal-imaging inspections, irrigation, pool and spa inspections, reinspections and custom rental arrival/departure inspections.",
+      "Compare eleven Hawaiʻi Island residential inspection services with dedicated scope, limitation, pricing and report-expectation pages from Aloha Technology Services LLC.",
   },
   "vendor-coordination": {
     title: "Vendor Coordination & Provider Research | Hawaiʻi Island",
@@ -148,6 +153,7 @@ const PAGE_SEO = {
     description:
       "Custom internal tools, operational dashboards, spreadsheet modernization and third-party application implementation.",
   },
+  ...INSPECTION_PAGE_SEO,
 };
 
 const services = [
@@ -518,198 +524,7 @@ const services = [
   },
 ];
 
-const inspectionTypes = [
-  {
-    id: "full-residential",
-    title: "Full Residential Home Inspection",
-    short: "Comprehensive review of accessible systems and components from site conditions through roofing, interiors and major installed systems.",
-    image: "/images/inspection-full-residential.jpg",
-    icon: Home,
-    bestFor: "Buyers, sellers and owners who want the broadest single inspection scope.",
-    includes: [
-      "Site, drainage, grading and accessible exterior conditions",
-      "Foundation, structure, roof, attic and visible building envelope",
-      "Electrical, plumbing, cooling, ventilation and water-heating systems",
-      "Interior rooms, kitchen, bathrooms, laundry, garage and lanais",
-      "Photographs, priorities, limitations and practical recommendations",
-    ],
-    deliverable:
-      "A complete client-friendly report with an executive summary, system-by-system findings, Red/Yellow/Green urgency priorities and recommended next actions.",
-  },
-  {
-    id: "buyer",
-    title: "Buyer’s Home Inspection",
-    short: "A detailed due-diligence inspection that helps a buyer understand visible conditions before completing the purchase.",
-    image: "/images/inspection-buyer.jpg",
-    icon: Users,
-    bestFor: "Prospective buyers during the inspection or due-diligence period.",
-    includes: [
-      "The full residential inspection scope when accessible and included",
-      "Safety, repair, maintenance and specialist-evaluation concerns",
-      "Items that may affect near-term budgeting or ownership planning",
-      "Clear distinction between urgent concerns and normal maintenance",
-      "Review discussion focused on practical buyer questions",
-    ],
-    deliverable:
-      "A prioritized report that supports informed discussions with the buyer’s real-estate and professional advisory team without assigning repair costs or negotiating terms.",
-  },
-  {
-    id: "pre-listing",
-    title: "Pre-Listing Home Inspection",
-    short: "A proactive inspection before marketing the property, designed to reduce avoidable surprises during escrow.",
-    image: "/images/inspection-pre-listing.jpg",
-    icon: FileText,
-    bestFor: "Owners and listing teams preparing a property for sale.",
-    includes: [
-      "Visible conditions likely to appear in a later buyer inspection",
-      "Maintenance and repair items the owner may choose to address",
-      "Specialist-evaluation recommendations where appropriate",
-      "Documentation of inaccessible or non-operational components",
-      "A practical preparation sequence based on urgency and impact",
-    ],
-    deliverable:
-      "A seller-focused condition report that helps the owner plan repairs, obtain specialist input and organize disclosures with the appropriate professionals.",
-  },
-  {
-    id: "maintenance",
-    title: "Home Maintenance Inspection",
-    short: "A condition and maintenance review that helps current owners protect the home and plan upcoming work.",
-    image: "/images/inspection-maintenance.jpg",
-    icon: Wrench,
-    bestFor: "Current homeowners, second-home owners and long-term maintenance planning.",
-    includes: [
-      "Visible deterioration, deferred maintenance and developing concerns",
-      "Water-management, corrosion, ventilation and exterior-sealant conditions",
-      "Aging systems and components that should be monitored or serviced",
-      "Seasonal, annual and near-term maintenance priorities",
-      "Recommended trade or specialist categories for follow-up",
-    ],
-    deliverable:
-      "A maintenance-oriented report organized by urgency and likely timeframe so the owner can create a practical property-care plan.",
-  },
-  {
-    id: "condo-townhome",
-    title: "Condo and Townhome Inspection",
-    short: "A residential inspection tailored to the unit, accessible exclusive-use areas and clearly distinguishable shared-building conditions.",
-    image: "/images/inspection-condo-townhome.jpg",
-    icon: Building2,
-    bestFor: "Condominium and townhome buyers, sellers and owners.",
-    includes: [
-      "Interior systems and components within the inspected unit",
-      "Accessible lanais, assigned areas and unit-specific equipment",
-      "Visible conditions at windows, doors, plumbing, electrical and HVAC",
-      "Observations that may involve a shared or association-maintained component",
-      "Clear scope limitations for inaccessible common elements",
-    ],
-    deliverable:
-      "A unit-focused report that distinguishes inspected components from visible conditions that may require association documents, management confirmation or specialist review.",
-  },
-  {
-    id: "new-construction",
-    title: "New Construction Home Inspection",
-    short: "An independent visual review of installed work and readily accessible systems before final acceptance or warranty milestones.",
-    image: "/images/inspection-new-construction.jpg",
-    icon: HardHat,
-    bestFor: "New-build buyers, owners approaching final walkthrough and warranty-period reviews.",
-    includes: [
-      "Visible workmanship, incomplete items and installation concerns",
-      "Operation of accessible installed systems and representative components",
-      "Interior, exterior, roof, attic and site observations when accessible",
-      "Documentation suitable for discussion with the builder",
-      "A clear record of limitations and items requiring specialist evaluation",
-    ],
-    deliverable:
-      "A photographic report of visible conditions and incomplete or concerning items. It does not replace municipal inspections, engineering review or the builder’s quality-control obligations.",
-  },
-  {
-    id: "reinspection",
-    title: "Repair Verification and Reinspection",
-    short: "A focused return visit to document whether specified reported items appear to have been addressed.",
-    image: "/images/inspection-reinspection.jpg",
-    icon: RefreshCw,
-    bestFor: "Clients seeking follow-up documentation after agreed repairs or specialist work.",
-    includes: [
-      "Review of the original reported item and accessible repair area",
-      "Visible comparison with prior photographs or descriptions",
-      "Basic operation where safe, appropriate and within scope",
-      "Documentation of remaining, changed or inaccessible conditions",
-      "Referral back to the repairing professional when certification is required",
-    ],
-    deliverable:
-      "A focused reinspection report describing visible conditions at the return visit. It is not a contractor warranty, engineering certification or guarantee of concealed work.",
-  },
-  {
-    id: "moisture",
-    title: "Moisture and Water-Intrusion Inspection",
-    short: "A targeted investigation using thermal imaging, a moisture meter and visual indicators to evaluate suspected water intrusion.",
-    image: "/images/inspection-moisture-detail.jpg",
-    icon: Droplets,
-    badge: "Reduced bundled rate available",
-    bestFor: "Suspected leaks, staining, musty conditions, post-storm concerns and areas with previous water events.",
-    includes: [
-      "Thermal scanning of relevant accessible surfaces under suitable conditions",
-      "Moisture-meter testing at representative or suspect locations",
-      "Visual review of likely entry points, drainage and adjacent materials",
-      "Photographic documentation of observed patterns and readings",
-      "Recommendations for plumbing, roofing, envelope, mitigation or other specialist review",
-    ],
-    deliverable:
-      "A targeted report identifying observed anomalies, readings, likely pathways and recommended next steps. Thermal imaging does not see through walls and cannot by itself confirm mold, concealed damage or the exact source of moisture.",
-  },
-  {
-    id: "irrigation",
-    title: "Irrigation System Inspection",
-    short: "A focused operational review of accessible irrigation zones, visible components and observed coverage conditions.",
-    image: "/images/inspection-irrigation.jpg",
-    icon: Sprout,
-    badge: "Reduced bundled rate available",
-    bestFor: "Homes with landscaped areas, high water use, dry zones, overspray, leaks or aging irrigation equipment.",
-    includes: [
-      "Operation of accessible zones and representative emitters",
-      "Visible leaks, damaged heads, overspray and obvious coverage gaps",
-      "Controller settings and accessible valve or filter conditions",
-      "Drainage or water-contact concerns near the building when observable",
-      "Recommendations for irrigation or landscaping follow-up",
-    ],
-    deliverable:
-      "An irrigation condition summary with photographs and observed operational concerns. Underground piping, exact flow calculations, water-quality testing and landscape-design performance are outside the standard scope.",
-  },
-  {
-    id: "pool-spa",
-    title: "Pool/Spa and Equipment Inspection",
-    short: "A visual and operational review of accessible pool or spa components, equipment and safety-related conditions, with thermal imaging where useful.",
-    image: "/images/inspection-pool-spa.jpg",
-    icon: Waves,
-    badge: "Reduced bundled rate available",
-    bestFor: "Properties with pools, spas, water features or associated equipment.",
-    includes: [
-      "Accessible surfaces, coping, visible structure and waterline conditions",
-      "Pumps, filters, heaters, controls and visible piping under normal operation",
-      "Accessible electrical bonding or safety observations within the inspection scope",
-      "Barriers, gates and readily visible safety-related conditions",
-      "Thermal observations when they provide useful supplemental information",
-    ],
-    deliverable:
-      "A pool/spa condition report with photographs and recommended specialist follow-up. It is not a leak-detection service, structural engineering evaluation, water-chemistry certification or code-compliance inspection.",
-  },
-  {
-    id: "arrival-departure",
-    title: "Custom Arrival and Departure Inspections",
-    short: "A custom checklist and photographic condition record for owners who use their residence as a rental or periodically occupied home.",
-    image: "/images/inspection-arrival-departure.jpg",
-    icon: Camera,
-    bestFor: "Vacation-rental owners, second-home owners and owner-managed rental properties.",
-    includes: [
-      "A client-approved arrival, departure or turnover checklist",
-      "Photographs of agreed rooms, furnishings, equipment and visible conditions",
-      "Documentation of missing, damaged or non-operational items observed during the visit",
-      "Basic readiness checks defined in the written scope",
-      "Prompt escalation of visible urgent conditions to the owner",
-    ],
-    deliverable:
-      "A dated condition record tailored to the owner’s checklist. This service does not include leasing, guest placement, rent handling, property management, housekeeping certification or responsibility for concealed damage.",
-  },
-];
+const inspectionTypes = inspectionServices;
 
 const providerFamilyGroups = [
   {
@@ -998,159 +813,30 @@ function HomePage({ onOpen }) {
   );
 }
 
-function InspectionCard({ inspection, onSelect }) {
-  const Icon = inspection.icon;
+function InspectionPageFallback() {
   return (
-    <Card className="group flex h-full flex-col overflow-hidden">
-      <div className="relative overflow-hidden">
-        <img src={inspection.image} alt={`${inspection.title} service`} className="aspect-[16/9] w-full object-cover transition duration-300 group-hover:scale-[1.03]" loading="lazy" />
-        <div className="absolute bottom-3 left-3 flex h-11 w-11 items-center justify-center rounded-full bg-[#1268D5] text-white shadow-lg">
-          <Icon className="h-5 w-5" />
-        </div>
-        {inspection.badge && <span className="absolute right-3 top-3 rounded-full bg-white/95 px-3 py-1 text-xs font-bold text-[#0D57B5] shadow">Add-on option</span>}
+    <div className="flex min-h-[360px] items-center justify-center rounded-[2rem] border border-slate-200 bg-slate-50 p-8 text-center">
+      <div>
+        <p className="text-sm font-bold uppercase tracking-[0.18em] text-[#1268D5]">Loading inspection service</p>
+        <p className="mt-3 text-lg text-slate-600">Preparing the inspection scope, pricing and report details.</p>
       </div>
-      <div className="flex flex-1 flex-col p-5">
-        <h3 className="text-lg font-bold leading-6 text-[#061B33]">{inspection.title}</h3>
-        <p className="mt-3 flex-1 text-sm leading-6 text-slate-600">{inspection.short}</p>
-        <button onClick={() => onSelect(inspection.id)} className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-[#1268D5] hover:text-[#0D57B5]">
-          View details <ArrowRight className="h-4 w-4" />
-        </button>
-      </div>
-    </Card>
+    </div>
   );
 }
 
 function HomeInspectionsPage({ onOpen }) {
-  const [selectedInspection, setSelectedInspection] = useState("full-residential");
-  const selected = inspectionTypes.find((item) => item.id === selectedInspection) || inspectionTypes[0];
-
-  const selectInspection = (id) => {
-    setSelectedInspection(id);
-    window.setTimeout(() => document.getElementById("inspection-detail")?.scrollIntoView({ behavior: "smooth", block: "start" }), 30);
-  };
-
   return (
-    <div className="space-y-16 md:space-y-20">
-      <section className="overflow-hidden rounded-[2rem] bg-[#061B33] text-white shadow-2xl">
-        <div className="grid lg:grid-cols-[0.95fr_1.05fr]">
-          <div className="px-7 py-12 md:px-11 lg:py-14">
-            <p className="text-sm font-bold uppercase tracking-[0.2em] text-[#77D7CF]">Home inspections</p>
-            <h1 className="mt-5 text-4xl font-bold tracking-tight md:text-5xl">Thorough. Impartial. Insightful.</h1>
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-200">
-              Protect your investment and make more informed decisions with a detailed, visual and non-invasive inspection of readily accessible residential systems and components.
-            </p>
-            <div className="mt-8 grid gap-4 sm:grid-cols-2">
-              {[
-                { icon: ShieldCheck, title: "Independent documentation", text: "Findings are based on observed conditions—not the outcome of a sale." },
-                { icon: Thermometer, title: "Advanced tools", text: "Thermal imaging and moisture measurements are used when appropriate." },
-                { icon: FileText, title: "Clear reporting", text: "Photographs, priorities, limitations and practical recommendations." },
-                { icon: MapPin, title: "Hawaiʻi Island context", text: "Local awareness of moisture, corrosion, drainage, pests and island logistics." },
-              ].map(({ icon: Icon, title, text }) => (
-                <div key={title} className="flex gap-3 rounded-xl border border-white/15 bg-white/10 p-4">
-                  <Icon className="mt-0.5 h-6 w-6 shrink-0 text-[#77D7CF]" />
-                  <div><p className="font-bold">{title}</p><p className="mt-1 text-sm leading-6 text-slate-300">{text}</p></div>
-                </div>
-              ))}
-            </div>
-            <Button variant="light" size="lg" className="mt-8" onClick={() => onOpen("contact")}>Request an Inspection Quote</Button>
-          </div>
-          <div className="relative min-h-[420px]">
-            <img src="/images/inspection-hero.jpg" alt="Hawaiʻi Island home representing residential inspection services" className="absolute inset-0 h-full w-full object-cover" loading="eager" fetchPriority="high" />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#061B33]/55 to-transparent" />
-          </div>
-        </div>
-      </section>
+    <React.Suspense fallback={<InspectionPageFallback />}>
+      <HomeInspectionsHubPage onOpen={onOpen} />
+    </React.Suspense>
+  );
+}
 
-      <section className="space-y-9">
-        <SectionHeading
-          eyebrow="Inspection services"
-          title="Choose the inspection that matches the decision you need to make"
-          description="Every service begins with a defined scope. Select any option to review who it is for, what is normally included and what the final deliverable explains."
-        />
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {inspectionTypes.map((inspection) => <InspectionCard key={inspection.id} inspection={inspection} onSelect={selectInspection} />)}
-        </div>
-      </section>
-
-      <section id="inspection-detail" className="scroll-mt-32 overflow-hidden rounded-[2rem] border border-blue-100 bg-blue-50/60">
-        <div className="grid lg:grid-cols-[0.92fr_1.08fr]">
-          <div className="relative min-h-[360px] lg:min-h-full">
-            <img src={selected.image} alt={`${selected.title} detail`} className="absolute inset-0 h-full w-full object-cover" loading="lazy" />
-          </div>
-          <div className="p-7 md:p-10">
-            <div className="flex flex-wrap items-center gap-3">
-              <span className="rounded-full bg-[#1268D5] px-3 py-1 text-xs font-bold uppercase tracking-wide text-white">Selected service</span>
-              {selected.badge && <span className="rounded-full border border-blue-200 bg-white px-3 py-1 text-xs font-bold text-[#0D57B5]">{selected.badge}</span>}
-            </div>
-            <h2 className="mt-5 text-3xl font-bold tracking-tight text-[#061B33]">{selected.title}</h2>
-            <p className="mt-4 text-lg leading-8 text-slate-600">{selected.short}</p>
-            <div className="mt-7 rounded-xl border border-white bg-white p-5 shadow-sm">
-              <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#1268D5]">Best for</p>
-              <p className="mt-2 leading-7 text-slate-700">{selected.bestFor}</p>
-            </div>
-            <div className="mt-7">
-              <h3 className="text-xl font-bold text-[#061B33]">Typical scope</h3>
-              <div className="mt-4 grid gap-3">
-                {selected.includes.map((item) => (
-                  <div key={item} className="flex gap-3 text-slate-700"><CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-[#1E9C73]" /><span className="leading-6">{item}</span></div>
-                ))}
-              </div>
-            </div>
-            <div className="mt-7 rounded-xl bg-[#061B33] p-5 text-white">
-              <p className="text-sm font-bold uppercase tracking-[0.16em] text-[#77D7CF]">What you receive</p>
-              <p className="mt-2 leading-7 text-slate-200">{selected.deliverable}</p>
-            </div>
-            <Button className="mt-7" onClick={() => onOpen("contact")}>Request This Inspection <ArrowRight className="h-4 w-4" /></Button>
-          </div>
-        </div>
-      </section>
-
-      <section className="rounded-[2rem] border border-emerald-100 bg-emerald-50 px-7 py-10 md:px-10">
-        <div className="grid gap-8 lg:grid-cols-[0.75fr_1.25fr] lg:items-start">
-          <div>
-            <p className="text-sm font-bold uppercase tracking-[0.2em] text-emerald-700">Bundled add-on options</p>
-            <h2 className="mt-3 text-3xl font-bold text-[#061B33]">Add targeted systems to another inspection</h2>
-            <p className="mt-4 leading-7 text-slate-600">
-              Moisture and water-intrusion, irrigation and pool/spa inspections may be quoted at a reduced bundled rate when performed during another qualifying inspection. Pricing depends on property size, system complexity, access, travel and the requested scope.
-            </p>
-          </div>
-          <div className="grid gap-4 md:grid-cols-3">
-            {inspectionTypes.filter((item) => item.badge).map((item) => (
-              <button key={item.id} onClick={() => selectInspection(item.id)} className="rounded-2xl border border-white bg-white p-5 text-left shadow-sm transition hover:-translate-y-1 hover:shadow-md">
-                <item.icon className="h-7 w-7 text-emerald-700" />
-                <h3 className="mt-4 font-bold text-[#061B33]">{item.title}</h3>
-                <p className="mt-2 text-sm leading-6 text-slate-600">{item.short}</p>
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="space-y-9">
-        <SectionHeading eyebrow="Your inspection report" title="Organized to support action—not confusion" description="The report explains what was observed, why it matters, what could not be inspected and what type of follow-up should be considered." />
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-          {[
-            { title: "Red — High / Immediate", text: "Urgent safety, active-damage or high-consequence conditions that warrant prompt action or specialist evaluation." },
-            { title: "Yellow — Medium / Soon", text: "Conditions requiring repair, maintenance, further evaluation or planning in the near term." },
-            { title: "Green — Okay / Monitor", text: "Serviceable conditions, routine maintenance items and components that should continue to be monitored." },
-            { title: "Limitations & referrals", text: "Inaccessible, shut-down or unsafe components are documented, along with the appropriate specialist category when needed." },
-          ].map((item) => (
-            <Card key={item.title} className="p-6"><h3 className="text-lg font-bold text-[#061B33]">{item.title}</h3><p className="mt-3 leading-7 text-slate-600">{item.text}</p></Card>
-          ))}
-        </div>
-      </section>
-
-      <section className="rounded-2xl border border-amber-200 bg-amber-50 px-6 py-5 text-sm leading-7 text-amber-950">
-        <strong>Inspection scope and limitations:</strong> Residential inspections are visual and non-invasive reviews of readily accessible components at the time of inspection. They are not warranties, guarantees, destructive investigations, engineering analyses, environmental assessments, licensed pest certifications, appraisals or comprehensive code-compliance inspections. Concealed, inaccessible, shut-down, unsafe or excluded components may not be inspected.
-      </section>
-
-      <section className="rounded-[2rem] bg-[#061B33] px-8 py-11 text-white">
-        <div className="flex flex-col gap-7 md:flex-row md:items-center md:justify-between">
-          <div className="max-w-3xl"><h2 className="text-3xl font-bold">Ready to discuss the property and inspection timing?</h2><p className="mt-4 leading-7 text-slate-300">Include the property location, approximate size, property type, desired date and whether you are buying, selling, maintaining or requesting a targeted inspection.</p></div>
-          <Button variant="light" size="lg" onClick={() => onOpen("contact")}>Book an Inspection</Button>
-        </div>
-      </section>
-    </div>
+function HomeInspectionDetailRoute({ pageId, onOpen }) {
+  return (
+    <React.Suspense fallback={<InspectionPageFallback />}>
+      <InspectionDetailPage pageId={pageId} onOpen={onOpen} />
+    </React.Suspense>
   );
 }
 
@@ -1997,6 +1683,7 @@ export default function TechnicalSolutionsCompanyWebsite() {
   const renderPage = () => {
     if (activePage === "home") return <HomePage onOpen={openPage} />;
     if (activePage === "home-inspections") return <HomeInspectionsPage onOpen={openPage} />;
+    if (activePage.startsWith("inspection-")) return <HomeInspectionDetailRoute pageId={activePage} onOpen={openPage} />;
     if (activePage === "vendor-coordination") return <VendorCoordinationPage onOpen={openPage} />;
     if (activePage === "about") return <AboutPage onOpen={openPage} />;
     if (activePage === "contact") return <ContactPage />;
@@ -2023,7 +1710,7 @@ export default function TechnicalSolutionsCompanyWebsite() {
                 </div>
               )}
             </div>
-            <button onClick={() => openPage("home-inspections")} className={`rounded-lg px-3 py-2 text-sm font-semibold transition ${activePage === "home-inspections" ? "bg-white/15 text-white" : "text-slate-200 hover:bg-white/10 hover:text-white"}`}>Home Inspections</button>
+            <button onClick={() => openPage("home-inspections")} className={`rounded-lg px-3 py-2 text-sm font-semibold transition ${(activePage === "home-inspections" || activePage.startsWith("inspection-")) ? "bg-white/15 text-white" : "text-slate-200 hover:bg-white/10 hover:text-white"}`}>Home Inspections</button>
             <button onClick={() => openPage("vendor-coordination")} className={`rounded-lg px-3 py-2 text-sm font-semibold transition ${activePage === "vendor-coordination" ? "bg-white/15 text-white" : "text-slate-200 hover:bg-white/10 hover:text-white"}`}>Vendor Coordination</button>
             <button onClick={() => openPage("about")} className={`rounded-lg px-3 py-2 text-sm font-semibold transition ${activePage === "about" ? "bg-white/15 text-white" : "text-slate-200 hover:bg-white/10 hover:text-white"}`}>About</button>
             <button onClick={() => openPage("contact")} className={`rounded-lg px-3 py-2 text-sm font-semibold transition ${activePage === "contact" ? "bg-white/15 text-white" : "text-slate-200 hover:bg-white/10 hover:text-white"}`}>Contact</button>

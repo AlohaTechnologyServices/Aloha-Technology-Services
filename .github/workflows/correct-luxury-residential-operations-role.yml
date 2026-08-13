@@ -1,0 +1,50 @@
+name: Correct Luxury Residential Operations Manager wording
+
+on:
+  push:
+    paths:
+      - '.github/workflows/correct-luxury-residential-operations-role.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update-about:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Correct About page role wording
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('src/App.jsx')
+          text = path.read_text()
+
+          old = "then carried it into luxury residential and resort operations."
+          new = "then carried it into my professional role as a Luxury Residential Operations Manager, where I was responsible for the readiness, care, coordination, and day-to-day performance of high-value residences."
+
+          if old not in text:
+              raise SystemExit('Expected wording was not found; no changes made.')
+
+          text = text.replace(old, new, 1)
+          path.write_text(text)
+          PY
+
+      - name: Validate production build
+        run: |
+          npm ci
+          npm run build
+
+      - name: Commit update and remove temporary workflow
+        run: |
+          rm .github/workflows/correct-luxury-residential-operations-role.yml
+          git config user.name "AlohaTechnologyServices"
+          git config user.email "alohatechnologyservice@gmail.com"
+          git add src/App.jsx .github/workflows/correct-luxury-residential-operations-role.yml
+          git commit -m "Correct Luxury Residential Operations Manager wording"
+          git push origin main

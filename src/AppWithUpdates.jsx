@@ -211,7 +211,7 @@ function makeCard(division, [title, blurb, path]) {
 function makeDivision(division) {
   const section = document.createElement("section");
   section.className = "ats-service-division";
-  section.innerHTML = `<div class="ats-division-heading"><p class="ats-division-eyebrow">Specialized service division</p><h2>${division.title}</h2><p class="ats-division-description">${division.description}</p></div>`;
+  section.innerHTML = `<div class="ats-division-heading"><h2>${division.title}</h2><p class="ats-division-description">${division.description}</p></div>`;
 
   const grid = document.createElement("div");
   grid.className = "ats-division-grid";
@@ -243,7 +243,6 @@ function organizeHome() {
   const propertyBlock = document.createElement("div");
   propertyBlock.className = "ats-service-divisions";
   propertyBlock.setAttribute("data-ats-service-divisions", "property");
-  propertyBlock.innerHTML = `<div class="ats-services-overview"><p>Specialized services</p><h2>Four service divisions. One dependable local company.</h2><span>Each division is a core ATS offering, organized so clients can quickly find the right property, technology, operational or digital solution.</span></div>`;
   propertyBlock.appendChild(makeDivision(DIVISIONS[0]));
   container.insertBefore(propertyBlock, propertySection);
 

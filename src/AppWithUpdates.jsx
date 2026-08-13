@@ -222,13 +222,8 @@ function makeDivision(division) {
 
 function organizeHome() {
   if (window.location.pathname !== "/") return;
+  if (document.querySelector('main [data-ats-service-divisions="property"]')) return;
 
-  // This guard must run before looking for headings. The previous implementation
-  // could match a heading inside the injected block and recursively inject again.
-  if (document.querySelector("main .ats-service-divisions")) return;
-
-  // Only match the original React-rendered section headings. Never match headings
-  // created by this enhancement layer.
   const propertyHeading = Array.from(document.querySelectorAll("main h2")).find(
     (heading) => heading.textContent?.trim() === "Property and home services come first",
   );
@@ -245,12 +240,18 @@ function organizeHome() {
   propertySection.classList.add("ats-original-services-section-hidden");
   otherSection.classList.add("ats-original-services-section-hidden");
 
-  const block = document.createElement("div");
-  block.className = "ats-service-divisions";
-  block.setAttribute("data-ats-service-divisions", "true");
-  block.innerHTML = `<div class="ats-services-overview"><p>Specialized services</p><h2>Four service divisions. One dependable local company.</h2><span>Each division is a core ATS offering, organized so clients can quickly find the right property, technology, operational or digital solution.</span></div>`;
-  DIVISIONS.forEach((division) => block.appendChild(makeDivision(division)));
-  container.insertBefore(block, propertySection);
+  const propertyBlock = document.createElement("div");
+  propertyBlock.className = "ats-service-divisions";
+  propertyBlock.setAttribute("data-ats-service-divisions", "property");
+  propertyBlock.innerHTML = `<div class="ats-services-overview"><p>Specialized services</p><h2>Four service divisions. One dependable local company.</h2><span>Each division is a core ATS offering, organized so clients can quickly find the right property, technology, operational or digital solution.</span></div>`;
+  propertyBlock.appendChild(makeDivision(DIVISIONS[0]));
+  container.insertBefore(propertyBlock, propertySection);
+
+  const remainingBlock = document.createElement("div");
+  remainingBlock.className = "ats-service-divisions ats-service-divisions--remaining";
+  remainingBlock.setAttribute("data-ats-service-divisions", "remaining");
+  DIVISIONS.slice(1).forEach((division) => remainingBlock.appendChild(makeDivision(division)));
+  container.insertBefore(remainingBlock, otherSection);
 }
 
 function makeMenu(mobile = false) {
@@ -351,9 +352,6 @@ export default function AppWithUpdates() {
 
     const runUpdate = () => {
       frame = 0;
-
-      // Ignore mutations produced by this enhancement pass itself. React-driven
-      // DOM changes will be observed again immediately after the pass completes.
       observer.disconnect();
       applyUpdates();
       observe();

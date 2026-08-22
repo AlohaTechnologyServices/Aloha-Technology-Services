@@ -1,5 +1,41 @@
-@media (min-width: 1024px) {
-  .ats-home-pricing-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+.ats-home-pricing-grid[data-ats-all-pricing="true"] {
+  display: flex !important;
+  grid-template-columns: none !important;
+  gap: 1rem;
+  overflow-x: auto;
+  padding: 0.15rem 0 0.85rem;
+  scroll-snap-type: x proximity;
+  scrollbar-width: thin;
+  overscroll-behavior-x: contain;
+}
+
+.ats-home-pricing-grid[data-ats-all-pricing="true"] .ats-home-price-card {
+  flex: 0 0 min(82vw, 20rem);
+  scroll-snap-align: start;
+}
+
+.ats-home-pricing-grid[data-ats-all-pricing="true"]::-webkit-scrollbar {
+  height: 0.65rem;
+}
+
+.ats-home-pricing-grid[data-ats-all-pricing="true"]::-webkit-scrollbar-track {
+  background: #eef4f8;
+  border-radius: 999px;
+}
+
+.ats-home-pricing-grid[data-ats-all-pricing="true"]::-webkit-scrollbar-thumb {
+  background: #9db5c8;
+  border-radius: 999px;
+}
+
+@media (min-width: 768px) {
+  .ats-home-pricing-grid[data-ats-all-pricing="true"] .ats-home-price-card {
+    flex-basis: 19rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .ats-home-pricing-grid[data-ats-all-pricing="true"] .ats-home-price-card {
+    flex-basis: 18.5rem;
   }
 }

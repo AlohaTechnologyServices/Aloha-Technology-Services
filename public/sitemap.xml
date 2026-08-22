@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://atshawaii.vercel.app/</loc><lastmod>2026-08-11</lastmod></url>
+  <url><loc>https://atshawaii.vercel.app/</loc><lastmod>2026-08-21</lastmod></url>
   <url><loc>https://atshawaii.vercel.app/about</loc><lastmod>2026-08-11</lastmod></url>
   <url><loc>https://atshawaii.vercel.app/contact</loc><lastmod>2026-08-11</lastmod></url>
-  <url><loc>https://atshawaii.vercel.app/services/property-field-services</loc><lastmod>2026-08-11</lastmod></url>
+  <url><loc>https://atshawaii.vercel.app/pricing</loc><lastmod>2026-08-21</lastmod></url>
+  <url><loc>https://atshawaii.vercel.app/services/property-field-services</loc><lastmod>2026-08-21</lastmod></url>
   <url><loc>https://atshawaii.vercel.app/services/home-inspections</loc><lastmod>2026-08-11</lastmod></url>
   <url><loc>https://atshawaii.vercel.app/services/home-inspections/full-residential</loc><lastmod>2026-08-11</lastmod></url>
   <url><loc>https://atshawaii.vercel.app/services/home-inspections/buyers-home-inspection</loc><lastmod>2026-08-11</lastmod></url>
@@ -16,14 +17,14 @@
   <url><loc>https://atshawaii.vercel.app/services/home-inspections/irrigation-system-inspection</loc><lastmod>2026-08-11</lastmod></url>
   <url><loc>https://atshawaii.vercel.app/services/home-inspections/pool-spa-equipment-inspection</loc><lastmod>2026-08-11</lastmod></url>
   <url><loc>https://atshawaii.vercel.app/services/home-inspections/custom-arrival-departure-inspections</loc><lastmod>2026-08-11</lastmod></url>
-  <url><loc>https://atshawaii.vercel.app/services/vendor-coordination</loc><lastmod>2026-08-11</lastmod></url>
-  <url><loc>https://atshawaii.vercel.app/services/handyman-services</loc><lastmod>2026-08-11</lastmod></url>
-  <url><loc>https://atshawaii.vercel.app/services/workflow-optimization</loc><lastmod>2026-08-11</lastmod></url>
-  <url><loc>https://atshawaii.vercel.app/services/technology-installation</loc><lastmod>2026-08-11</lastmod></url>
-  <url><loc>https://atshawaii.vercel.app/services/training-support</loc><lastmod>2026-08-11</lastmod></url>
-  <url><loc>https://atshawaii.vercel.app/services/website-development</loc><lastmod>2026-08-11</lastmod></url>
-  <url><loc>https://atshawaii.vercel.app/services/business-insight</loc><lastmod>2026-08-11</lastmod></url>
-  <url><loc>https://atshawaii.vercel.app/services/automation-development</loc><lastmod>2026-08-11</lastmod></url>
-  <url><loc>https://atshawaii.vercel.app/services/ai-implementation</loc><lastmod>2026-08-11</lastmod></url>
-  <url><loc>https://atshawaii.vercel.app/services/application-development</loc><lastmod>2026-08-11</lastmod></url>
+  <url><loc>https://atshawaii.vercel.app/services/vendor-coordination</loc><lastmod>2026-08-21</lastmod></url>
+  <url><loc>https://atshawaii.vercel.app/services/handyman-services</loc><lastmod>2026-08-21</lastmod></url>
+  <url><loc>https://atshawaii.vercel.app/services/workflow-optimization</loc><lastmod>2026-08-21</lastmod></url>
+  <url><loc>https://atshawaii.vercel.app/services/technology-installation</loc><lastmod>2026-08-21</lastmod></url>
+  <url><loc>https://atshawaii.vercel.app/services/training-support</loc><lastmod>2026-08-21</lastmod></url>
+  <url><loc>https://atshawaii.vercel.app/services/website-development</loc><lastmod>2026-08-21</lastmod></url>
+  <url><loc>https://atshawaii.vercel.app/services/business-insight</loc><lastmod>2026-08-21</lastmod></url>
+  <url><loc>https://atshawaii.vercel.app/services/automation-development</loc><lastmod>2026-08-21</lastmod></url>
+  <url><loc>https://atshawaii.vercel.app/services/ai-implementation</loc><lastmod>2026-08-21</lastmod></url>
+  <url><loc>https://atshawaii.vercel.app/services/application-development</loc><lastmod>2026-08-21</lastmod></url>
 </urlset>

@@ -11,6 +11,10 @@
       "destination": "/index.html"
     },
     {
+      "source": "/pricing",
+      "destination": "/index.html"
+    },
+    {
       "source": "/services/(.*)",
       "destination": "/index.html"
     }
@@ -62,6 +66,15 @@
     },
     {
       "source": "/contact",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "index, follow"
+        }
+      ]
+    },
+    {
+      "source": "/pricing",
       "headers": [
         {
           "key": "X-Robots-Tag",

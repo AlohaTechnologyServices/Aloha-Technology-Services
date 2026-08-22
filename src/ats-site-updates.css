@@ -1,4 +1,4 @@
-/* ATS service-division organization, navigation and contrast refinements. */
+/* ATS service-division organization, navigation, pricing and contrast refinements. */
 
 .ats-original-services-section-hidden,
 .ats-original-menu-grid-hidden,
@@ -294,9 +294,218 @@
   color: #061b33 !important;
 }
 
+/* Public pricing preview and service-level pricing blocks. */
+.ats-home-pricing,
+.ats-service-pricing {
+  border: 1px solid #dbe5ef;
+  border-radius: 2rem;
+  background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+  padding: clamp(1.75rem, 4vw, 2.75rem);
+  box-shadow: 0 14px 42px rgba(6, 27, 51, 0.06);
+}
+
+.ats-home-pricing-heading,
+.ats-service-pricing-heading {
+  max-width: 52rem;
+}
+
+.ats-home-pricing-heading > p,
+.ats-service-pricing-heading > p {
+  margin: 0;
+  color: #1268d5;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.ats-home-pricing-heading h2,
+.ats-service-pricing-heading h2 {
+  margin: 0.75rem 0 0;
+  color: #061b33;
+  font-size: clamp(1.8rem, 3vw, 2.35rem);
+  font-weight: 750;
+  letter-spacing: -0.025em;
+  line-height: 1.18;
+}
+
+.ats-home-pricing-heading > span,
+.ats-service-pricing-heading > span {
+  display: block;
+  margin-top: 0.85rem;
+  color: #475569;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.ats-home-pricing-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.ats-home-price-card {
+  display: flex;
+  min-height: 10.5rem;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  background: #fff;
+  padding: 1.35rem;
+  color: #061b33;
+  cursor: pointer;
+  text-align: left;
+  box-shadow: 0 8px 24px rgba(6, 27, 51, 0.05);
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.ats-home-price-card:hover,
+.ats-home-price-card:focus-visible {
+  transform: translateY(-3px);
+  border-color: #bfdbfe;
+  box-shadow: 0 15px 32px rgba(6, 27, 51, 0.1);
+}
+
+.ats-home-price-card span {
+  font-size: 1.08rem;
+  font-weight: 750;
+}
+
+.ats-home-price-card strong {
+  margin-top: 1rem;
+  color: #1268d5;
+  font-size: 1.3rem;
+  line-height: 1.35;
+}
+
+.ats-home-price-card small {
+  margin-top: 1rem;
+  color: #64748b;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.ats-home-pricing-action,
+.ats-service-pricing-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.ats-pricing-primary,
+.ats-pricing-secondary {
+  border-radius: 0.8rem;
+  padding: 0.8rem 1.05rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 750;
+  transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+}
+
+.ats-pricing-primary {
+  border: 1px solid #1268d5;
+  background: #1268d5;
+  color: #fff;
+}
+
+.ats-pricing-primary:hover,
+.ats-pricing-primary:focus-visible {
+  background: #0f5bb9;
+  border-color: #0f5bb9;
+  transform: translateY(-1px);
+}
+
+.ats-pricing-secondary {
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  color: #334155;
+}
+
+.ats-pricing-secondary:hover,
+.ats-pricing-secondary:focus-visible {
+  border-color: #93c5fd;
+  color: #1268d5;
+}
+
+.ats-service-pricing-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.ats-service-price-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 1rem;
+  background: #fff;
+  padding: 1.25rem;
+  box-shadow: 0 7px 22px rgba(6, 27, 51, 0.045);
+}
+
+.ats-service-price-card > div {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.ats-service-price-card h3 {
+  margin: 0;
+  color: #061b33;
+  font-size: 1.02rem;
+  font-weight: 750;
+  line-height: 1.4;
+}
+
+.ats-service-price-card strong {
+  flex-shrink: 0;
+  color: #1268d5;
+  font-size: 1.05rem;
+  font-weight: 850;
+  text-align: right;
+}
+
+.ats-service-price-card p {
+  margin: 0.7rem 0 0;
+  color: #64748b;
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.ats-service-price-note {
+  margin-top: 1.25rem;
+  border-left: 4px solid #49bda7;
+  border-radius: 0.7rem;
+  background: #f0fdfa;
+  padding: 1rem 1.15rem;
+  color: #334155;
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+@media (min-width: 640px) {
+  .ats-home-pricing-grid,
+  .ats-service-pricing-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (min-width: 768px) {
   .ats-division-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .ats-home-pricing-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .ats-service-pricing-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
 
@@ -312,5 +521,12 @@
   }
   .ats-grouped-services-menu {
     grid-template-columns: minmax(0, 1fr) !important;
+  }
+  .ats-service-price-card > div {
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+  .ats-service-price-card strong {
+    text-align: left;
   }
 }
